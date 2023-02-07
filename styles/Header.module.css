@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 10%;
+    background-color: var(--header-color);
+}
+
+.header ul li {
+    display: inline-flex;
+}
+
+.social {
+    list-style: none;
+}
+
+.social li {
+    padding: 0 0.3rem;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem 1rem;
+}
+
+.nav {
+    position: sticky;
+    list-style: none;
+    background-color: var(--navbar-color);
+    color: var(--navbar-font-color);
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.nav li {
+    padding: 0 2rem;
+}
