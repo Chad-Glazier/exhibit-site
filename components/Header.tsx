@@ -28,8 +28,8 @@ export default function Header({navigationLinks, socialLinks}: HeaderProps) {
             />
 
             <ul className={styles.social}>
-                {socialLinks.map(({url, icon}: SocialLink) => (
-                    <li>
+                {socialLinks.map(({url, icon}: SocialLink, i: number) => (
+                    <li key={i}>
                         <a href={url} target="_blank" rel="noopener noreferrer">
                         <img src={icon} alt="Social media icon" width="20px" height="20px" />
                         </a>
@@ -39,8 +39,8 @@ export default function Header({navigationLinks, socialLinks}: HeaderProps) {
         </header>
 
         <ul className={styles.nav}>
-            {navigationLinks.map(({url, label}: NavigationLink) => (
-                <li>
+            {navigationLinks.map(({url, label}: NavigationLink, i: number) => (
+                <li key={i}>
                     <a className="nav-link" href={url}>{label}</a>
                 </li>
             ))}
