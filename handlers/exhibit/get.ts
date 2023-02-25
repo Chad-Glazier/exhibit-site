@@ -25,8 +25,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
  * the matching `PopulatedExhibit`s and status `200`.
  * 
  * @param req a `NextApiRequest` object
- * @param res a `NextApiResponse` object. Note that this function sends a response, so
- * it should not be expected to pass through other middleware afterwards.
+ * @param res a `NextApiResponse` object
  * @returns `void`
  */
 export default async function get(

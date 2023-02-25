@@ -6,7 +6,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<PopulatedExhibit | PopulatedExhibit[] | ErrorMessage>
 ) {
-    let handler = handlers[req.method ?? ""];
+    const handler = handlers[req.method ?? ""];
     
     if (!handler) {
         res.status(400)

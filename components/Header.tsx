@@ -1,21 +1,15 @@
 import styles from "@/styles/Header.module.css";
 
-export interface NavigationLink {
-    url: string;
-    label: string;
-}
-
 export interface SocialLink {
     url: string;
     icon: string;
 }
 
 export interface HeaderProps {
-    navigationLinks: NavigationLink[];
     socialLinks: SocialLink[];
 }
 
-export default function Header({navigationLinks, socialLinks}: HeaderProps) {
+export default function Header({ socialLinks }: HeaderProps) {
     return (
     <>
         <header className={styles.header}>
@@ -26,7 +20,6 @@ export default function Header({navigationLinks, socialLinks}: HeaderProps) {
                 width={356}
                 max-width={"80%"}
             />
-
             <ul className={styles.social}>
                 {socialLinks.map(({url, icon}: SocialLink, i: number) => (
                     <li key={i}>
@@ -37,14 +30,6 @@ export default function Header({navigationLinks, socialLinks}: HeaderProps) {
                 ))}
             </ul>
         </header>
-
-        <ul className={styles.nav}>
-            {navigationLinks.map(({url, label}: NavigationLink, i: number) => (
-                <li key={i}>
-                    <a className="nav-link" href={url}>{label}</a>
-                </li>
-            ))}
-        </ul>
     </>
     );
 }

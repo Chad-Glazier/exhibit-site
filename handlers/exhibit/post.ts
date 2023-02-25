@@ -18,6 +18,7 @@ import { z } from "zod";
  * 
  * @param req a NextApiRequest object
  * @param res a NextApiResponse object
+ * @returns `void`
  */
 export default async function post(
     req: NextApiRequest,
