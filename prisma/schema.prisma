@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Exhibit {
+  id        Int     @id @default(autoincrement())
+  title     String  @unique
+  thumbnail String
+  summary   String
+  published Boolean
+  cards     Card[]
+}
+
+model Card {
+  id          Int     @id @default(autoincrement())
+  media       String
+  description String
+  exhibitId   Int
+  exhibit     Exhibit @relation(fields: [exhibitId], references: [id])
+}
+
+generator zod {
+  provider              = "zod-prisma"
+  output                = "./zod"
+  relationModel         = true
+  modelCase             = "PascalCase"
+  modelSuffix           = "Schema"
+  useDecimalJs          = true
+  imports               = null
+  prismaJsonNullability = true
+}

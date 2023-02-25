@@ -1,13 +1,26 @@
+import { PopulatedExhibit, ErrorMessage } from "@/types";
 import type { NextApiRequest, NextApiResponse } from "next";
+import handlers from "@/handlers/exhibit";
 
-type Data = {
-    name: string
-};
-
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse<PopulatedExhibit | PopulatedExhibit[] | ErrorMessage>
 ) {
+    let handler = handlers[req.method ?? ""];
+    
+    if (!handler) {
+        res.status(400)
+           .json({
+                message: `${req.url ? new URL(req.url).pathname : "this address"} does not accept ${req.method ? req.method + " requests." : "requests of that type."}`
+           });
+        return;
+    }
 
-    res.status(200).json({ name: 'John Doe' });
+    try {
+        await handler(req, res);
+    } catch(error: unknown) {
+        res.status(500).json({
+            message: "Unknown internal server error."
+        });
+    }
 }
