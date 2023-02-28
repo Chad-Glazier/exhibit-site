@@ -64,7 +64,7 @@ export default async function get(
         res.status(
             exhibits.length === id.length ? 200 : 206
             ).json(exhibits);
-        prisma.$disconnect();
+        await prisma.$disconnect();
         return;
     }
 
@@ -76,10 +76,10 @@ export default async function get(
         res.status(404).json({
             message: `No exhibit matches the \`id\` ${id}`
         });
-        prisma.$disconnect();
+        await prisma.$disconnect();
         return;
     }
     res.status(200).json(exhibit);            
-    prisma.$disconnect();
+    await prisma.$disconnect();
     return;
 }

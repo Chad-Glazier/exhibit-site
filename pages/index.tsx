@@ -1,47 +1,29 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import Header, { HeaderProps } from "@/components/Header";
-import Navigation, { NavigationProps } from "@/components/Navigation";
+import { GetServerSideProps } from "next";
+import { PopulatedExhibit } from "@/types";
+import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
 
-const headerProps: HeaderProps = {
-    socialLinks: [
-        { 
-            url: "https://www.facebook.com/vernonmuseum/", 
-            icon: "/social-icons/facebook.svg" 
-        },
-        { 
-            url: "https://www.instagram.com/vernon_museum/", 
-            icon: "/social-icons/instagram.svg" 
-        },
-        { 
-            url: "https://twitter.com/Vernon_Museum", 
-            icon: "/social-icons/twitter.svg" 
-        },
-        { 
-            url: "https://www.youtube.com/channel/UCtLtOUPyI6Qd4XApN-OmeHQ", 
-            icon: "/social-icons/youtube.svg" 
-        }
-    ]
+
+interface Props {
+    exhibits: PopulatedExhibit[];
 }
 
-const navigationProps: NavigationProps = {
-    links: [
-        {
-            url: "https://vernonmuseum.ca",
-            label: "Main Site"
-        },
-        {
-            url: "https://vernonmuseum.ca/archives/",
-            label: "Archives"
-        },
-        {
-            url: "https://vernonmuseum.ca/contact-us-mav/",
-            label: "Contact"
-        }
-    ]
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+    const prisma = new PrismaClient();
+    prisma.$connect();
+
+    const exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
+        include: { cards: true }
+    });
+
+    await prisma.$disconnect();
+
+    return { props: { exhibits } };
 }
 
-export default function Home() {
+export default function Home({ exhibits }: Props) {
     return (
     <>
         <Head>
@@ -49,8 +31,17 @@ export default function Home() {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <main className={styles.main}>
-            <Header {...headerProps} />
-            <Navigation {...navigationProps} />
+            <h1>Exhibits</h1>
+            <ul>
+            {...exhibits.map((exhibit, index) => (
+                <li key={index}>
+                    <Link href={`/exhibit/${exhibit.title}`}>
+                        {`${exhibit.title.replace(/\-/, " ")}`}
+                    </Link>
+                </li>
+                ))
+            }                
+            </ul>
         </main>
     </>
     );

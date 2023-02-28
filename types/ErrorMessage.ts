@@ -1,7 +1,12 @@
 import * as z from "zod";
 
 /**
- * Used as a response when the API can't process a request.
+ * Used as to report errors. The API will send back an `ErrorMessage` in its response
+ * body if it cannot process a request. 
+ * 
+ * If the API sends back a successful request but the client has a problem parsing it, 
+ * the client can use this with the `client` field set to true to indicate that the API
+ * processed the request but returned something unexpected.
  */
 export interface ErrorMessage {
     message: string;

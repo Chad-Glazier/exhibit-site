@@ -48,7 +48,7 @@ export default async function post(
             ...preExisting,
             message: "An exhibit with that `id` already exists."
         })
-        prisma.$disconnect();
+        await prisma.$disconnect();
         return;
     }
 
@@ -64,5 +64,5 @@ export default async function post(
         }
     });
     res.status(201).json(createdExhibit);
-    prisma.$disconnect();
+    await prisma.$disconnect();
 }
