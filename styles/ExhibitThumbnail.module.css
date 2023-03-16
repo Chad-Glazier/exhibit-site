@@ -1,0 +1,22 @@
+.exhibitThumbnail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.thumbnailImage {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.summary {
+  font-size: 1rem;
+  text-align: justify;
+}

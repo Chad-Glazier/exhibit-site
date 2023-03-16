@@ -3,7 +3,7 @@ import prisma from "@/prisma";
 import { Exhibit } from "@prisma/client";
 import { GetServerSideProps } from "next/types";
 
-interface HomeProps {
+interface BrowserProps {
   exhibitThumbnails: Exhibit[];
 }
 
@@ -16,13 +16,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return { props: { exhibitThumbnails } };
 }
 
-export default function Home(
-  { exhibitThumbnails }: HomeProps
+export default function Browser(
+  { exhibitThumbnails }: BrowserProps
 ) {
-  return (
-    <>
-      <h1>Home</h1>
-      {exhibitThumbnails.map((exhibit, index) => <ExhibitThumbnail key={index} {...exhibit} />)}    
-    </>
-  );
+  <h1>Browser</h1>
+  {exhibitThumbnails.map((exhibit, index) => <ExhibitThumbnail key={index} {...exhibit} />)}
 }

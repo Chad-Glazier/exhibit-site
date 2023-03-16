@@ -1,6 +1,6 @@
 import { PopulatedExhibit, ErrorMessage, ExhibitCreatable, ExhibitCreatableSchema, CardCreatable, CardCreatableSchema, PopulatedExhibitCreatable } from "@/types";
-import { Exhibit, PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import prisma from "@/prisma";
 import { z } from "zod";
 
 /**
@@ -36,9 +36,6 @@ export default async function post(
         return;
     }
 
-    const prisma = new PrismaClient();
-    prisma.$connect();
-
     let preExisting: PopulatedExhibit | null = await prisma.exhibit.findUnique({
         where: { title: newExhibit.title },
         include: { cards: true }
@@ -63,6 +60,6 @@ export default async function post(
             cards: true
         }
     });
+
     res.status(201).json(createdExhibit);
-    await prisma.$disconnect();
 }

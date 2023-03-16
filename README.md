@@ -8,6 +8,8 @@ $ yarn run dev
 
 to start the development server.
 
+Occasionally, you might see a warning about the number of Prisma Clients running. This is just caused by Next's hot reloading and wont affect the actual website.
+
 ## React with NextJS
 
 Use the `Link` component, imported from `next/link` to make relative links to other pages or to external websites.

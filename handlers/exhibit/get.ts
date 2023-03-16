@@ -2,14 +2,15 @@ import {
     PopulatedExhibit, 
     ErrorMessage
 } from "@/types";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
- * Handles a GET request to `/exhibit?id=<some_number>`. This endpoint can take either
+ * Handles a GET request to `/exhibit?id=<some_number>`. This endpoint can take
  * a single `id` parameter, like `/exhibit?id=3`, or a series of them, like
  * `/exhibit?id=1&id=3`.
  * 
+ * - If given an `id=*`, sends back an array of all `PopulatedExhibit`s and 200.
  * - If not given an `id`, sends back an `ErrorMessage` and status `400`.
  * - If one or more `id`s cannot be parsed to a `number`, sends back an
  *  ErrorMessage and status `400`.
@@ -34,6 +35,14 @@ export default async function get(
 ): Promise<void> {
     const { id } = req.query;
 
+    if (id === "*") {
+        let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
+            include: { cards: true }
+        });
+        res.status(200).json(exhibits);
+        return;
+    }
+
     if (!id) {
         res.status(400).json({
             message: `${req.method} requests to ${req.url ? new URL(req.url).pathname : "this address"} require an \`id\` parameter.`
@@ -50,9 +59,6 @@ export default async function get(
         });
         return;
     }
-
-    const prisma = new PrismaClient();
-    prisma.$connect();
     
     if (Array.isArray(id)) {
         let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
@@ -64,7 +70,6 @@ export default async function get(
         res.status(
             exhibits.length === id.length ? 200 : 206
             ).json(exhibits);
-        await prisma.$disconnect();
         return;
     }
 
@@ -76,10 +81,9 @@ export default async function get(
         res.status(404).json({
             message: `No exhibit matches the \`id\` ${id}`
         });
-        await prisma.$disconnect();
         return;
     }
+
     res.status(200).json(exhibit);            
-    await prisma.$disconnect();
     return;
 }
