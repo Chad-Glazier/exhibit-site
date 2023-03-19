@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  name     String @default("Admin")
+  email    String @id
+  password String
+}
+
 model Exhibit {
   id        Int     @id @default(autoincrement())
   title     String  @unique

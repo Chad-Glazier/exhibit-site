@@ -1,5 +1,5 @@
 import style from "@/styles/LoginPage.module.css";
-import { Credentials, ErrorMessage, ErrorMessageSchema } from "@/types";
+import { ErrorMessage, ErrorMessageSchema } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -22,33 +22,8 @@ export default function LoginPage() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     
-    const credentials: Credentials = {
-      password,
-      email
-    };
-
-    const response: Response = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(credentials)
-    });
-
-    if (!response.ok) {
-      try {
-        const errorMessage: ErrorMessage = ErrorMessageSchema.parse(response.body);
-        // handle the invalid credentials
-        console.error(errorMessage.message);
-      } catch(e: any) {
-        // handle the (unexpected) parsing error
-        console.error("Error parsing the ErrorMessage from the response.");
-      }
-      return;
-    }
-
-    router.push("/admin/dashboard");
   }
 
   return (

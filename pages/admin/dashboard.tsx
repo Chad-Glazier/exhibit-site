@@ -21,8 +21,12 @@ export default function Dashboard(
 ) {
   return (
     <main className={style.main}>
-      <h1>Dashboard</h1>
-      {exhibitThumbnails.map((exhibit, index) => <ExhibitThumbnail key={index} {...exhibit} />)}
+      <h1 className={style.title}>Dashboard</h1>
+      <div className={style.exhibitGrid}>
+        {exhibitThumbnails.map((exhibit, index) => (
+          <ExhibitThumbnail key={index} {...exhibit} designer />
+        ))}
+      </div>
     </main>
   );
 }

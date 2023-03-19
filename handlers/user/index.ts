@@ -1,0 +1,13 @@
+import { NextApiHandler } from "next/types";
+import { ErrorMessage, AuthenticUser } from "@/types";
+import get from "./get";
+import aggregateHandlers from "@/handlers/aggregateHandlers";
+import { withAuth } from "@/handlers/middleware";
+
+const handlers: Record<string, NextApiHandler<ErrorMessage | AuthenticUser>> = {
+  "GET": withAuth(get)
+};
+
+const handler: NextApiHandler = aggregateHandlers(handlers);
+
+export default handler;

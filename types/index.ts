@@ -2,25 +2,25 @@ export type {
   PopulatedExhibit, 
   PopulatedExhibitCreatable,
   CardCreatable,
-  ExhibitCreatable
+  ExhibitCreatable,
+  AuthenticUser,
+  UserData
 } from "./specialModels";
 export { 
   PopulatedExhibitSchema,
   PopulatedExhibitCreatableSchema,
   CardCreatableSchema,
-  ExhibitCreatableSchema
+  ExhibitCreatableSchema,
+  AuthenticUserSchema,
+  UserDataSchema
 } from "./specialModels";
 export type { 
-  ErrorMessage 
+  ErrorMessage,
+  Credentials,
+  TokenPayload
 } from "./general";
 export { 
-  ErrorMessageSchema 
-} from "./general";
-export type {
-  Credentials,
-  LoggedInCredentials
-} from "./authentication";
-export {
+  ErrorMessageSchema,
   CredentialsSchema,
-  LoggedInCredentialsSchema
-} from "./authentication";
+  TokenPayloadSchema
+} from "./general";
