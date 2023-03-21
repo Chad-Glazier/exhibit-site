@@ -2,6 +2,7 @@ import { ExhibitThumbnail } from "@/components";
 import prisma from "@/prisma";
 import { Exhibit } from "@prisma/client";
 import { GetServerSideProps } from "next/types";
+import Header from "@/components/Header";
 
 interface HomeProps {
   exhibitThumbnails: Exhibit[];
@@ -21,8 +22,9 @@ export default function Home(
 ) {
   return (
     <>
+      <Header/>
       <h1>Home</h1>
-      {exhibitThumbnails.map((exhibit, index) => <ExhibitThumbnail key={index} {...exhibit} />)}    
+      {exhibitThumbnails.map((exhibit, index) => <ExhibitThumbnail key={index} {...exhibit} />)}
     </>
   );
 }
