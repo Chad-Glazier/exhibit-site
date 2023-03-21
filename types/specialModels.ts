@@ -5,9 +5,6 @@ import * as z from "zod";
 export type UserData = Omit<User, "password">;
 export const UserDataSchema = UserSchema.omit({ password: true });
 
-export type AuthenticUser = UserData & { token: string };
-export const AuthenticUserSchema = UserDataSchema.extend({ token: z.string() });
-
 export type PopulatedExhibit = Exhibit & { cards: Card[] };
 export const PopulatedExhibitSchema = ExhibitSchema.extend({
     cards: z.array(CardSchema)

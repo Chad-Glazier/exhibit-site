@@ -14,7 +14,7 @@ export default function withAuth(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
-    const token: string | undefined = req.headers.authorization?.split(" ")[1];
+    const token: string | undefined = req.headers.cookie;
     if (!token) {
       return res.status(401).json({ message: "This action requires an authorized user" });
     }
