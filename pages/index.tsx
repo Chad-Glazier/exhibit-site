@@ -23,7 +23,6 @@ export default function Home(
   return (
     <>
       <Header/>
-      <h1>Home</h1>
       {exhibitThumbnails.map((exhibit, index) => <ExhibitThumbnail key={index} {...exhibit} />)}
     </>
   );

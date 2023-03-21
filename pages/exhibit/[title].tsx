@@ -3,6 +3,12 @@ import prisma from "@/prisma";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Header from "@/components/Header";
+import styles from "@/styles/Exhibit.module.css"
+import {Exhibit} from "@prisma/client";
+import {ExhibitThumbnail} from "@/components";
+import Card from "@/components/Card";
+import React, { useState } from 'react';
 
 interface Props {
   exhibit: PopulatedExhibit | null;
@@ -24,8 +30,37 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
 }
 
 export default function ExhibitPage({ exhibit }: Props) {
+  if(!exhibit){
+    return null
+  }
+  const { title, thumbnail, summary, cards }: Exhibit = exhibit
+  const mainCard = {
+      src:`/exhibit-media/thumbnails/${thumbnail}`,
+      description: summary
+    }
+  const [selectedCard, setSelectedCard] = useState(mainCard);
+  const isYoutube = selectedCard?.src?.includes('youtube.com')
+
+  const contentCards = [
+    mainCard,
+    ...[
+      ...cards,
+      {
+        media:'https://www.youtube.com/embed/cV0_DFkJU_w',
+        description: 'youtube video from the museum archives'
+      }
+    ].map((item)=>{
+      console.log({...item,src:`/exhibit-media/cards/${item.media}`})
+      return {
+        ...item,
+        src:item?.media?.includes('http')?item.media:`/exhibit-media/cards/${item.media}`.replace('png','jpg')
+      }})
+  ]
   return (
-    <>
+    <div
+      className={styles.main}
+    >
+      <Header/>
       <Head>
         {
           exhibit == null ?
@@ -34,9 +69,27 @@ export default function ExhibitPage({ exhibit }: Props) {
         }
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <h1>Exhibit</h1>
-      <p>{JSON.stringify(exhibit)}</p>
-      <Link href="/">Return</Link>
-    </>
+      <div className={styles.detailContainer}>
+        {isYoutube?<iframe src='https://www.youtube.com/embed/cV0_DFkJU_w' />:<img src={selectedCard.src}/>}
+        <div className={styles.textsContainer}>
+          <h2>{title}</h2>
+
+          <p>{selectedCard.description}</p>
+        </div>
+      </div>
+      <div
+      className={styles.contentContainer}>
+        {contentCards.map((item)=>(
+          <div
+            className={styles.cardContainer}
+            onClick={()=>setSelectedCard(item)}
+          >
+            <div className={styles.cardInner}>
+          <Card {...item} src={item.src || `/exhibit-media/cards/media.jpg`}/>
+          </div>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 };
