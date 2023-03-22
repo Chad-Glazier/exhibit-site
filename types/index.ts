@@ -3,7 +3,6 @@ export type {
   PopulatedExhibitCreatable,
   CardCreatable,
   ExhibitCreatable,
-  AuthenticUser,
   UserData
 } from "./specialModels";
 export { 
@@ -11,7 +10,6 @@ export {
   PopulatedExhibitCreatableSchema,
   CardCreatableSchema,
   ExhibitCreatableSchema,
-  AuthenticUserSchema,
   UserDataSchema
 } from "./specialModels";
 export type { 

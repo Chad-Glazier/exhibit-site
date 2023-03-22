@@ -3,20 +3,15 @@ import prisma from "@/prisma";
 import { Exhibit } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { ExhibitThumbnail } from "@/components";
+import { withAuth, WithAuthProps,  } from "../hoc";
+import { UserData } from "@/types";
 
-interface DashboardProps {
+interface DashboardProps extends WithAuthProps {
   exhibitThumbnails: Exhibit[];
+  userData: UserData | null;
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const exhibitThumbnails: Exhibit[] = await prisma.exhibit.findMany({
-    include: { cards: false }
-  });
-
-  return { props: { exhibitThumbnails } };
-}
-
-export default function Dashboard(
+function Dashboard(
   { exhibitThumbnails }: DashboardProps
 ) {
   return (
@@ -30,3 +25,5 @@ export default function Dashboard(
     </main>
   );
 }
+
+export default withAuth(Dashboard);

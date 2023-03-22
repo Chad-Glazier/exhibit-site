@@ -1,22 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { User } from "@prisma/client";
 import { 
-  ErrorMessage, TokenPayload, AuthenticUser, 
-  AuthenticUserSchema, 
+  ErrorMessage, TokenPayload, 
   TokenPayloadSchema,
-  UserData
+  UserData,
+  UserDataSchema
 } from "@/types";
-import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import prisma from "@/prisma";
+import cookie from "cookie";
 
 const jwtSecret: string = process.env.JWT_SECRET as string;
 
 export default async function get(
   req: NextApiRequest,
-  res: NextApiResponse<AuthenticUser | ErrorMessage>
+  res: NextApiResponse<UserData | ErrorMessage>
 ) {
-  const token: string | undefined = req.headers.authorization?.split(" ")[1];
+  const token: string | undefined = cookie.parse(req.headers.cookie || "")["token"];
   if (!token) {
     return res.status(401).json({ message: "No authorization token found" });
   }
@@ -29,8 +29,8 @@ export default async function get(
     if (!user) {
       return res.status(401).json({ message: "Unrecognized user in token" });
     }
-    const authUser: AuthenticUser = AuthenticUserSchema.parse({...user, token});
-    return res.status(200).json(authUser);
+    const userData: UserData = UserDataSchema.parse(user);
+    return res.status(200).json(userData);
   } catch {
     return res.status(401).json({ message: "Invalid token or payload" });
   }
