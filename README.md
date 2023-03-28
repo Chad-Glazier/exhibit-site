@@ -1,63 +1,125 @@
 # Vernon Museum and Archives Exhibit Website
 
-Run 
+## Developer Environment Setup
+
+First, create a `.env` file at the top level. It should include a line,
+
+```
+DATABASE_URL="file:./dev.db"
+```
+
+You will also need to create a `.env.local` file that looks like this:
+
+```
+JWT_SECRET="someSecretString"
+SALT_ROUNDS=2
+```
+
+Next, run
+
+```
+$ yarn install
+```
+
+and finally,
 
 ```
 $ yarn run dev
 ```
 
-to start the development server.
+# API Documentation
 
-Occasionally, you might see a warning about the number of Prisma Clients running. This is just caused by Next's hot reloading and wont affect the actual website.
+## Authentication
 
-## React with NextJS
+The API is primarily meant for the Museum's administrative website, so most of the API endpoints require authentication. Authentication is via cookies; each cookie has the key `token` and the value is an encrypted JSON Web Token that includes the user's email address as the payload. This way, the user can be both authenticated and identified with the cookie.
 
-Use the `Link` component, imported from `next/link` to make relative links to other pages or to external websites.
+### Authenticate a User
 
-The `Head` component, imported from `next/head`, is responsible for setting the metadata and can be used just like the `<head>` tag in HTML. The `pages/_document.tsx` component wraps every page before its exported and includes some metadata, but it omits the `<title>` and `<meta name="viewport ...>` tags so that they can be set by individual pages.
+In order to get such a cookie from the API, send a request to `/api/authenticate`, and include a JSON body that includes the user's `email` and `password` (unhashed). E.g.,
 
-If a page file exports a function `getServerSideProps` which matches the type `GetServerSideProps` imported from `next`, that function will be called and it's return value will be used to set the props for the page as its rendered on the server, before being sent to the client.
+```
+    const response = await fetch(
+      "/api/user/authenticate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+            email: "rinkyDinkValtruvian@gmail.com", 
+            password: "killBinkyBong"
+        })
+    });
+```
 
-Since Next automatically turns each file in `pages` that exports a component into an endpoint, React components (that aren't pages) should be kept in `components`, just as `handlers` holds API request handlers.
+-   If the credentials are correct, you will get a response of `200`, a header to set the `token` cookie, and a body that includes the `UserData` (i.e., the user's information except for their password). 
+-   Otherwise, it will send back a 4XX status code and an `ErrorMessage` in the body.
 
-## Database 
+### Verify a User's Authenticity
 
-Prisma is used to interact with the database. If you want to interact with the data directly through the CLI, use
+If you want to verify a pre-existing cookie, you can send a request to the `/api/authenticate` endpoint:
+
+```
+const response: Response = await fetch("/api/user/authentic");
+```
+
+-   If the user is authenticated, the response will have a status of 200 and the body will include a `UserData` object. 
+-   If the user is *not* authenticated, the response have a status of 4XX and the body will include an `ErrorMessage` object.
+
+## Exhibits
+
+Exhibits represent the actual exhibits that guest users will browse and view, and that the administrative users will create and publish. 
+
+***this section is incomplete***
+
+# Reading the Source Code
+
+## Database
+
+The database is running on SQLite3, and we interface with it via the <a href="https://www.prisma.io/">Prisma ORM</a>. The `/prisma` directory has all of the database files, and you can directly interact with the database via
 
 ```
 $ sqlite3 prisma/dev.db
 ```
 
-If  you want to change the schema of the database, change the `prisma/schema.prisma` file, then run
+To view the structure of the database, refer to the `/prisma/schema.prisma` file.
+
+## API Source Code Structure
+
+All API endpoints are located in `/handlers`, and then imported to respective files in `/pages/api` so that NextJS can use it's file-based routing.
+
+Each handler is written in a file that represents the endpoint, i.e., `/handlers/exhibit/get.ts` corresponds to `GET /api/exhibit`. A directory within `/handlers` follows the general pattern:
+
+-   `get.ts` (or `post.ts`, `put.ts`, etc.):
+    -   These files are named after HTTP methods and each one exports a single `NextApiHandler` that handles that request.
+-   `index.ts`
+    -   This file is where each of the `NextApiHandlers` are given middleware and aggregated into a single `NextApiHandler`. (handlers are aggregated by the `/handlers/aggregateHandlers.ts` function).
+
+### Middleware
+
+The `/handlers/middleware` folder is special, because it's exports include functions that take a `NextApiHandler` and wrap it in a new `NextApiHandler` that handles something with the request. 
+
+Middleware may or may not invoke the handler you give it, depending on the request. E.g., the `withAuth` middleware follows the structure:
 
 ```
-$ yarn run migrate
+function withAuth(next: NextApiHandler): NextApiHandler {
+
+    return async function(req, res) {
+
+        // logic to determine if the request is authentic
+
+        if (authentic) {
+            next(req, res);
+        } else {
+            res.send(401);
+        }
+    }
+}
 ```
 
-to apply those changes. Note that this command also updates the types and Zod objects generated by Prisma.
+## Types
 
-## Types and Type Safety
+Many types related to the database are automatically generated by Prisma. Additionally, the Zod library is used for runtime type-checking, which is used extentensively to verify API requests/responses.
 
-Prisma generates its own types and matching Zod objects for runtime type-checking and parsing.
+All custom types are defined in `/types`. The `/types/specialModels.ts` file includes types that are based on the types generated by Prisma. E.g., `UserData` represents the `User` model in the database, but without the password.
 
-Custom types are defined in `types`. The types in `types/specialModels.ts` are definitions of types and Zod objects that extend those generated by Prisma. The following are two types that are important for interacting with the database and API:
-
--   `PopulatedExhibit` which represents an exhibit with its `cards` included. When interacting with the API to receive a database, you can expect it to return with this shape. This type should always be returned by queries like the following:
-
-    ```
-    prisma.exhibit.findFirst({ include: { cards: true } });
-    ```
-
--   `PopulatedExhibitCreatable` which is the same as `PopulatedExhibit`, except that it doesn't have any `id` attributes on it. This makes it appropriate to insert into the database while allowing the database to autogenerate the `id`s. When you want to create a new Exhibit, this is the shape that the API will expect you to send as the body.
-
-The last type that the API will frequently use is:
-
--   `ErrorMessage` which is sent back from the API whenever a request couldn't be processed.
-
-## API Requests
-
-The API endpoints are mapped to the `pages/api` folder by Next. In order to separate the request handlers, they have been moved into `handlers`. If you want to know how a given request is handled, check the corresponding file in `handlers`.
-
-E.g., if you want to know how a GET request to `/api/exhibit` is handled, look at `handlers/exhibit/get.ts`.
-
-I will try to comment the API handlers so that it's clear what they expect/return.
+`/types/general.ts` just include some types that aren't included in the database. E.g., `ErrorMessage`.
