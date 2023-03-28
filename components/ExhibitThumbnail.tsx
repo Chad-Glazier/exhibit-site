@@ -7,19 +7,19 @@ interface ExhibitThumbnailProps extends Exhibit {
 }
 
 export default function ExhibitThumbnail(
-  { title, thumbnail, summary, designer }: ExhibitThumbnailProps
+  { title, thumbnail, summary, designer, src }: ExhibitThumbnailProps
 ) {
   return (
     <div className={style.exhibitThumbnail}>
       <Link
         href={
-          designer ? 
-          `/admin/designer/${title.replace(" ", "-")}`
-          : `/exhibit/${title.replace(" ", "-")}`}
+          designer ?
+          `/admin/designer/${title?.replace(" ", "-")}`
+          : `/exhibit/${title?.replace(" ", "-")}`}
       >
         <img
           className={style.thumbnailImage}
-          src={`/exhibit-media/thumbnails/${thumbnail}`}
+          src={src || `/exhibit-media/thumbnails/${thumbnail}`}
           alt={title}
         />
         <div className={style.title}>{title}</div>
