@@ -35,7 +35,7 @@ export default function ExhibitPage({ exhibit }: Props) {
         {
           exhibit == null ?
             <title>"The Museum & Archives of Vernon | Virtual Exhibits"</title>
-          : <title>{exhibit.title + " | Virtual Exhibit"}</title>
+          : <title>{"Designer | " + exhibit.title}</title>
         }
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
