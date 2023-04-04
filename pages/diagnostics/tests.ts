@@ -1,5 +1,5 @@
 import { ErrorMessageSchema, PopulatedExhibitCreatable, PopulatedExhibitSchema, UserDataSchema } from "@/types";
-import { ApiTestProps } from "./ApiTest";
+import { ApiTestProps } from "../../components/testing/ApiTest";
 import { z } from "zod";
 
 const sampleExhibit: PopulatedExhibitCreatable = {
