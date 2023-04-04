@@ -14,9 +14,10 @@ export default function withAuth(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
-    const token: string | undefined = req.headers.cookie;
+    // GET requests are the only ones that receive cookies automatically, need to handle this
+    const token: string | undefined = cookie.parse(req.headers.cookie || "")["token"];
     if (!token) {
-      return res.status(401).json({ message: "This action requires an authorized user" });
+      return res.status(401).json({ message: "No authorization token found" });
     }
     try {
       const verifiedToken: JwtPayload | string = jwt.verify(token, jwtSecret);

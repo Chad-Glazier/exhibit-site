@@ -15,8 +15,8 @@ export default function ExhibitThumbnail(
       <Link
         href={
           designer ?
-          `/designer/${title?.replace(" ", "-")}`
-          : `/exhibit/${title?.replace(" ", "-")}`}
+          `/designer/${encodeURIComponent(title)}`
+          : `/exhibit/${encodeURIComponent(title)}`}
       >
         <img
           className={style.thumbnailImage}

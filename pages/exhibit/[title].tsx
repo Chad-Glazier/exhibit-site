@@ -2,11 +2,9 @@ import { PopulatedExhibit } from "@/types";
 import prisma from "@/prisma";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import Header from "@/components/Header";
 import styles from "@/styles/Exhibit.module.css"
-import {Exhibit} from "@prisma/client";
-import {ExhibitThumbnail} from "@/components";
+import { NotFound } from "@/components/pages";
 import Card from "@/components/Card";
 import React, { useState } from 'react';
 
@@ -21,8 +19,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
     return { props: { exhibit: null } };
   }
 
-  const exhibit: PopulatedExhibit | null = await prisma.exhibit.findUnique({
-    where: { title: title.replace(/\-/, " ") },
+  const exhibit: PopulatedExhibit | null = await prisma.exhibit.findFirst({
+    where: {
+      AND: [
+        { title: decodeURIComponent(title) },
+        { published: true }
+      ]
+    },
     include: { cards: true }
   });
 
@@ -31,7 +34,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
 
 export default function ExhibitPage({ exhibit }: Props) {
   if(!exhibit){
-    return null
+    return <NotFound />
   }
   const { title, thumbnail, summary, cards }: PopulatedExhibit = exhibit
   const mainCard = {

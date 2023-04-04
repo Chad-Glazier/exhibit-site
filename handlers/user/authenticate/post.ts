@@ -48,6 +48,7 @@ export function getCookieString(token: string, ttl: number = 7): string {
   return [
     `token=${token}; `,
     `SameSite=Strict; `,
-    `Expires=${expiration}`
+    `Expires=${expiration}; `,
+    `Path=/api`
   ].join(" ");
 }

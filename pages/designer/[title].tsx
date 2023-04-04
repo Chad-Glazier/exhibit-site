@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   }
 
   const exhibit: PopulatedExhibit | null = await prisma.exhibit.findUnique({
-    where: { title: title.replace(/\-/, " ") },
+    where: { title: decodeURIComponent(title) },
     include: { cards: true }
   });
 

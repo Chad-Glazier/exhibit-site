@@ -1,11 +1,18 @@
-import { ErrorMessageSchema, PopulatedExhibitSchema, UserDataSchema } from "@/types";
+import { ErrorMessageSchema, ExhibitCreatable, PopulatedExhibitSchema, UserDataSchema } from "@/types";
 import { ApiTestProps } from "./ApiTest";
 import { z } from "zod";
+
+const sampleExhibit: ExhibitCreatable = {
+  title: "Sample's Title;",
+  thumbnail: "thumbnail-1.png",
+  summary: "Sample summary",
+  published: false
+}
 
 const tests: ApiTestProps[] = [
   {
     name: "Get Exhibit",
-    url: "/api/exhibit?id=1",
+    url: `/api/exhibit?title=`,
     request: {
       method: "GET"
     },
@@ -65,6 +72,59 @@ const tests: ApiTestProps[] = [
       credentials: "omit",
     },
     expectedReponseBodies: [ErrorMessageSchema],
+  },
+  {
+    name: "Post an Exhibit",
+    url: "/api/exhibit",
+    request: {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({
+        "title": "Vernons Chinatown 3",
+        "thumbnail": "thumbnail3.jpg",
+        "summary": "Lorem ipsum dolor",
+        "published": true,
+        "cards": [
+          {
+            "media": "media.png",
+            "description": "a new picture ",
+          }
+        ]
+      })
+    },
+    expectedReponseBodies: [PopulatedExhibitSchema]
+  },
+  {
+    name: "Put an Exhibit",
+    url: "/api/exhibit",
+    request: {
+      method: "PUT",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({
+        "title": "Vernon Chinatown 3",
+        "thumbnail": "thumbnail3.jpg",
+        "summary": "Updated summary",
+        "published": true,
+        "cards": [
+          {
+            "media": "media.png",
+            "description": "an updated picture",
+          }
+        ]
+      })
+    },
+    expectedReponseBodies: [PopulatedExhibitSchema]
+  },
+  {
+    name: "Delete an Exhibit",
+    url: "/api/exhibit?",
+    request: {
+      method: "DELETE",
+      credentials: "same-origin"
+    },
+    expectedReponseBodies: [PopulatedExhibitSchema]
   },
 ];
 
