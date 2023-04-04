@@ -3,6 +3,8 @@ import prisma from "@/prisma";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { NextRouter, useRouter } from "next/router";
+import { useMemo } from "react";
 
 interface Props {
   exhibit: PopulatedExhibit | null;
@@ -24,6 +26,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
 }
 
 export default function ExhibitPage({ exhibit }: Props) {
+  const router: NextRouter = useRouter();
+  useMemo(() => router, [router]);
+
   return (
     <>
       <Head>
@@ -36,7 +41,7 @@ export default function ExhibitPage({ exhibit }: Props) {
       </Head>
       <h1>Exhibit Designer</h1>
       <p>{JSON.stringify(exhibit)}</p>
-      <Link href="/admin/dashboard">Return</Link>
+      <Link href="_" onClick={(e) => { e.preventDefault(); router.back(); }}>Return</Link>
     </>
   )
 };

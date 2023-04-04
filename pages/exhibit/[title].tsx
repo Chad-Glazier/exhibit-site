@@ -33,7 +33,7 @@ export default function ExhibitPage({ exhibit }: Props) {
   if(!exhibit){
     return null
   }
-  const { title, thumbnail, summary, cards }: Exhibit = exhibit
+  const { title, thumbnail, summary, cards }: PopulatedExhibit = exhibit
   const mainCard = {
       src:`/exhibit-media/thumbnails/${thumbnail}`,
       description: summary

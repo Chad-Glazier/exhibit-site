@@ -3,7 +3,8 @@ import style from "@/styles/ExhibitThumbnail.module.css";
 import Link from "next/link";
 
 interface ExhibitThumbnailProps extends Exhibit {
-  designer?: boolean
+  designer?: boolean;
+  src?: string; 
 }
 
 export default function ExhibitThumbnail(
@@ -14,7 +15,7 @@ export default function ExhibitThumbnail(
       <Link
         href={
           designer ?
-          `/admin/designer/${title?.replace(" ", "-")}`
+          `/designer/${title?.replace(" ", "-")}`
           : `/exhibit/${title?.replace(" ", "-")}`}
       >
         <img
