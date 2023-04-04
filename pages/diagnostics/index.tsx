@@ -1,8 +1,3 @@
-/**
- * This page is meant for developers to test the API. It is not meant to be used
- * by the public or administrators, though it technically could be as it doesn't
- * expose any sensitive data without the normal verification required.
- */
 import ApiTest, { runTest } from "../../components/testing/ApiTest";
 import React, { useState } from 'react';
 import styles from "@/styles/TestingDashboard.module.css";
