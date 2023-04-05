@@ -4,7 +4,7 @@ import Link from "next/link";
 
 interface ExhibitThumbnailProps extends Exhibit {
   designer?: boolean;
-  src?: string; 
+  src?: string;
 }
 
 export default function ExhibitThumbnail(
@@ -13,6 +13,7 @@ export default function ExhibitThumbnail(
   return (
     <div className={style.exhibitThumbnail}>
       <Link
+        className={style.content}
         href={
           designer ?
           `/designer/${encodeURIComponent(title)}`
@@ -23,8 +24,10 @@ export default function ExhibitThumbnail(
           src={src || `/exhibit-media/thumbnails/${thumbnail}`}
           alt={title}
         />
+        <div className={style.textContent}>
         <div className={style.title}>{title}</div>
         <div className={style.summary}>{summary}</div>
+        </div>
       </Link>
     </div>
   );
