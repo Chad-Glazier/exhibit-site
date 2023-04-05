@@ -1,7 +1,7 @@
 import { UserData, UserDataSchema } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState, FunctionComponent, ComponentProps } from "react";
-import DefaultLoading from "./DefaultLoading";
+import DefaultLoading from "./Loading";
 
 export interface WithAuthProps {
   userData: UserData | null;
@@ -21,7 +21,7 @@ export default function withAuth<T extends WithAuthProps>(
       verifyToken()
         .then((userData: UserData | null) => {
           if(userData === null) {
-            router.push("/login");
+            router.push("/404");
           };
           setUserData(userData);
         });

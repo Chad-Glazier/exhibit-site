@@ -1,6 +1,7 @@
 import { ErrorMessageSchema, PopulatedExhibitCreatable, PopulatedExhibitSchema, UserDataSchema } from "@/types";
 import { ApiTestProps } from "../../components/testing/ApiTest";
 import { z } from "zod";
+import { FileUploadForm } from "@/components";
 
 const sampleExhibit: PopulatedExhibitCreatable = {
   title: "Sample's Title;",
@@ -140,6 +141,10 @@ const deleteTests: ApiTestProps[] = [
   }
 ]
 
+const imageTests: JSX.Element[] = [
+  <FileUploadForm />
+];
+
 const tests: ApiTestProps[] = [
   ...createTests,
   ...readTests,
@@ -148,3 +153,6 @@ const tests: ApiTestProps[] = [
 ];
 
 export default tests;
+export {
+  imageTests
+};

@@ -2,7 +2,7 @@ import ApiTest, { runTest } from "../../components/testing/ApiTest";
 import React, { useState } from "react";
 import styles from "@/styles/TestingDashboard.module.css";
 import Popup from "@/components/testing/Popup";
-import tests from "./tests";
+import tests, { imageTests } from "./tests";
 import { withAuth } from "@/components/hoc";
 import Head from "next/head";
 
@@ -65,6 +65,11 @@ function TestingDashboard() {
           </p>
         </div>
         <div className={styles.tests}>
+          {imageTests.map((test, index) => (
+            <div key={index} id={`image_test_${index}`}>
+              {test}
+            </div>
+          ))}
           {tests.map((test, index) => (
             <div key={index} id={`test_${index}`}>
               <ApiTest {...test} passed={allTestsResults[index]} />

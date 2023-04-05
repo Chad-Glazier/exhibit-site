@@ -7,7 +7,6 @@ import styles from "@/styles/Exhibit.module.css"
 import { NotFound } from "@/components/pages";
 import Card from "@/components/Card";
 import React, { useState } from 'react';
-import Image from "next/image";
 
 export interface ExhibitPageProps {
   exhibit: PopulatedExhibit | null;
@@ -78,7 +77,6 @@ export default function ExhibitPage({
         }
         <div className={styles.textsContainer}>
           <h2>{title}</h2>
-
           <p>{selectedCard.description}</p>
         </div>
       </div>
