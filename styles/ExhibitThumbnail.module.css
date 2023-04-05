@@ -1,13 +1,26 @@
 .exhibitThumbnail {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 15vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
 }
 
 .thumbnailImage {
   width: 100%;
   max-width: 300px;
   margin-bottom: 0.5rem;
+}
+
+.textContent {
+  margin-left: 3rem;
+  margin-right: 3rem;
 }
 
 .title {
