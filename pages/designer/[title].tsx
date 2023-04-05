@@ -1,5 +1,3 @@
-// pages/designer/[title].tsx
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { withAuth } from '@/components/hoc';
@@ -48,14 +46,6 @@ function Designer({
   }
 
   const [cards, setCards] = useState<Card[]>(exhibit.cards);
-
-  // Fetch exhibit data here and populate the cards state
-  useEffect(() => {
-    if (title) {
-      // Fetch exhibit data from the server
-      // ...
-    }
-  }, [title]);
 
   const handleCardChange = (id: number, media: string, description: string) => {
     setCards((prevCards) =>
