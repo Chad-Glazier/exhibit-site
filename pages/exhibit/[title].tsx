@@ -33,19 +33,22 @@ export const getServerSideProps: GetServerSideProps<ExhibitPageProps> = async ({
   return { props: { exhibit } };
 }
 
-export default function ExhibitPage({ 
-  exhibit 
+export default function ExhibitPage({
+  exhibit
 }: ExhibitPageProps) {
   if(!exhibit){
     return <NotFound />
   }
   const { title, thumbnail, summary, cards }: PopulatedExhibit = exhibit;
+  console.log(exhibit)
   const mainCard = {
       src:`/exhibit-media/thumbnails/${thumbnail}`,
       description: summary
     };
   const [selectedCard, setSelectedCard] = useState(mainCard);
   const isYoutube = selectedCard?.src?.match(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/);
+  const videoId = selectedCard?.src?.split('v=')[1];
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
   const contentCards = [
     mainCard,
     ...cards.map((item) => {
@@ -73,7 +76,7 @@ export default function ExhibitPage({
       </Head>
       <div className={styles.detailContainer}>
         {isYoutube ?
-          <iframe src='https://www.youtube.com/embed/cV0_DFkJU_w' />
+          <iframe src={embedUrl} />
           : <img src={selectedCard.src} alt="exhibit media"/>
         }
         <div className={styles.textsContainer}>

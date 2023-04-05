@@ -9,11 +9,14 @@ export default function Card(
   { src, alt }: CardProps
 ) {
   const isYoutube = src?.includes('youtube.com')
+  const videoId = src?.split('v=')[1];
+  const embedUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+
   return (
     <div className={style.main}>
         <img
           className={style.image}
-          src={isYoutube?'https://img.youtube.com/vi/cV0_DFkJU_w/0.jpg':src}
+          src={isYoutube?embedUrl:src}
           alt={alt}
         />
     </div>
