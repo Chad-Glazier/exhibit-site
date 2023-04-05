@@ -1,14 +1,10 @@
 import style from "@/styles/LoginPage.module.css";
 import { UserData, UserDataSchema, ErrorMessage, ErrorMessageSchema } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 
 export default function Login() {
   const router = useRouter();
-
-  useEffect(() => {
-    router.prefetch("/admin/dashboard");
-  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

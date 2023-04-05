@@ -12,7 +12,7 @@ export default function NotFound() {
         height={100}
       />
       <p className={styles.description}>
-        We're sorry, but the page you're looking for cannot be found. Please
+        We&apos;re sorry, but the page you&apos;re looking for cannot be found. Please
         check the URL and try again, or go back to the <Link className={styles.link} href="/">homepage</Link>.
       </p>
     </div>

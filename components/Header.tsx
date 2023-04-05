@@ -1,14 +1,17 @@
 import style from "@/styles/Header.module.css";
+import Link from "next/link";
 
 export default function Header(){
 
   return(
     <div>
       <div className={style.header}>
-        <img
-          className={style.logo}
-          src='/logo.svg'
-        />
+        <Link href="/">
+          <img
+            className={style.logo}
+            src='/logo.svg'
+          />      
+        </Link>
         <div
           className={style.socialIconContainer}
         >

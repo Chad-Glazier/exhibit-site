@@ -7,12 +7,13 @@ import styles from "@/styles/Exhibit.module.css"
 import { NotFound } from "@/components/pages";
 import Card from "@/components/Card";
 import React, { useState } from 'react';
+import Image from "next/image";
 
-interface Props {
+export interface ExhibitPageProps {
   exhibit: PopulatedExhibit | null;
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<ExhibitPageProps> = async ({ params }) => {
   const title: string | string[] | null = params?.title || null;
 
   if (!title || Array.isArray(title)) {
@@ -32,33 +33,31 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   return { props: { exhibit } };
 }
 
-export default function ExhibitPage({ exhibit }: Props) {
+export default function ExhibitPage({ 
+  exhibit 
+}: ExhibitPageProps) {
   if(!exhibit){
     return <NotFound />
   }
-  const { title, thumbnail, summary, cards }: PopulatedExhibit = exhibit
+  const { title, thumbnail, summary, cards }: PopulatedExhibit = exhibit;
   const mainCard = {
       src:`/exhibit-media/thumbnails/${thumbnail}`,
       description: summary
-    }
+    };
   const [selectedCard, setSelectedCard] = useState(mainCard);
-  const isYoutube = selectedCard?.src?.includes('youtube.com')
-
+  const isYoutube = selectedCard?.src?.match(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/);
   const contentCards = [
     mainCard,
-    ...[
-      ...cards,
-      {
-        media:'https://www.youtube.com/embed/cV0_DFkJU_w',
-        description: 'youtube video from the museum archives'
-      }
-    ].map((item)=>{
-      console.log({...item,src:`/exhibit-media/cards/${item.media}`})
+    ...cards.map((item) => {
       return {
         ...item,
-        src:item?.media?.includes('http')?item.media:`/exhibit-media/cards/${item.media}`.replace('png','jpg')
-      }})
-  ]
+        src: item?.media?.includes('http') ?
+          item.media
+          : `/exhibit-media/cards/${item.media}`.replace('png','jpg')
+      }
+    })
+  ];
+
   return (
     <div
       className={styles.main}
@@ -67,13 +66,16 @@ export default function ExhibitPage({ exhibit }: Props) {
       <Head>
         {
           exhibit == null ?
-            <title>"The Museum & Archives of Vernon | Virtual Exhibits"</title>
+            <title>The Museum & Archives of Vernon | Virtual Exhibits</title>
           : <title>{exhibit.title + " | Virtual Exhibit"}</title>
         }
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className={styles.detailContainer}>
-        {isYoutube?<iframe src='https://www.youtube.com/embed/cV0_DFkJU_w' />:<img src={selectedCard.src}/>}
+        {isYoutube ?
+          <iframe src='https://www.youtube.com/embed/cV0_DFkJU_w' />
+          : <img src={selectedCard.src} alt="exhibit media"/>
+        }
         <div className={styles.textsContainer}>
           <h2>{title}</h2>
 
@@ -82,13 +84,14 @@ export default function ExhibitPage({ exhibit }: Props) {
       </div>
       <div
       className={styles.contentContainer}>
-        {contentCards.map((item)=>(
+        {contentCards.map((item, index) => (
           <div
             className={styles.cardContainer}
             onClick={()=>setSelectedCard(item)}
+            key={index}
           >
             <div className={styles.cardInner}>
-          <Card {...item} src={item.src || `/exhibit-media/cards/media.jpg`}/>
+            <Card {...item} src={item.src || `/exhibit-media/cards/media.jpg`}/>
           </div>
           </div>
         ))}

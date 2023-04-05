@@ -44,7 +44,7 @@ export default function ApiTest({
         <div className={styles.req}>
           <h2>Request</h2>
           <code className={styles.code}>
-            fetch("{url}",<br />
+            fetch(&quo;{url}&quo;,<br />
               <div className={styles.reqObj}>
               <PrettyObject object={request} />
               </div>

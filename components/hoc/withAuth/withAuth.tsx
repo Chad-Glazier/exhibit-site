@@ -28,7 +28,7 @@ export default function withAuth<T extends WithAuthProps>(
     }, []);
 
     if (userData === null) {
-      return <DefaultLoading />;
+      return <LoadingPage />;
     }
 
     const newProps: T = {

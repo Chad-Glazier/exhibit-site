@@ -1,5 +1,5 @@
 import ApiTest, { runTest } from "../../components/testing/ApiTest";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styles from "@/styles/TestingDashboard.module.css";
 import Popup from "@/components/testing/Popup";
 import tests from "./tests";
@@ -52,12 +52,12 @@ function TestingDashboard() {
         <div className={styles.explanation}>
           <p>
             This page is meant for developers to test out the API. What follows is a series of tests; you may try them individually or all
-            at once with the "Run All Tests" button. A test is considered to have "passed" if it sends back a request of the expected type,
+            at once with the &ldquo;Run All Tests&ldquo; button. A test is considered to have &ldquo;passed&ldquo; if it sends back a request of the expected type,
             regardless of status codes.
           </p>
           <br />
           <p>
-            Note that, although they are able to be individually ran, some tests depend on others so it's best to do them in the order that they appear. E.g., the "delete" tests delete exhibits made by the "create" tests.
+            Note that, although they are able to be individually ran, some tests depend on others so it&apos;s best to do them in the order that they appear. E.g., the &ldquo;delete&ldquo; tests delete exhibits made by the &ldquo;create&ldquo; tests.
           </p>
           <br />
           <p>
@@ -74,36 +74,36 @@ function TestingDashboard() {
         <div id="credentials" className={styles.documentation}>
         <h2>Authentication</h2>
       <p>
-        The API is primarily meant for the Museum's administrative website, so most of the API endpoints require authentication. Authentication is via cookies; each cookie has the key <code>token</code> and the value is an encrypted JSON Web Token that includes the user's email address as the payload. This way, the user can be both authenticated and identified with the cookie.
+        The API is primarily meant for the Museum&apos;s administrative website, so most of the API endpoints require authentication. Authentication is via cookies; each cookie has the key <code>token</code> and the value is an encrypted JSON Web Token that includes the user&apos;s email address as the payload. This way, the user can be both authenticated and identified with the cookie.
       </p>
 
       <h3>Authenticate a User</h3>
       <p>
-        In order to get such a cookie from the API, send a request to <code>/api/authenticate</code>, and include a JSON body that includes the user's <code>email</code> and <code>password</code> (unhashed). E.g.,
+        In order to get such a cookie from the API, send a request to <code>/api/authenticate</code>, and include a JSON body that includes the user&apos;s <code>email</code> and <code>password</code> (unhashed). E.g.,
       </p>
       <pre>
         {`const response = await fetch(
-  "/api/user/authenticate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ 
-        email: "rinkyDinkValtruvian@gmail.com", 
-        password: "killBinkyBong"
-    })
-});`}
+          "/api/user/authenticate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                email: "rinkyDinkValtruvian@gmail.com", 
+                password: "killBinkyBong"
+            })
+        });`}
       </pre>
       <ul>
         <li>
-          If the credentials are correct, you will get a response of <code>200</code>, a header to set the <code>token</code> cookie, and a body that includes the <code>UserData</code> (i.e., the user's information except for their password).
+          If the credentials are correct, you will get a response of <code>200</code>, a header to set the <code>token</code> cookie, and a body that includes the <code>UserData</code> (i.e., the user&apos;s information except for their password).
         </li>
         <li>
           Otherwise, it will send back a 4XX status code and an <code>ErrorMessage</code> in the body.
         </li>
       </ul>
 
-      <h3>Verify a User's Authenticity</h3>
+      <h3>Verify a User&apos;s Authenticity</h3>
       <p>
         If you want to verify a pre-existing cookie, you can send a request to the <code>/api/authenticate</code> endpoint:
       </p>
