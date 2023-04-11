@@ -1,11 +1,13 @@
 import ExhibitThumbnail from "./ExhibitThumbnail";
 import ConfirmPopup from "./ConfirmPopup";
 import CreateExhibitPopup from "./CreateExhibitPopup";
-import FileUploadForm from "./FileUpload";
+import UploadImagePopup from "./UploadImagePopup";
+import AdminNav from "./AdminNav";
 
 export {
   ExhibitThumbnail,
   ConfirmPopup,
   CreateExhibitPopup,
-  FileUploadForm
+  UploadImagePopup,
+  AdminNav
 };

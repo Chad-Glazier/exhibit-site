@@ -25,3 +25,11 @@ export interface TokenPayload {
 export const TokenPayloadSchema = z.object({
     email: z.string()
 });
+
+export interface NewImage {
+    newUrl: string;
+}
+
+export const NewImageSchema = z.object({
+    newUrl: z.string()
+});

@@ -4,7 +4,7 @@ import { WithAuthProps, withAuth } from "@/components/hoc";
 import Head from "next/head";
 import Link from 'next/link';
 import { ErrorMessageSchema, PopulatedExhibit, PopulatedExhibitCreatable, PopulatedExhibitSchema } from '@/types';
-import { ConfirmPopup, CreateExhibitPopup } from '@/components';
+import { AdminNav, ConfirmPopup, CreateExhibitPopup } from '@/components';
 import { GetServerSideProps } from 'next';
 import prisma from "@/prisma";
 
@@ -73,6 +73,7 @@ function Dashboard({
 
     return (
       <>
+        <AdminNav />
         {showConfirmPopup &&
           <ConfirmPopup
             message={`Are you sure you want to permanently delete "${title}"?`}

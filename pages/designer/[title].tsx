@@ -6,6 +6,7 @@ import { PopulatedExhibit, UserData } from '@/types';
 import prisma from '@/prisma';
 import { NotFound } from '@/components/pages';
 import styles from "@/styles/Dashboard.module.css";
+import { AdminNav } from '@/components';
 
 interface Card {
   id: number;
@@ -18,7 +19,7 @@ interface DesignerProps {
   userData: UserData | null;
 }
 
-async function updateExhibit(updatedExhibit){
+async function updateExhibit(updatedExhibit: PopulatedExhibit){
   await fetch("/api/exhibit", {
     method: "PUT",
     credentials: "same-origin",
@@ -127,6 +128,7 @@ function Designer({
 
   return (
     <div>
+      <AdminNav />
       <h1>Edit Exhibit: {title}</h1>
       <div
         style={{

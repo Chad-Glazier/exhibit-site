@@ -30,6 +30,10 @@ model Card {
   exhibit     Exhibit @relation(fields: [exhibitId], references: [id])
 }
 
+model Image {
+  url String @id
+}
+
 generator zod {
   provider              = "zod-prisma"
   output                = "./zod"

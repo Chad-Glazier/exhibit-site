@@ -14,7 +14,6 @@ export default function withAuth(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
-    // GET requests are the only ones that receive cookies automatically, need to handle this
     const token: string | undefined = cookie.parse(req.headers.cookie || "")["token"];
     if (!token) {
       return res.status(401).json({ message: "No authorization token found" });

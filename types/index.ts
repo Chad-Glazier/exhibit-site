@@ -15,10 +15,15 @@ export {
 export type { 
   ErrorMessage,
   Credentials,
-  TokenPayload
+  TokenPayload,
+  NewImage
 } from "./general";
 export { 
   ErrorMessageSchema,
   CredentialsSchema,
-  TokenPayloadSchema
+  TokenPayloadSchema,
+  NewImageSchema
 } from "./general";
+export type {
+  NextApiImageHandler
+} from "./specialApiHandlers";
