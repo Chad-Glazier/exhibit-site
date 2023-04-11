@@ -1,5 +1,9 @@
 # Vernon Museum and Archives Exhibit Website
 
+## Todo
+
+Implement a "forgot my password" feature".
+
 ## Developer Environment Setup
 
 First, create a `.env` file at the top level. It should include a line,
