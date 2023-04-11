@@ -1,10 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import styles from '@/styles/Gallery.module.css';
-import { ConfirmPopup, UploadImagePopup, AdminNav } from '@/components';
+import React, { useEffect, useState } from "react";
+import styles from "@/styles/Gallery.module.css";
+import { ConfirmPopup, UploadImagePopup, AdminNav } from "@/components";
 import { Image } from "@prisma/client";
-import path from 'path';
+import path from "path";
+import { GetServerSideProps } from "next";
+import prisma from "@/prisma";
 
-export default function Gallery() {
+interface GalleryProps {
+  initialImages: Image[]
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const images: Image[] = await prisma.image.findMany();
+
+  return {
+    props: {
+      initialImages: images
+    }
+  };
+}
+
+export default function Gallery({ initialImages }: GalleryProps) {
   const [images, setImages] = useState<Image[]>([]);
   const [showUploadPopup, setShowUploadPopup] = useState<boolean>(false);
 
@@ -13,7 +29,7 @@ export default function Gallery() {
   }, []);
 
   async function fetchImages() {
-    const response = await fetch('/api/image?url=*');
+    const response = await fetch("/api/image?url=*");
     const data: Image[] = await response.json();
     setImages(data);
   }
