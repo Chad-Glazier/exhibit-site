@@ -5,6 +5,7 @@ import { Image } from "@prisma/client";
 import path from "path";
 import { GetServerSideProps } from "next";
 import prisma from "@/prisma";
+import Head from "next/head";
 
 interface GalleryProps {
   initialImages: Image[]
@@ -21,12 +22,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 }
 
 export default function Gallery({ initialImages }: GalleryProps) {
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<Image[]>(initialImages);
   const [showUploadPopup, setShowUploadPopup] = useState<boolean>(false);
-
-  useEffect(() => {
-    fetchImages();
-  }, []);
 
   async function fetchImages() {
     const response = await fetch("/api/image?url=*");
@@ -41,6 +38,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
 
   async function deleteImage({ url }: Image) {
     url = encodeURIComponent(url);
+    setImages((prev) => prev.filter(img => img.url !== url));
     await fetch("/api/image?url=" + url, {
       method: "DELETE",
       credentials: "same-origin"
@@ -56,7 +54,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
         <AdminNav />
         {showConfirmPopup && (
           <ConfirmPopup
-            message={`Are you sure you want to permanently delete "${image.url}"?`}
+            message={`Are you sure you want to permanently delete "${path.basename(image.url)}"?`}
             onCancel={() => setShowConfirmPopup(false)}
             onConfirm={() => {
               setShowConfirmPopup(false);
@@ -79,26 +77,31 @@ export default function Gallery({ initialImages }: GalleryProps) {
   }
 
   return (
-    <div className={styles.imageGallery}>
-      <h1>Image Gallery</h1>
-      <div className={styles.images}>
-        {images.map((image) => (
-          <ImageTile key={image.url} image={image} />
-        ))}
-        <div className={styles.addButton} onClick={() => setShowUploadPopup(true)}>
-          <h3>Add New Image</h3>
+    <>
+      <Head>
+        <title>Gallery | The Museum & Archives of Vernon</title>
+      </Head>
+      <div className={styles.imageGallery}>
+        <h1>Image Gallery</h1>
+        <div className={styles.images}>
+          {images.map((image) => (
+            <ImageTile key={image.url} image={image} />
+          ))}
+          <div className={styles.addButton} onClick={() => setShowUploadPopup(true)}>
+            <h3>Add New Image</h3>
+          </div>
         </div>
-      </div>
-      {showUploadPopup && (
-        <UploadImagePopup
-          onUpload={(image: File) => {
-            addImage(image);
-            setShowUploadPopup(false);
-          }}
-          onCancel={() => setShowUploadPopup(false)}
-        />
-      )}
-    </div>
+        {showUploadPopup && (
+          <UploadImagePopup
+            onUpload={(image: File) => {
+              addImage(image);
+              setShowUploadPopup(false);
+            }}
+            onCancel={() => setShowUploadPopup(false)}
+          />
+        )}
+      </div>    
+    </>
   );
 }
 

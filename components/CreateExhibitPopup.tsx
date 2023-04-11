@@ -9,7 +9,7 @@ interface CreateExhibitPopupProps {
 export default function CreateExhibitPopup(
   { onCreate, onCancel }: CreateExhibitPopupProps
 ) {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

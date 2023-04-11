@@ -3,7 +3,7 @@ import styles from "@/styles/Dashboard.module.css";
 import { WithAuthProps, withAuth } from "@/components/hoc";
 import Head from "next/head";
 import Link from 'next/link';
-import { ErrorMessageSchema, PopulatedExhibit, PopulatedExhibitCreatable, PopulatedExhibitSchema } from '@/types';
+import { PopulatedExhibit } from '@/types';
 import { AdminNav, ConfirmPopup, CreateExhibitPopup } from '@/components';
 import { GetServerSideProps } from 'next';
 import prisma from "@/prisma";
@@ -120,9 +120,8 @@ function Dashboard({
         <title>Dashboard | The Museum & Archives of Vernon</title>
       </Head>
       <div className={styles.dashboard}>
-        <h1>Dashboard</h1>
         <div className={styles.publishedExhibits}>
-          <h2>Published Exhibits</h2>
+          <h1>Published Exhibits</h1>
           <div className={styles.exhibitTiles}>
             {exhibits
               .filter(exhibit => exhibit.published)
@@ -132,7 +131,7 @@ function Dashboard({
           </div>
         </div>
         <div className={styles.draftExhibits}>
-          <h2>Exhibit Drafts</h2>
+          <h1>Exhibit Drafts</h1>
           <div className={styles.exhibitTiles}>
             {exhibits
               .filter(exhibit => !exhibit.published)

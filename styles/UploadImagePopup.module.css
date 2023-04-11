@@ -27,8 +27,37 @@
   z-index: 2;
 }
 
+.uploadImagePopup form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+  min-width: 300px;
+}
+
+.uploadImagePopup input[type="file"] {
+  display: none;
+}
+
+.uploadImagePopup label {
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #0070f3;
+  color: white;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+.uploadImagePopup label:hover {
+  background-color: #0051a2;
+}
+
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 20px;
+}
+
+.actions button {
+  margin-left: 10px;
 }

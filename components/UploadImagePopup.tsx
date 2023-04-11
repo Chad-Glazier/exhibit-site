@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styles from "@/styles/UploadImagePopup.module.css";
 
 interface UploadImagePopupProps {
@@ -29,7 +29,15 @@ export default function UploadImagePopup({ onUpload, onCancel }: UploadImagePopu
       <div className={styles.content}>
         <h2>Upload Image</h2>
         <form onSubmit={handleSubmit}>
-          <input type="file" accept="image/*" onChange={handleFileChange} />
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <label htmlFor="fileInput">
+            {selectedFile ? selectedFile.name : "Choose an image"}
+          </label>
           <div className={styles.actions}>
             <button type="button" onClick={onCancel}>
               Cancel
