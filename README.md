@@ -38,7 +38,50 @@ The types used by the `/api/user` endpoints include the following.
 |Type|Description|
 |-|-|
 |`UserData`|Represents all of a user's information, except for their password.|
+|`Credentials`|Represents a user's username and password (unhashed).|
 |`ErrorMessage`|Represents an error message with the `message` field that holds a string.|
+
+### Create a User
+
+Note that, to create a user, you must already be authenticated. This is circular, so if you need to get this up and running you can manually modify the `/handlers/user/index.ts` and change the following line:
+
+```ts
+  "POST": withAuth(post)
+```
+
+to
+
+```ts
+  "POST": post
+```
+
+This change will make it possible to create a new user, without requiring authentication. Once you have one user saved, I strongly recommend reverting the change before deployment.
+
+In order to actually create the user, you can send a POST request like so.
+
+```ts
+fetch("/api/user", {
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify({ 
+        email: "rinkyDinkValtruvian@gmail.com", 
+        password: "killBinkyBong",
+        name: "Rinky Dink Valtruvian"
+    }) // `User` object, as matching the one found in `/prisma/schema.prisma`
+});
+```
+
+This can return one of the following responses.
+
+|Status Code|Body|Description|
+|-|-|-|
+|`409`|`ErrorMessage`|Indicates that the email is already taken, so the user was not created.|
+|`400`|`ErrorMessage`|Indicates that something was wrong with the request.|
+|`201`|`UserData`|Indicates that the user was successfully created.|
+
+The successful response will also include set a cookie that represents the new user (i.e., you will be logged in as the new user), as well as a `UserData` object that represents the user. The authorization cookie will be an encrypted JSON Web Token which contains the user's `email` as the payload. This means that the server can identify the user by this token (although the client cannot, since it cannot decrypt the JWT).
+
+At no point will the server *ever* send a response that contains a user's `password`, whether encrypted or not. The only time it will be transmitted is as an unhashed string in the requests to login and create a new user.
 
 ### Authenticate a User
 
@@ -58,8 +101,13 @@ const response = await fetch(
 });
 ```
 
--   If the credentials are correct, you will get a response of `200`, a header to set the `token` cookie, and a body that includes the `UserData` (i.e., the user's information except for their password). 
--   Otherwise, it will send back a 4XX status code and an `ErrorMessage` in the body.
+The possible responses for this example include the following.
+
+|Status Code|Body|Description|
+|-|-|-|
+|`401`|`ErrorMessage`|Email doesn't exist in the database, or the password doesn't exist. The `message` in the response will clarify which.|
+|`400`|`ErrorMessage`|Something was wrong with the request.|
+|`200`|`UserData` <br/> (and a `Set-Cookie` header)|Indicates that the user was authenticated, the user's data is included in the response.|
 
 ### Verify a User's Authenticity
 
@@ -69,8 +117,13 @@ If you want to verify a pre-existing cookie, you can send a request to the `/api
 const response: Response = await fetch("/api/user/authentic");
 ```
 
--   If the user is authenticated, the response will have a status of 200 and the body will include a `UserData` object.
--   If the user is *not* authenticated, the response have a status of 4XX and the body will include an `ErrorMessage` object.
+The following responses are possible.
+
+|Status Code|Body|Description|
+|-|-|-|
+|`401`|`ErrorMessage`|Unauthorized token was found.|
+|`400`|`ErrorMessage`|Token was either unparseable or nonexistent.|
+|`200`|`UserData`|The token represents an authorized user.|
 
 ## Exhibits
 

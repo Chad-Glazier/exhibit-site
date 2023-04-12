@@ -32,6 +32,6 @@ export default async function get(
     const userData: UserData = UserDataSchema.parse(user);
     return res.status(200).json(userData);
   } catch {
-    return res.status(401).json({ message: "Invalid token or payload" });
+    return res.status(400).json({ message: "Invalid token or payload" });
   }
 }
