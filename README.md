@@ -311,6 +311,7 @@ Images can be uploaded and deleted with the API, and then accessed via the image
 The following are types for the `/api/images` endpoint.
 
 |Type|Description|
+|-|-|
 |`Image`|Represents an image in the database. These will have, at least, a `url` attribute that represents the address you can access it from. E.g., you could set an `<img />` element's `src` attribute to an `Image`'s `url` field.|
 |`ErrorMessage`|Represents an error message with the `message` field that holds a string.|
 
