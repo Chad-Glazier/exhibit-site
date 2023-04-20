@@ -5,6 +5,8 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 15vh;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
+
 }
 
 .content {

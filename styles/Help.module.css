@@ -1,0 +1,62 @@
+.main {
+  padding-top: 3.8rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  gap: 1rem;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.subheading {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.screenshot, .smallScreenshot {
+  box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.5);
+  transition: all 400ms;
+}
+
+.smallScreenshot:hover {
+  margin-left: -5px;
+  margin-right: 5px;
+}
+
+.screenshot {
+  width: 800px;
+  max-width: 90vw;
+  margin: 2rem 0;
+}
+
+.smallScreenshot {
+  width: 300px;
+  max-width: 90vw;
+  margin: 2rem 0;
+  align-self: center;
+}
+
+.main li {
+  margin-left: 2rem;
+  list-style-type: disc;
+}
+
+.main p {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
