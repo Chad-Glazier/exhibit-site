@@ -1,0 +1,106 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.exhibit, .card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  margin: 1rem;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.title {
+  font-size: large;
+  margin-bottom: 5px;
+}
+
+.title, .summary, .description {
+  padding: 5px;
+  width: 550px;
+}
+
+.summary, .description {
+  height: 100%;
+  width: 100%;
+}
+
+.media {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.media:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+  .exhibit, .card {
+    flex-direction: column;
+  }
+  .title, .summary, .description {
+    width: 88vw;
+  }
+}
+
+.button {
+  background-color: #0070f3;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  width: 800px;
+  margin-bottom: 5px;
+  text-align: center;
+  transition: all 400ms;
+}
+
+.button:hover {
+  background-color: #0051a2;
+}
+
+.returnButton {
+  position: fixed;
+  top: 0rem;
+  opacity: 0.8;
+  width: 100vw;
+  border-radius: 0;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 3px;
+  right: -5px;
+  width: 40px;
+  transform: rotate(45deg);
+}
+
+.deleteButton:hover {
+  cursor: pointer;
+
+}
+
+.card {
+  position: relative;
+}

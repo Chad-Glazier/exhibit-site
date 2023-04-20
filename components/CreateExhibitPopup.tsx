@@ -4,10 +4,11 @@ import { useState } from "react";
 interface CreateExhibitPopupProps {
   onCreate: (title: string) => void;
   onCancel: () => void;
+  confirmText?: string;
 }
 
 export default function CreateExhibitPopup(
-  { onCreate, onCancel }: CreateExhibitPopupProps
+  { onCreate, onCancel, confirmText }: CreateExhibitPopupProps
 ) {
   const [title, setTitle] = useState("");
 
@@ -30,7 +31,7 @@ export default function CreateExhibitPopup(
           />
           <div className={styles.buttons}>
             <button type="submit" className={styles.createButton}>
-              Create
+              {confirmText ?? "Create"}
             </button>
             <button type="button" className={styles.cancelButton} onClick={onCancel}>
               Cancel

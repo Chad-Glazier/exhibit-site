@@ -39,12 +39,14 @@ export default function ExhibitPage({
     return <NotFound />
   }
   const { title, thumbnail, summary, cards }: PopulatedExhibit = exhibit;
-  console.log(exhibit)
+
   const mainCard = {
-      src:`/exhibit-media/thumbnails/${thumbnail}`,
-      description: summary
-    };
+    src: thumbnail,
+    description: summary
+  };
+
   const [selectedCard, setSelectedCard] = useState(mainCard);
+
   const isYoutube = selectedCard?.src?.match(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/);
   const videoId = selectedCard?.src?.split('v=')[1];
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
@@ -53,9 +55,7 @@ export default function ExhibitPage({
     ...cards.map((item) => {
       return {
         ...item,
-        src: item?.media?.includes('http') ?
-          item.media
-          : `/exhibit-media/cards/${item.media}`.replace('png','jpg')
+        src: item.media
       }
     })
   ];

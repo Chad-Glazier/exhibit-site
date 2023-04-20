@@ -6,17 +6,19 @@ import path from "path";
 import { GetServerSideProps } from "next";
 import prisma from "@/prisma";
 import Head from "next/head";
+import { PopulatedExhibit } from "@/types";
 
 interface GalleryProps {
   initialImages: Image[]
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const images: Image[] = await prisma.image.findMany();
+  const images: Image[] | undefined = await prisma.image.findMany();
+  const exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({ include: { cards: true }});
 
   return {
     props: {
-      initialImages: images
+      initialImages: images ?? []
     }
   };
 }
@@ -51,7 +53,6 @@ export default function Gallery({ initialImages }: GalleryProps) {
 
     return (
       <>
-        <AdminNav />
         {showConfirmPopup && (
           <ConfirmPopup
             message={`Are you sure you want to permanently delete "${path.basename(image.url)}"?`}
@@ -62,6 +63,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
             }}
           />
         )}
+        <AdminNav />
         <div className={styles.imageTile}>
           <img className={styles.thumbnail} src={image.url} alt={image.url} />
           {path.basename(image.url)}
