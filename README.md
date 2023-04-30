@@ -89,17 +89,20 @@ to
 
 This change will make it possible to create a new user without requiring authentication. Once you have one user saved, I strongly recommend reverting the change before deployment. 
 
-In order to actually create the user, you can send a POST request like so. 
+In order to actually create the user, you can send a POST request like the one shown below. 
 
 ```ts
 fetch("/api/user", {
-    method: "POST",
-    credentials: "same-origin",
-    body: JSON.stringify({ 
-        email: "rinkyDinkValtruvian@gmail.com", 
-        password: "killBinkyBong",
-        name: "Rinky Dink Valtruvian"
-    }) // `User` object, as matching the one found in `/prisma/schema.prisma`
+  method: "POST",
+  credentials: "same-origin",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ 
+    email: "admin@museum.ca", 
+    password: "pass",
+    name: "Rinky Dink Valtruvian"
+  }) // `User` object, as matching the one found in `/prisma/schema.prisma`
 });
 ```
 

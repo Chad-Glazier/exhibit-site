@@ -1,12 +1,14 @@
-import { withAuth } from "@/components/hoc";
 import { Dashboard, DashboardProps } from "@/components/pages";
 import prisma from "@/prisma";
 import { PopulatedExhibit } from "@/types";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPageContext, PreviewData } from "next";
+import { ParsedUrlQuery } from "querystring";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+  console.log(context.req.cookies.token);
+
   const initialExhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({ include: { cards: true }});
   return { props: { initialExhibits } };
 }
 
-export default withAuth<DashboardProps>(Dashboard);
+export default Dashboard;

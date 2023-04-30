@@ -8,7 +8,6 @@ import {
 } from "@/types";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import prisma from "@/prisma";
-import cookie from "cookie";
 
 const jwtSecret: string = process.env.JWT_SECRET as string;
 
@@ -16,8 +15,8 @@ export default async function get(
   req: NextApiRequest,
   res: NextApiResponse<UserData | ErrorMessage>
 ) {
-  const token: string | undefined = cookie.parse(req.headers.cookie || "")["token"];
-  if (!token) {
+  const token: string | null = req.cookies.token || null;
+  if (token === null) {
     return res.status(401).json({ message: "No authorization token found" });
   }
   try {
