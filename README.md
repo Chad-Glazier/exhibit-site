@@ -21,6 +21,7 @@ Next, run
 
 ```bash
 $ yarn install
+$ yarn run migrate
 ```
 
 and finally,

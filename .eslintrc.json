@@ -1,10 +1,4 @@
 {
   "extends": "next/core-web-vitals",
-  "rules": {
-    "jsx-a11y/alt-text": "off",
-    "@next/next/no-img-element": "off",
-    "react-hooks/rules-of-hooks": "off",
-    "react/jsx-no-target-blank": "off",
-    "react-hooks/exhaustive-deps": "off"
-  }
+  "rules": {}
 }
