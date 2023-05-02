@@ -3,7 +3,6 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next/types";
 import prisma from "@/prisma";
 import { User } from "@prisma/client";
 import { TokenPayload, TokenPayloadSchema } from "@/types";
-import cookie from "cookie";
 
 const jwtSecret: string = process.env.JWT_SECRET as string;
 
@@ -14,8 +13,8 @@ export default function withAuth(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
-    const token: string | undefined = cookie.parse(req.headers.cookie || "")["token"];
-    if (!token) {
+    const token: string | null = req.cookies.token || null;
+    if (token === null) {
       return res.status(401).json({ message: "No authorization token found" });
     }
     try {

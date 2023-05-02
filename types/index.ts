@@ -27,3 +27,6 @@ export {
 export type {
   NextApiImageHandler
 } from "./specialApiHandlers";
+export type {
+  ApiResponse
+} from "./responseWrapper";

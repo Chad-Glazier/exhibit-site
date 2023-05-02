@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 import { ErrorMessage, UserData } from "@/types";
 import prisma from "@/prisma";
 
-export default async function get(
+export default async function del(
   req: NextApiRequest,
   res: NextApiResponse<UserData | UserData[] | ErrorMessage>
 ) {
@@ -11,6 +11,7 @@ export default async function get(
 
   if (email === "*") {
     const users: User[] = await prisma.user.findMany();
+    await prisma.user.deleteMany();
     const userData: UserData[] = users.map(user => {
       const { password, ...userData } = user;
       return userData;
@@ -28,6 +29,9 @@ export default async function get(
 
   if (Array.isArray(email)) {
     const users: User[] = await prisma.user.findMany({
+      where: { email: { in: email }}
+    });
+    await prisma.user.deleteMany({
       where: { email: { in: email }}
     });
     const userData: UserData[] = users.map(user => {
@@ -49,6 +53,9 @@ export default async function get(
     });
     return;
   }
+  await prisma.user.delete({
+    where: { email }
+  });
   const { password, ...userData } = user;
   res.status(200).json(userData);
 }

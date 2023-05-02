@@ -51,7 +51,9 @@ export default function Designer({
     const response = await fetch("/api/exhibit", {
       method: exhibit?.title === title ? "PUT" : "POST",
       credentials: "same-origin",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json" 
+      },
       body: JSON.stringify(newExhibit)
     });
 
