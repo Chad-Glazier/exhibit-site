@@ -27,12 +27,12 @@ export default async function put(
   if (preExisting.length > 0) {
     await prisma.card.deleteMany({
       where: {
-        exhibitId: { in: preExisting.map(el => el.id) }
+        exhibitId: { in: preExisting.map(exhibit => exhibit.id) }
       }
     });
     await prisma.exhibit.deleteMany({
       where: {
-        title: newExhibit.title
+        id: { in: preExisting.map(exhibit => exhibit.id) }
       }
     });
   }
@@ -48,5 +48,8 @@ export default async function put(
       cards: true
     }
   });  
-  res.status(201).json(createdExhibit);
+
+  console.log(createdExhibit);
+
+  return res.status(201).json(createdExhibit);
 }

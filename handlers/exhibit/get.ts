@@ -7,7 +7,10 @@ export default async function get(
   res: NextApiResponse<PopulatedExhibit | PopulatedExhibit[] | ErrorMessage>
 ): Promise<void> {
   const { id } = req.query;
-  const { title } = req.query;
+  let { title } = req.query;
+
+  if (Array.isArray(title)) title = title.map(decodeURIComponent);
+  else if (title && title !== "*") title = decodeURIComponent(title);
 
   if (!id && !title) {
     res.status(400).json({

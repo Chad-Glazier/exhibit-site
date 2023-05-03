@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import prisma from "@/prisma";
 import { getCookieString } from "./authenticate/post";
 
-export default async function post(
+export default async function put(
   req: NextApiRequest,
   res: NextApiResponse<UserData | ErrorMessage>
 ) {
@@ -31,8 +31,9 @@ export default async function post(
     });
 
     if (preExistingUser) {
-      res.status(409).json({ message: "That email is taken"});
-      return;
+      await prisma.user.delete({
+        where: { email: preExistingUser.email }
+      });
     }
 
     const hashedPassword: string = await bcrypt.hash(password, saltRounds);

@@ -1,18 +1,27 @@
-import { PopulatedExhibit, ErrorMessage, ExhibitCreatable, ExhibitCreatableSchema, CardCreatable, CardCreatableSchema, PopulatedExhibitCreatable } from "@/types";
+import { PopulatedExhibit, ErrorMessage } from "@/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/prisma";
-import { z } from "zod";
 
 export default async function del(
   req: NextApiRequest,
   res: NextApiResponse<ErrorMessage | PopulatedExhibit | PopulatedExhibit[]>
 ): Promise<void> {
   const { id } = req.query;
-  const { title } = req.query;
+  let { title } = req.query;
+
+  if (Array.isArray(title)) title = title.map(decodeURIComponent);
+  else if (title && title !== "*") title = decodeURIComponent(title);
 
   if (!id && !title) {
     res.status(400).json({
       message: `${req.method} requests to ${req.url ? new URL(req.url).pathname : "this address"} require an \`id\` or a \`title\` parameter.`
+    });
+    return;
+  }
+
+  if (id && title) {
+    res.status(400).json({
+      message: `${req.method} requests to ${req.url ? new URL(req.url).pathname : "this address"} cannot have both an \`id\` and a \`title\` parameter.`
     });
     return;
   }
@@ -178,7 +187,7 @@ export default async function del(
     // if exhibit doesn't exist => 404 Not Found
     if (exhibit === null) {
       res.status(404).json({
-        message: `No exhibit matches the \`id\` ${id}`
+        message: `No exhibit matches the \`title\` ${title}`
       });
       return;
     }

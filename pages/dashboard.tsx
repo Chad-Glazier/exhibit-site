@@ -1,7 +1,8 @@
 import prisma from "@/prisma";
 import { PopulatedExhibit } from "@/types";
 import { GetServerSideProps } from "next";
-import { ApiClient, authorized } from "@/util";
+import { authorized } from "@/util/server";
+import { ApiClient } from "@/util/client";
 import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";

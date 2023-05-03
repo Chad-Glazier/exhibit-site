@@ -34,6 +34,15 @@ export async function getExhibits(...titles: string[]): Promise<ApiResponse<Popu
     method: "GET",
     credentials: "same-origin"
   });
+
+  
+  if (titles.length == 0) {
+    console.warn("No emails provided to `getExhibits`. Try using `getAllExhibits` instead.");
+  }
+  
+  if (titles.length == 1) {
+    console.warn("Only one email provided to `getExhibits`. Try using `getExhibit` instead.");
+  }
   
   return parseResponse<PopulatedExhibit[]>(PopulatedExhibitSchema.array(), response);
 }

@@ -30,6 +30,14 @@ export async function getImages(...urls: string[]): Promise<ApiResponse<Image[]>
     credentials: "same-origin"
   });
 
+  if (urls.length == 0) {
+    console.warn("No emails provided to `getImages`. Try using `getAllImages` instead.");
+  }
+  
+  if (urls.length == 1) {
+    console.warn("Only one email provided to `getImages`. Try using `getImage` instead.");
+  }
+
   return parseResponse<Image[]>(ImageSchema.array(), response);
 }
 

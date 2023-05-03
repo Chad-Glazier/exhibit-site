@@ -1,6 +1,7 @@
 import {
   ApiResponse,
   PopulatedExhibit,
+  PopulatedExhibitCreatable,
   PopulatedExhibitSchema,
 } from "@/types";
 import parseResponse from "../parseResponse";
@@ -14,7 +15,7 @@ import parseResponse from "../parseResponse";
  * exhibit. If everything went well, this will be the same as the first
  * argument.
  */
-export async function putExhibit(exhibit: PopulatedExhibit): Promise<ApiResponse<PopulatedExhibit>> {
+export async function putExhibit(exhibit: PopulatedExhibitCreatable): Promise<ApiResponse<PopulatedExhibit>> {
   const response = await fetch("/api/exhibit", {
     method: "PUT",
     credentials: "same-origin",
@@ -36,7 +37,7 @@ export async function putExhibit(exhibit: PopulatedExhibit): Promise<ApiResponse
  * if there wasn't a conflict. If there was a conflict, then the pre-
  * existing exhibit is included but the `ok` field is set to `false`.
  */
-export async function postExhibit(exhibit: PopulatedExhibit): Promise<ApiResponse<PopulatedExhibit>> {
+export async function postExhibit(exhibit: PopulatedExhibitCreatable): Promise<ApiResponse<PopulatedExhibit>> {
   const response = await fetch("/api/exhibit", {
     method: "POST",
     credentials: "same-origin",

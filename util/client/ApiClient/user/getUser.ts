@@ -22,6 +22,14 @@ export async function getUser(email: string): Promise<ApiResponse<UserData>> {
 export async function getUsers(...emails: string[]): Promise<ApiResponse<UserData[]>> {
   const response = await fetch("/api/user?email=" + emails.map(encodeURIComponent).join("&email="));
 
+  if (emails.length == 0) {
+    console.warn("No emails provided to `getUsers`. Try using `getAllUsers` instead.");
+  }
+  
+  if (emails.length == 1) {
+    console.warn("Only one email provided to `getUsers`. Try using `getUser` instead.");
+  }
+
   return parseResponse<UserData[]>(UserDataSchema.array(), response);
 }
 

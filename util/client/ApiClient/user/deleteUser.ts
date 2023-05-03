@@ -8,7 +8,7 @@ import { ApiResponse, UserData, UserDataSchema } from "@/types";
  * @returns The deleted user's `UserData`.
  */
 export async function deleteUser(email: string): Promise<ApiResponse<UserData>> {
-  const response: Response = await fetch(`/api/user?email=${email}`, {
+  const response: Response = await fetch("/api/user?email=" + encodeURIComponent(email), {
     method: "DELETE",
     credentials: "same-origin"
   });

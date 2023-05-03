@@ -7,7 +7,10 @@ export default async function del(
   req: NextApiRequest,
   res: NextApiResponse<UserData | UserData[] | ErrorMessage>
 ) {
-  const { email } = req.query;
+  let { email } = req.query;
+
+  if (Array.isArray(email)) email = email.map(decodeURIComponent);
+  else if (email && email !== "*") email = decodeURIComponent(email);
 
   if (email === "*") {
     const users: User[] = await prisma.user.findMany();

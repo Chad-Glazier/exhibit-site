@@ -1,7 +1,19 @@
 import { ApiResponse, Credentials, UserData, UserDataSchema } from "@/types";
 import parseResponse from "../parseResponse";
 
-export default async function postAuthenticate(credentials: Credentials): Promise<ApiResponse<UserData>> {
+/**
+ * Safely authenticates a new user, returning their `UserData` and setting 
+ * an authentication cookie if successful.
+ * 
+ * @param email the email of the user to authenticate
+ * @param password the password of the user, as an unhashed string
+ * @returns an `ApiResponse` wrapping the user's `UserData`.
+ */
+export default async function postAuthenticate(email: string, password: string): Promise<ApiResponse<UserData>> {
+  const credentials: Credentials = {
+    email, password
+  }
+
   const response = await fetch("/api/user/authenticate", {
     method: "POST",
     credentials: "same-origin",

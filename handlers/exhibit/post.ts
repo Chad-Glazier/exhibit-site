@@ -44,5 +44,5 @@ export default async function post(
     }
   });
 
-  res.status(201).json(createdExhibit);
+  return res.status(201).json(createdExhibit);
 }
