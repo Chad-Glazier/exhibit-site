@@ -1,13 +1,9 @@
-import NotFound from "./NotFound";
-import Designer, { DesignerProps } from "./Designer";
-import Help from "./Help";
+import Dashboard from "./Dashboard";
+import Home from "./Home";
+import Login from "./Login";
 
-export {
-  NotFound,
-  Designer,
-  Help
+export { 
+  Dashboard, 
+  Home,
+  Login
 };
-
-export type {
-  DesignerProps
-}

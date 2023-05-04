@@ -1,5 +1,7 @@
-import ApiClient from "./ApiClient";
+import { exhibit, image, user } from "./ApiClient";
 
 export {
-  ApiClient
+  exhibit,
+  image,
+  user
 }
