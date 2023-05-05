@@ -1,9 +1,11 @@
-import Dashboard from "./Dashboard";
-import Home from "./Home";
-import Login from "./Login";
+import Dashboard from "./dashboard/Dashboard";
+import Home from "./home/Home";
+import Login from "./login/Login";
+import Gallery from "./gallery/Gallery";
 
 export { 
   Dashboard, 
   Home,
-  Login
+  Login,
+  Gallery
 };

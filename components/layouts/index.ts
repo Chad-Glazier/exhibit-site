@@ -1,5 +1,5 @@
-import AdminLayout from "./AdminLayout";
-import Layout from "./Layout";
+import AdminLayout from "./admin/AdminLayout";
+import Layout from "./guest/Layout";
 
 export { 
   AdminLayout,

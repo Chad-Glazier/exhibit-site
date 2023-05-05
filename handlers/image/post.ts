@@ -44,8 +44,8 @@ async function saveImageToFile(image: File): Promise<string> {
   let destinationPath: string = path.join(destinationDirectory, image.originalFilename);
   let uniqueFileName = basename;
   
-  for (let i = 0; fs.existsSync(destinationPath); i++) {
-    uniqueFileName = `${fileNameWithoutExtension}_${i}${fileExtension}`;
+  for (let i = 1; fs.existsSync(destinationPath); i++) {
+    uniqueFileName = `${fileNameWithoutExtension} (${i})${fileExtension}`;
     destinationPath = path.join(destinationDirectory, uniqueFileName);
   }
 

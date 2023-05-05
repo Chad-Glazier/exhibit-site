@@ -1,11 +1,5 @@
-import NavBar from "./NavBar";
-import AdminNav from "./AdminNav";
-import ExhibitTile from "./ExhibitTile";
-import Popup from "./Popup";
+import Popup from "./popup/Popup";
 
 export {
-  NavBar,
-  AdminNav,
-  ExhibitTile,
   Popup
 }

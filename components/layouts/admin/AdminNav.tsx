@@ -5,7 +5,7 @@ import styles from "./AdminNav.module.css";
 export default function AdminNav() {
   return (
     <nav className={styles.navbar}>
-      <Link href="/">
+      <Link href="/dashboard">
         <Image
           src="/logo.svg"
           alt="The Museum & Archives of Vernon Logo"
@@ -15,18 +15,18 @@ export default function AdminNav() {
       </Link>
       <ul className={styles.navbarList}>
         <li className={styles.navbarItem}>
-          <Link href="/exhibits" className={styles.navbarLink}>
+          <Link href="/gallery" className={styles.navbarLink}>
+            Gallery
+          </Link>
+        </li>
+        <li className={styles.navbarItem}>
+          <Link href="/dashboard" className={styles.navbarLink}>
             Exhibits
           </Link>
         </li>
         <li className={styles.navbarItem}>
-          <Link href="/about" className={styles.navbarLink}>
-            About
-          </Link>
-        </li>
-        <li className={styles.navbarItem}>
-          <Link href="/contact" className={styles.navbarLink}>
-            Contact
+          <Link href="/help" className={styles.navbarLink}>
+            Help
           </Link>
         </li>
       </ul>
