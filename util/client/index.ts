@@ -1,7 +1,5 @@
-import { exhibit, image, user } from "./ApiClient";
+import api from "./ApiClient"; 
 
 export {
-  exhibit,
-  image,
-  user
+  api
 }

@@ -3,7 +3,7 @@ import { PopulatedExhibit, PopulatedExhibitCreatable, UserData } from "@/types";
 import { AdminLayout } from "@/components/layouts";
 import { useState } from "react";
 import { Popup } from "@/components/general";
-import { exhibit } from "@/util/client";
+import { api } from "@/util/client";
 import ExhibitTile from "./ExhibitTile";
 
 export default function Dashboard({ 
@@ -32,10 +32,10 @@ export default function Dashboard({
               cards: [],
               published: false
             }
-            exhibit.post(newExhibit)
+            api.exhibit.post(newExhibit)
               .then(res => {
                 // this handles a specific edge case where two users have browsers open,
-                // and they both attempt to create a new exhibit with the same name.
+                // and they both attempt to create a new api.exhibit with the same name.
                 if (!res.ok && res.body) {
                   setExhibitCache(prev => prev.map(el => {
                     if (el.title === res.body?.title) {
@@ -62,7 +62,7 @@ export default function Dashboard({
             key={index} 
             exhibit={el} 
             onDelete={() => {
-              exhibit.deleteOne(el.title);
+              api.exhibit.deleteOne(el.title);
               setExhibitCache(prev => prev.filter(({ title }) => title !== el.title))
             }}
           />

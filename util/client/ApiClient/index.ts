@@ -10,7 +10,7 @@ import { postImage } from "./image/postImage";
 import { deleteImage, deleteImages, deleteAllImages } from "./image/deleteImage";
 import { getImage, getImages, getAllImages } from "./image/getImage";
 
-export const exhibit = {
+const exhibit = {
   put: putExhibit,
   post: postExhibit,
   deleteOne: deleteExhibit,
@@ -21,7 +21,7 @@ export const exhibit = {
   getAll: getAllExhibits,
 }
 
-export const image = {
+const image = {
   post: postImage,
   deleteOne: deleteImage,
   deleteMany: deleteImages,
@@ -31,7 +31,7 @@ export const image = {
   getAll: getAllImages,
 }
 
-export const user = {
+const user = {
   authentic: getAuthentic,
   authenticate: postAuthenticate,
   post: postUser,
@@ -44,8 +44,10 @@ export const user = {
   deleteAll: deleteAllUsers,
 }
 
-export default {
+const api = {
   exhibit,
   image,
-  user
+  user    
 };
+
+export default api;

@@ -3,7 +3,7 @@ import { Image } from "@prisma/client";
 import GalleryTile from "./GalleryTile";
 import { UserData } from "@/types";
 import React, { useState } from "react";
-import { image } from "@/util/client";
+import { api } from "@/util/client";
 import { Popup } from "@/components/general";
 
 export default function Gallery({
@@ -30,7 +30,7 @@ export default function Gallery({
             }
 
             const imageFile = imageFiles[0];
-            image.post(imageFile)
+            api.image.post(imageFile)
               .then(res => {
                 if (res.ok) {
                   setImageCache(prev => [...prev, res.body]);
@@ -52,7 +52,7 @@ export default function Gallery({
           key={index}
           image={el}
           onDelete={() => {
-            image.deleteOne(el.url);
+            api.image.deleteOne(el.url);
             setImageCache(prev => prev.filter(({ url }) => url !== el.url))         
           }}
         />

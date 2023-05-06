@@ -1,5 +1,5 @@
 import styles from "./Login.module.css";
-import { user } from "@/util/client";
+import { api } from "@/util/client";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -16,7 +16,7 @@ export default function Login() {
     const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement).value;
     const password = (e.currentTarget.elements.namedItem("password") as HTMLInputElement).value;
 
-    const response = await user.authenticate(email, password);
+    const response = await api.user.authenticate(email, password);
     
     if (response.ok) {
       router.push("/dashboard");
