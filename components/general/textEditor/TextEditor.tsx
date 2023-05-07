@@ -1,75 +1,64 @@
-import { $getRoot, $getSelection } from "lexical";
-import { useEffect } from "react";
+import theme from "./themes/theme";
+import styles from "./TextEditor.module.css";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import styles from "./TextEditor.module.css";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
+import { ListItemNode, ListNode } from "@lexical/list";
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { AutoLinkNode, LinkNode } from "@lexical/link";
+import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import { TRANSFORMERS } from "@lexical/markdown";
+import ToolbarPlugin from "./plugins/ToolbarPlugin";
+import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 
-let theme: Record<string, string> = {
-  ltr: 'ltr',
-  rtl: 'rtl',
-  placeholder: 'editor-placeholder',
-  paragraph: 'editor-paragraph',
-}
-
-for (let key of Object.keys(theme)) {
-  theme[key] = styles[theme[key]];
-}
-
-// When the editor changes, you can get notified via the
-// LexicalOnChangePlugin!
-function onChange(editorState: any) {
-  editorState.read(() => {
-    // Read the contents of the EditorState here.
-    const root = $getRoot();
-    const selection = $getSelection();
-  });
-}
-
-// Lexical React plugins are React components, which makes them
-// highly composable. Furthermore, you can lazy load plugins if
-// desired, so you don"t pay the cost for plugins until you
-// actually use them.
-function MyCustomAutoFocusPlugin() {
-  const [editor] = useLexicalComposerContext();
-
-  useEffect(() => {
-    // Focus the editor when the effect fires!
-    editor.focus();
-  }, [editor]);
-
-  return null;
-}
-
-// Catch any errors that occur during Lexical updates and log them
-// or throw them as needed. If you don"t throw them, Lexical will
-// try to recover gracefully without losing user data.
-function onError(error: any) {
-  console.error(error);
+function Placeholder() {
+  return <div className={theme.placeholder}>Enter text...</div>;
 }
 
 export default function TextEditor() {
-  const initialConfig = {
-    namespace: "MyEditor", 
-    theme,
-    onError,
-  };
-
   return (
-    <LexicalComposer initialConfig={initialConfig}>
+    <LexicalComposer initialConfig={{
+      theme,
+      onError(error: Error) {
+        throw error;
+      },
+      nodes: [
+        HeadingNode,
+        ListNode,
+        ListItemNode,
+        QuoteNode,
+        CodeNode,
+        CodeHighlightNode,
+        TableNode,
+        TableCellNode,
+        TableRowNode,
+        AutoLinkNode,
+        LinkNode
+      ],
+      namespace: "TextEditor"
+    }}>
       <div className={styles.editorContainer}>
-        <PlainTextPlugin
-          contentEditable={<ContentEditable />}
-          placeholder={<span>Enter some text...</span>}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <OnChangePlugin onChange={onChange} />
-        <HistoryPlugin />
-        <MyCustomAutoFocusPlugin />
+        <ToolbarPlugin />
+        <div className={styles.editorInner}>
+          <RichTextPlugin
+            contentEditable={<ContentEditable className={styles.editorInput}/>}
+            placeholder={<Placeholder />}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <ListPlugin />
+          <LinkPlugin />
+          <AutoLinkPlugin />
+          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+        </div>
       </div>
     </LexicalComposer>
   );

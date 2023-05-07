@@ -3,6 +3,7 @@ import styles from "./ExhibitTile.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Popup } from "@/components/general";
+import Link from "next/link";
 
 export default function ExhibitTile({ 
   exhibit,
@@ -11,7 +12,7 @@ export default function ExhibitTile({
   exhibit: PopulatedExhibitCreatable 
   /**
    * This prop is a callback that's invoked after the user clicks the "delete"
-   * button, and confirms the deletion.
+   * button and confirms the deletion.
    */ 
   onDelete: () => void
 }) {
@@ -27,7 +28,9 @@ export default function ExhibitTile({
         }}>
           Delete
         </button>
-        <button>
+        <button onClick={() => {
+          setShowPopup(false);
+        }}>
           Cancel
         </button>
       </Popup>
@@ -44,6 +47,9 @@ export default function ExhibitTile({
           <button onClick={() => setShowPopup(true)}>
             Delete
           </button>
+          <Link href={`/designer/${exhibit.title}`}>
+            Edit
+          </Link>
         </div>
       </div>    
     </>

@@ -25,8 +25,8 @@ export default function AdminNav() {
           </Link>
         </li>
         <li className={styles.navbarItem}>
-          <Link href="/help" className={styles.navbarLink}>
-            Help
+          <Link href="/designer" className={styles.navbarLink}>
+            Designer
           </Link>
         </li>
       </ul>

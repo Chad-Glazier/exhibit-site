@@ -4,7 +4,7 @@ import { useState } from "react";
 import AddMediaPopup from "./AddMediaPopup";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { TextEditor } from "@/components/general";
+const TextEditor = dynamic(() => import("../../general/textEditor/TextEditor"), { ssr: false });
 
 export default function Card({
   card,
@@ -22,7 +22,7 @@ export default function Card({
         show={showMediaPopup}
         onClickAway={() => setShowMediaPopup(false)}
       />
-      <form className={styles.card}>
+      <div className={styles.card}>
         <Image
           onClick={() => setShowMediaPopup(true)}
           src={updatedCard.media}
@@ -31,7 +31,7 @@ export default function Card({
           height={200}
         />
         <TextEditor />
-      </form>    
+      </div>    
     </>
   );
 }

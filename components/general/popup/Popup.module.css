@@ -8,9 +8,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 }
 
 .popup {
   display: flex;
   flex-direction: column;
+  z-index: 101;
 }
