@@ -2,7 +2,7 @@ import styles from "./ActiveCard.module.css";
 import { CardCreatable } from "@/types";
 import Image from "next/image";
 import { isYouTube } from "@/util";
-import { TextEditor } from "@/components/general";
+import { TextEditor, YouTubeEmbed } from "@/components/general";
 
 export default function ActiveCard({
   card
@@ -12,13 +12,11 @@ export default function ActiveCard({
   return (
     <section>
       {isYouTube(card.media) ? 
-        <iframe
-          width="200"
-          height="200"
+        <YouTubeEmbed
           src={card.media}
-          title={card.media}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        /> 
+          height={315}
+          width={560}
+        />
         :
         <Image
           src={card.media}

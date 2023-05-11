@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { isYouTube } from "@/util";
 const TextEditor = dynamic(() => import("../../general/textEditor/TextEditor"), { ssr: false });
 import { Image as ImageType } from "@prisma/client";
+import { YouTubeEmbed } from "@/components/general";
 
 export default function Card({
   card,
@@ -38,12 +39,12 @@ export default function Card({
       />
       <div className={styles.card}>
         {isYouTube(updatedCard.current.media) ?
-          <iframe
-              width="200"
-              height="200"
-              src={updatedCard.current.media}
-              title={updatedCard.current.media}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          <YouTubeEmbed
+            onClick={() => setShowMediaPopup(true)} 
+            src={updatedCard.current.media}
+            height={315}
+            width={560}
+            thumbnailOnly
           />
         : <Image
             onClick={() => setShowMediaPopup(true)}
