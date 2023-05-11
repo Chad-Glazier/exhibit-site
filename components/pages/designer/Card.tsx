@@ -42,8 +42,8 @@ export default function Card({
           <YouTubeEmbed
             onClick={() => setShowMediaPopup(true)} 
             src={updatedCard.current.media}
-            height={315}
-            width={560}
+            height={200}
+            width={200}
             thumbnailOnly
           />
         : <Image

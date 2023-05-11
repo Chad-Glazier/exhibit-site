@@ -1,5 +1,5 @@
 .editorContainer {
-  margin: 20px auto 20px auto;
+  margin: 10px auto 10px auto;
   border-radius: 2px;
   color: #000;
   position: relative;
@@ -13,8 +13,6 @@
 .editorInner {
   background: #fff;
   position: relative;
-  max-width: 500px;
-  max-height: 350px;
   overflow-y: auto;
 }
 

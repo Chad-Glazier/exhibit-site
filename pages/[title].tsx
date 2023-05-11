@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import prisma from "@/prisma";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { title } = context.query;
+  let { title } = context.query;
 
   if (title === undefined || typeof title !== "string") {
     return {
@@ -11,6 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
+  title = decodeURIComponent(title);
   const exhibit = await prisma.exhibit.findUnique({ where: { title }, include: { cards: true }});
 
   if (!exhibit) {

@@ -14,8 +14,8 @@ export default function ActiveCard({
       {isYouTube(card.media) ? 
         <YouTubeEmbed
           src={card.media}
-          height={315}
-          width={560}
+          height={200}
+          width={200}
         />
         :
         <Image
@@ -25,8 +25,18 @@ export default function ActiveCard({
           height={200}
         />
       }
+
       <TextEditor
-        readonly={true}
+        /**
+          * This `key` prop is necessary to force the TextEditor to re-render,
+          * but it also introduces a bug when an exhibit includes two cards with
+          * identical `media` values but distinct `description` values.
+          * 
+          * I'm willing to accept this potential bug because it is extremely unlikely,
+          * and the bug itself will merely lead to the two cards sharing descriptions.
+          */
+        key={card.media}
+        readonly         
         initialState={card.description}
       />
     </section>

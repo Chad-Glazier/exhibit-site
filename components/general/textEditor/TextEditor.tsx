@@ -18,7 +18,7 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EditorState, LexicalEditor } from "lexical";
 
 export default function TextEditor({
