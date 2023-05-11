@@ -42,7 +42,6 @@ export default function ExhibitTile({
           width={300}
           height={300}
         />
-        <p className={styles.description}>{exhibit.summary}</p>
         <div className={styles.buttons}>
           <button onClick={() => setShowPopup(true)}>
             Delete

@@ -1,5 +1,6 @@
-import isYouTube from "./shared/isYouTube";
+import isYouTube, { youTubeRegExp, youTubePattern } from "./shared/isYouTube";
 
 export {
-  isYouTube
+  isYouTube,
+  youTubePattern
 }

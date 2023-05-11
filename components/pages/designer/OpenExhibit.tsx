@@ -1,43 +1,51 @@
 import { PopulatedExhibit } from "@/types";
 import styles from "./OpenExhibit.module.css";
 import { AdminLayout } from "@/components/layouts";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "@/util/client";
 
 export default function OpenExhibit({
   exhibitCache
 }: {
-  exhibitCache?: PopulatedExhibit[]
+  exhibitCache: PopulatedExhibit[]
 }) {
   const router = useRouter();
-  const [createNew, setCreateNew] = useState<boolean>(!exhibitCache || exhibitCache.length == 0);
+  const [createNew, setCreateNew] = useState<boolean>(true);
+  const [waiting, setWaiting] = useState<boolean>(false);
 
   return (
     <AdminLayout>
       <form onSubmit={e => {
         e.preventDefault();
+        if (waiting) return;
+        setWaiting(true);
+
+        const title = createNew ? 
+          (document.getElementById("title") as HTMLInputElement).value  
+          : (document.getElementById("title-selector") as HTMLInputElement).value;
+
         if (createNew) {
           api.exhibit.post({
-            title: (document.getElementById("title") as HTMLInputElement).value,
+            title,
             summary: "No description",
             thumbnail: "/add.png",
             cards: [],
             published: false
           }).then(res => {
-            if (res.body) router.push(`/designer/${res.body.title}`);
+            if (res.body) router.push(`/designer/${encodeURIComponent(res.body.title)}`);
             else router.push("/500_Admin");
           });
-          return;
-        }
-        const title = (document.getElementById("title-selector") as HTMLInputElement).value;
-        if (title === "Create New Exhibit") {
           return;
         }
         router.push(`/designer/${title}`);
       }}>
         <label htmlFor="title">Select an Exhibit to Open</label>
         <select name="title" id="title-selector" required>
+          <option 
+            value="Create New Exhibit"
+            onClick={() => setCreateNew(true)}
+          >Create New Exhibit</option>
           {exhibitCache && exhibitCache.map((exhibit, index) => (
             <option
               onClick={() => setCreateNew(false)} 
@@ -45,10 +53,6 @@ export default function OpenExhibit({
               value={exhibit.title}
             >{exhibit.title}</option>
           ))}
-          <option 
-            value="Create New Exhibit"
-            onClick={() => setCreateNew(true)}
-          >Create New Exhibit</option>
         </select>
         {createNew && (
           <>
@@ -56,7 +60,7 @@ export default function OpenExhibit({
             <input type="text" name="title" id="title" required />
           </> 
         )}
-        <button type="submit">Open</button>
+        <button>{(createNew ? "Create" : "Open") + " Exhibit"}</button>
       </form>
     </AdminLayout>
   );

@@ -15,35 +15,43 @@ import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
+import { useRef } from "react";
+import { EditorState, LexicalEditor } from "lexical";
 
-function Placeholder() {
-  return <div className={theme.placeholder}>Enter text...</div>;
-}
-
-export default function TextEditor() {
+export default function TextEditor({
+  onChange,
+  initialState
+}: {
+  onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void;
+  initialState?: string;
+}) {  
   return (
-    <LexicalComposer initialConfig={{
-      theme,
-      onError(error: Error) {
-        throw error;
-      },
-      nodes: [
-        HeadingNode,
-        ListNode,
-        ListItemNode,
-        QuoteNode,
-        CodeNode,
-        CodeHighlightNode,
-        TableNode,
-        TableCellNode,
-        TableRowNode,
-        AutoLinkNode,
-        LinkNode
-      ],
-      namespace: "TextEditor"
-    }}>
+    <LexicalComposer 
+      initialConfig={{
+        editorState: initialState,
+        theme,
+        onError(error: Error) {
+          throw error;
+        },
+        nodes: [
+          HeadingNode,
+          ListNode,
+          ListItemNode,
+          QuoteNode,
+          CodeNode,
+          CodeHighlightNode,
+          TableNode,
+          TableCellNode,
+          TableRowNode,
+          AutoLinkNode,
+          LinkNode
+        ],
+        namespace: "TextEditor",
+      }}
+    >
       <div className={styles.editorContainer}>
         <ToolbarPlugin />
         <div className={styles.editorInner}>
@@ -58,8 +66,13 @@ export default function TextEditor() {
           <LinkPlugin />
           <AutoLinkPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <OnChangePlugin onChange={onChange} />
         </div>
       </div>
     </LexicalComposer>
   );
+}
+
+function Placeholder() {
+  return <div className={theme.placeholder}>Enter text...</div>;
 }

@@ -24,7 +24,6 @@ model Exhibit {
 
 model Card {
   id          Int     @id @default(autoincrement())
-  title       String  @default("")
   media       String
   description String
   exhibitId   Int
