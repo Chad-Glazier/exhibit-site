@@ -56,6 +56,7 @@ export default function Designer({
         onChange={({ media, description }) => {
           cache.current.thumbnail = media; 
           cache.current.summary = description;
+          forceUpdate(x => !x);
         }}
       />
       {cache.current.cards.map((card, index) => 
@@ -66,13 +67,16 @@ export default function Designer({
           allImages={allImages}
           key={index}
           card={card}
+          onDelete={() => {
+            cache.current.cards = cache.current.cards.filter((_, i) => i !== index);
+          }}
         />
       )}
       <button
         onClick={() => {
           cache.current.cards.push({
             media: "/add.png",
-            description: ""
+            description: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
           });
           forceUpdate(x => !x);
         }}

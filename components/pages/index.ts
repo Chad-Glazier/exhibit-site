@@ -8,8 +8,10 @@ import NotFound from "./errorPages/NotFound";
 import AdminNotFound from "./errorPages/AdminNotFound";
 import ServerError from "./errorPages/ServerError";
 import AdminServerError from "./errorPages/AdminServerError";
+import Exhibit from "./exhibit/Exhibit";
 
 export { 
+  Exhibit,
   Dashboard, 
   Home,
   Login,

@@ -11,10 +11,12 @@ import { Image as ImageType } from "@prisma/client";
 export default function Card({
   card,
   onChange,
+  onDelete,
   allImages
 }: {
   card: CardCreatable;
   onChange: (updatedCard: CardCreatable) => void;
+  onDelete?: (updatedCard: CardCreatable) => void;
   allImages: ImageType[];
 }) {
   const updatedCard = useRef<CardCreatable>(card);
@@ -58,6 +60,11 @@ export default function Card({
             onChange(updatedCard.current);
           }}
         />
+        {onDelete &&
+          <button onClick={() => onDelete(updatedCard.current)}>
+            Delete
+          </button>
+        }
       </div>    
     </>
   );

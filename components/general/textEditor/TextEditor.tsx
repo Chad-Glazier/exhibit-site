@@ -23,10 +23,12 @@ import { EditorState, LexicalEditor } from "lexical";
 
 export default function TextEditor({
   onChange,
-  initialState
+  initialState,
+  readonly
 }: {
-  onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void;
+  onChange?: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void;
   initialState?: string;
+  readonly?: boolean;
 }) {  
   return (
     <LexicalComposer 
@@ -50,10 +52,13 @@ export default function TextEditor({
           LinkNode
         ],
         namespace: "TextEditor",
+        editable: !readonly
       }}
     >
       <div className={styles.editorContainer}>
-        <ToolbarPlugin />
+        {!readonly &&
+          <ToolbarPlugin />
+        }
         <div className={styles.editorInner}>
           <RichTextPlugin
             contentEditable={<ContentEditable className={styles.editorInput}/>}
@@ -66,7 +71,7 @@ export default function TextEditor({
           <LinkPlugin />
           <AutoLinkPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-          <OnChangePlugin onChange={onChange} />
+          <OnChangePlugin onChange={onChange ?? (() => {})} />
         </div>
       </div>
     </LexicalComposer>

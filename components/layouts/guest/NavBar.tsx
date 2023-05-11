@@ -15,7 +15,7 @@ export default function NavBar() {
       </Link>
       <ul className={styles.navbarList}>
         <li className={styles.navbarItem}>
-          <Link href="/exhibits" className={styles.navbarLink}>
+          <Link href="/" className={styles.navbarLink}>
             Exhibits
           </Link>
         </li>
