@@ -9,11 +9,20 @@ import { ApiResponse, UserData, UserDataSchema } from "@/types";
  * new user.
  * @returns the `UserData` of the new user, assuming the post was successful.
  */
-export async function postUser(user: User, masterKey?: string): Promise<ApiResponse<UserData>> {
+export async function postUser(user: User, options?: Partial<{
+  masterKey?: string;
+  dontLogIn?: boolean;
+}>): Promise<ApiResponse<UserData>> {
+  const masterKey = options ? options.masterKey : undefined;
+  const dontLogIn = options ? options.dontLogIn : false;
+
   let response: Response;
+
+  let target = "/api/user";
+  if (dontLogIn) { target += "?dontLogIn=true"; }
   
   if (masterKey) {
-    response = await fetch("/api/user", {
+    response = await fetch(target, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -22,7 +31,7 @@ export async function postUser(user: User, masterKey?: string): Promise<ApiRespo
       body: JSON.stringify(user)
     });    
   } else {
-    response = await fetch("/api/user", {
+    response = await fetch(target, {
       method: "POST",
       credentials: "same-origin",
       headers: { 
@@ -44,11 +53,20 @@ export async function postUser(user: User, masterKey?: string): Promise<ApiRespo
  * @returns the `UserData` of the new user, assuming the creation was 
  * successful.
  */
-export async function putUser(user: User, masterKey?: string): Promise<ApiResponse<UserData>> {
+export async function putUser(user: User, options?: Partial<{
+  masterKey?: string;
+  dontLogIn?: boolean;
+}>): Promise<ApiResponse<UserData>> {
+  const masterKey = options ? options.masterKey : undefined;
+  const dontLogIn = options ? options.dontLogIn : false;
+
   let response: Response;
+
+  let target = "/api/user";
+  if (dontLogIn) { target += "?dontLogIn=true"; }
   
   if (masterKey) {
-    response = await fetch("/api/user", {
+    response = await fetch(target, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json",
@@ -57,7 +75,7 @@ export async function putUser(user: User, masterKey?: string): Promise<ApiRespon
       body: JSON.stringify(user)
     });    
   } else {
-    response = await fetch("/api/user", {
+    response = await fetch(target, {
       method: "PUT",
       credentials: "same-origin",
       headers: { 

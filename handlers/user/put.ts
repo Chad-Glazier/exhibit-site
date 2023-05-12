@@ -14,6 +14,8 @@ export default async function put(
   let jwtSecret: string;
   let saltRounds: number;
 
+  const dontLogIn = req.query.dontLogIn === "true";
+
   try {
     jwtSecret = process.env.JWT_SECRET as string;
     saltRounds = parseInt(process.env.SALT_ROUNDS as string);
@@ -24,16 +26,18 @@ export default async function put(
   }
 
   try {
-    const { password, email, ...otherUserData }: User = UserSchema.parse(req.body);
+    const { password, email, isMaster, ...otherUserData }: User = UserSchema.parse(req.body);
 
-    const preExistingUser: User | null = await prisma.user.findUnique({
-      where: { email }
-    });
+    const allUsers = await prisma.user.findMany();
 
+    const preExistingUser = allUsers.find((user: User) => user.email === email);
+
+    let wasMaster: boolean = false;
     if (preExistingUser) {
-      await prisma.user.delete({
+      const deletedUser = await prisma.user.delete({
         where: { email: preExistingUser.email }
       });
+      wasMaster = deletedUser.isMaster;
     }
 
     const hashedPassword: string = await bcrypt.hash(password, saltRounds);
@@ -43,12 +47,19 @@ export default async function put(
         data: { 
           password: hashedPassword,
           email,
+          isMaster: wasMaster,
           ...otherUserData
         }
       });
-      const userData: UserData = { email, ...otherUserData};
+      const userData: UserData = { email, isMaster: wasMaster, ...otherUserData};
       const tokenPayload: TokenPayload = { email };
       const token: string = jwt.sign(tokenPayload, jwtSecret);
+      if (dontLogIn) {
+        res
+          .status(201)
+          .json(userData);
+        return;
+      }
       res
         .status(201)
         .setHeader("Set-Cookie", getCookieString(token))

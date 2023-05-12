@@ -2,10 +2,12 @@
 
 :root {
   --font: 'Poppins', serif;
-  --navbar-background-color: #4D4F51;
-  --navbar-color: #E9E9E9;
-  --header-background-color: #FFFFFF;
-  --menu-background-color: rgba(36, 39, 42, 0.8);
+  --blackish: #24272A;
+  --orangish: #CA6D4F;
+  --yellowish: #EAA55E;
+  --greenish: #8B8C4A;
+  --bluish: #5B6670;
+  --greyish: #AFA99F;
 }
 
 * {

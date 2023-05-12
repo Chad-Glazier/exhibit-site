@@ -28,8 +28,11 @@ export default function Register() {
     const response = await api.user.post({
       name,
       email,
-      password      
-    }, masterKey);
+      password,
+      isMaster: true      
+    }, {
+      masterKey: masterKey
+    });
     
     if (response.ok) {
       router.push("/dashboard");

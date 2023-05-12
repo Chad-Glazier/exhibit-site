@@ -26,7 +26,7 @@
   margin-right: 2px;
 }
 
-.toolbar button.toolbarItem .toolbar i.format {
+.toolbar button.toolbarItem .toolbar {
   background-size: contain;
   display: inline-block;
   height: 18px;
@@ -37,7 +37,7 @@
   opacity: 0.6;
 }
 
-.toolbar button.toolbarItem:disabled .toolbar i.format {
+.toolbar button.toolbarItem:disabled .toolbar {
   opacity: 0.2;
 }
 
@@ -45,7 +45,7 @@
   background-color: rgba(223, 232, 250, 0.3);
 }
 
-.toolbar button.toolbarItem.active .toolbar i {
+.toolbar button.toolbarItem.active .toolbar {
   opacity: 1;
 }
 

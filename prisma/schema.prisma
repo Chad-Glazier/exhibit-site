@@ -8,9 +8,10 @@ datasource db {
 }
 
 model User {
-  name     String @default("Admin")
-  email    String @id
+  name     String  @default("Admin")
+  email    String  @id
   password String
+  isMaster Boolean @default(false)
 }
 
 model Exhibit {

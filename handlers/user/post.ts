@@ -14,6 +14,8 @@ export default async function post(
   let jwtSecret: string;
   let saltRounds: number;
 
+  const dontLogIn = req.query.dontLogIn === "true";
+
   try {
     jwtSecret = process.env.JWT_SECRET as string;
     saltRounds = parseInt(process.env.SALT_ROUNDS as string);
@@ -24,11 +26,11 @@ export default async function post(
   }
 
   try {
-    const { password, email, ...otherUserData }: User = UserSchema.parse(req.body);
+    const { password, email, isMaster, ...otherUserData }: User = UserSchema.parse(req.body);
 
-    const preExistingUser: User | null = await prisma.user.findUnique({
-      where: { email }
-    });
+    const allUsers: User[] = await prisma.user.findMany();
+
+    const preExistingUser = allUsers.find((user: User) => user.email === email);
 
     if (preExistingUser) {
       res.status(409).json({ message: "That email is taken"});
@@ -39,15 +41,22 @@ export default async function post(
     
     try {
       await prisma.user.create({
-        data: { 
+        data: {
+          isMaster: allUsers.length === 0,
           password: hashedPassword,
           email,
           ...otherUserData
         }
       });
-      const userData: UserData = { email, ...otherUserData};
+      const userData: UserData = { email, isMaster: allUsers.length === 0, ...otherUserData};
       const tokenPayload: TokenPayload = { email };
       const token: string = jwt.sign(tokenPayload, jwtSecret);
+      if (dontLogIn) {
+        res
+          .status(201)
+          .json(userData);
+        return;
+      }
       res
         .status(201)
         .setHeader("Set-Cookie", getCookieString(token))

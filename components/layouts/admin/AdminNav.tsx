@@ -29,6 +29,11 @@ export default function AdminNav() {
             Designer
           </Link>
         </li>
+        <li className={styles.navbarItem}>
+          <Link href="/accounts" className={styles.navbarLink}>
+            Accounts
+          </Link>
+        </li>
       </ul>
     </nav>
   );
