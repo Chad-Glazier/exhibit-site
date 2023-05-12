@@ -9,15 +9,28 @@ import { ApiResponse, UserData, UserDataSchema } from "@/types";
  * new user.
  * @returns the `UserData` of the new user, assuming the post was successful.
  */
-export async function postUser(user: User): Promise<ApiResponse<UserData>> {
-  const response = await fetch("/api/user", {
-    method: "POST",
-    credentials: "same-origin",
-    headers: { 
-      "Content-Type": "application/json" 
-    },
-    body: JSON.stringify(user)
-  });
+export async function postUser(user: User, masterKey?: string): Promise<ApiResponse<UserData>> {
+  let response: Response;
+  
+  if (masterKey) {
+    response = await fetch("/api/user", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + masterKey
+      },
+      body: JSON.stringify(user)
+    });    
+  } else {
+    response = await fetch("/api/user", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { 
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user)
+    });    
+  }
 
   return parseResponse<UserData>(UserDataSchema, response);
 }
@@ -31,15 +44,28 @@ export async function postUser(user: User): Promise<ApiResponse<UserData>> {
  * @returns the `UserData` of the new user, assuming the creation was 
  * successful.
  */
-export async function putUser(user: User): Promise<ApiResponse<UserData>> {
-  const response = await fetch("/api/user", {
-    method: "PUT",
-    credentials: "same-origin",
-    headers: { 
-      "Content-Type": "application/json" 
-    },
-    body: JSON.stringify(user)
-  });
+export async function putUser(user: User, masterKey?: string): Promise<ApiResponse<UserData>> {
+  let response: Response;
+  
+  if (masterKey) {
+    response = await fetch("/api/user", {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + masterKey
+      },
+      body: JSON.stringify(user)
+    });    
+  } else {
+    response = await fetch("/api/user", {
+      method: "PUT",
+      credentials: "same-origin",
+      headers: { 
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user)
+    });    
+  }
 
   return parseResponse<UserData>(UserDataSchema, response);
 }

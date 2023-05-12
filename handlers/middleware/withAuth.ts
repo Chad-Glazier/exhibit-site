@@ -5,6 +5,7 @@ import { User } from "@prisma/client";
 import { TokenPayload, TokenPayloadSchema } from "@/types";
 
 const jwtSecret: string = process.env.JWT_SECRET as string;
+const masterKey: string = process.env.MASTER_KEY as string;
 
 export default function withAuth(
   next: NextApiHandler
@@ -13,6 +14,17 @@ export default function withAuth(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
+    const authorization: string | undefined = req.headers.authorization;
+    if (masterKey && authorization) {
+      const existingUsers = await prisma.user.findMany();
+      if (existingUsers.length > 0) {
+        return res.status(401).json({ message: "The master key can only be used when no authorized users exist." });
+      }
+      if (authorization !== "Bearer " + masterKey) {
+        return res.status(401).json({ message: "The `Authorization` header of the request didn't match the master key." });
+      }
+      return next(req, res);
+    }
     const token: string | null = req.cookies.token || null;
     if (token === null) {
       return res.status(401).json({ message: "No authorization token found" });

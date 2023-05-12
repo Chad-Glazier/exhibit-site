@@ -9,6 +9,7 @@ import AdminNotFound from "./errorPages/AdminNotFound";
 import ServerError from "./errorPages/ServerError";
 import AdminServerError from "./errorPages/AdminServerError";
 import Exhibit from "./exhibit/Exhibit";
+import Register from "./login/Register";
 
 export { 
   Exhibit,
@@ -21,5 +22,6 @@ export {
   NotFound,
   AdminNotFound,
   ServerError,
-  AdminServerError
+  AdminServerError,
+  Register
 };
