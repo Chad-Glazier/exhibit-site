@@ -28,7 +28,7 @@ export default function ExhibitTile({
   return (
     <>
       <Popup show={showPopup} onClickAway={() => setShowPopup(false)}>
-        <p>Are you sure you want to delete &quot;{image.url}&quot;&#x3F;</p>
+        <p>Are you sure you want to delete &quot;{imageBasename}&quot;&#x3F;</p>
         <button onClick={() => {
           if (onDelete) onDelete();
           setShowPopup(false);

@@ -21,7 +21,7 @@ export default async function del(
     const deleted: Image[] = await prisma.image.findMany();
     await prisma.image.deleteMany();
 
-    delImage(...deleted);
+    deleteImageFile(...deleted);
 
     return res
       .status(200)
@@ -29,15 +29,13 @@ export default async function del(
   }
 
   if (Array.isArray(url)) {
-    url = url.map(el => decodeURIComponent(el));
-
     const deleted: Image[] = await prisma.image.findMany({
       where: {
         url: { in: url }
       }
     });
 
-    delImage(...deleted);
+    deleteImageFile(...deleted);
 
     const payload = await prisma.image.deleteMany({
       where: {
@@ -52,8 +50,6 @@ export default async function del(
       .json(deleted);
   }
 
-  url = decodeURIComponent(url);
-
   const deleted: Image | null = await prisma.image.delete({
     where: { url }
   });
@@ -64,15 +60,17 @@ export default async function del(
       .json({ message: "Image not found." });
   }
 
-  delImage(deleted);
+  deleteImageFile(deleted);
 
   return res
     .status(200)
     .json(deleted);
 }
 
-function delImage(...images: Image[]) {
+function deleteImageFile(...images: Image[]) {
   for (let { url } of images) {
-    fs.unlink(path.join(process.cwd(), "public/", url), () => {});
+    const target = path.join(process.cwd(), "public/uploads", decodeURIComponent(url.split("/").pop()!));
+    console.log(target);
+    fs.unlink(target, () => {});
   }
 }

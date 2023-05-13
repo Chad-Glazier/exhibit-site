@@ -24,8 +24,6 @@ enum MediaType {
  * 
  * In all of these cases, the `onUrlSubmit` prop is called with a URL to
  * the media.
- * 
- * @todo refactor this to use state instead of DOM manipulation (?)
  */
 export default function AddMediaPopup({
   show,
@@ -145,6 +143,5 @@ export default function AddMediaPopup({
         </form>
       </Popup>
     </>
-
-  )
+  );
 }
