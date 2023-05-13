@@ -65,6 +65,24 @@ export default function Dashboard({
               api.exhibit.deleteOne(el.title);
               setExhibitCache(prev => prev.filter(({ title }) => title !== el.title))
             }}
+            onTogglePublic={async (exhibit) => {
+              setExhibitCache(prev => prev.map(el => {
+                if (el.title === exhibit.title) {
+                  return { ...exhibit, published: !exhibit.published};
+                }
+                return el;
+              }));
+              const res = await api.exhibit.put({ ...exhibit, published: !exhibit.published });
+              if (!res.ok) {
+                alert(res.error);
+                setExhibitCache(prev => prev.map(el => {
+                  if (el.title === exhibit.title) {
+                    return { ...exhibit, published: !exhibit.published};
+                  }
+                  return el;
+                }));
+              }
+            }}
           />
         )}
         <button onClick={() => setShowPopup(true)}>

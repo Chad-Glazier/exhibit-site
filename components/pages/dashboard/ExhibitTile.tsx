@@ -4,17 +4,16 @@ import Image from "next/image";
 import { useState } from "react";
 import { Popup } from "@/components/general";
 import Link from "next/link";
+import { api } from "@/util/client";
 
 export default function ExhibitTile({ 
   exhibit,
-  onDelete 
+  onDelete,
+  onTogglePublic
 }: { 
-  exhibit: PopulatedExhibitCreatable 
-  /**
-   * This prop is a callback that's invoked after the user clicks the "delete"
-   * button and confirms the deletion.
-   */ 
-  onDelete: () => void
+  exhibit: PopulatedExhibitCreatable;
+  onDelete: () => void;
+  onTogglePublic: (exhibit: PopulatedExhibitCreatable) => void;
 }) {
   const [showPopup, setShowPopup] = useState(false);
 
@@ -46,8 +45,16 @@ export default function ExhibitTile({
           <button onClick={() => setShowPopup(true)}>
             Delete
           </button>
+            <button onClick={() => {
+              onTogglePublic(exhibit); 
+            }}>
+              {exhibit.published ? "Unpublish" : "Publish"}
+            </button>
           <Link href={`/designer/${exhibit.title}`}>
             Edit
+          </Link>
+          <Link href={`/preview/${exhibit.title}`} target="_blank">
+            Preview
           </Link>
         </div>
       </div>    

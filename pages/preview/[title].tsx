@@ -1,13 +1,19 @@
-import { Exhibit } from "@/components/pages";
 import { GetServerSideProps } from "next";
 import prisma from "@/prisma";
+import { authorized } from "@/util/server";
+import { Exhibit } from "@/components/pages";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const userData = await authorized(context.req.cookies);
+  if (!userData) {
+    return { redirect: { destination: "/login", permanent: false } };
+  }
+
   let { title } = context.query;
 
   if (title === undefined || typeof title !== "string") {
     return {
-      redirect: { destination: "/404", permanent: false }
+      redirect: { destination: "/404_Admin", permanent: false }
     }
   }
 
@@ -19,14 +25,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: { cards: true }
   });
 
-  if (!exhibit || !exhibit.published) {
+  if (!exhibit) {
     return {
-      redirect: { destination: "/404", permanent: false }
+      redirect: { destination: "/404_Admin", permanent: false }
     }
   }
 
   return {
-    props: { exhibit }
+    props: { exhibit, userData }
   }
 }
 
