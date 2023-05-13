@@ -16,16 +16,11 @@ export default function NavBar() {
       <ul className={styles.navbarList}>
         <li className={styles.navbarItem}>
           <Link href="/" className={styles.navbarLink}>
-            Exhibits
+            Virtual Exhibits
           </Link>
         </li>
         <li className={styles.navbarItem}>
-          <Link href="/about" className={styles.navbarLink}>
-            About
-          </Link>
-        </li>
-        <li className={styles.navbarItem}>
-          <Link href="/contact" className={styles.navbarLink}>
+          <Link href="https://vernonmuseum.ca/contact-us-mav/" className={styles.navbarLink}>
             Contact
           </Link>
         </li>

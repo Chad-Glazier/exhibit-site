@@ -50,10 +50,10 @@ export default function ExhibitTile({
             }}>
               {exhibit.published ? "Unpublish" : "Publish"}
             </button>
-          <Link href={`/designer/${exhibit.title}`}>
+          <Link href={`/designer/${encodeURIComponent(exhibit.title)}`}>
             Edit
           </Link>
-          <Link href={`/preview/${exhibit.title}`} target="_blank">
+          <Link href={`/preview/${encodeURIComponent(exhibit.title)}`} target="_blank">
             Preview
           </Link>
         </div>

@@ -49,7 +49,5 @@ export default async function put(
     }
   });  
 
-  console.log(createdExhibit);
-
   return res.status(201).json(createdExhibit);
 }

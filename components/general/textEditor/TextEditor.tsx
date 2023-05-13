@@ -61,7 +61,7 @@ export default function TextEditor({
         <div className={styles.editorInner}>
           <RichTextPlugin
             contentEditable={<ContentEditable className={styles.editorInput}/>}
-            placeholder={<Placeholder />}
+            placeholder={<div className={theme.placeholder}>{readonly ? ""  : "Enter text..."}</div>}
             ErrorBoundary={LexicalErrorBoundary}
           />
           <HistoryPlugin />
