@@ -5,7 +5,7 @@
   "scripts": {
     "migrate": "prisma migrate dev --name new_migration && prisma format && prisma generate",
     "dev": "next dev",
-    "build": "npm install && mkdir public/uploads && npm run migrate && next build",
+    "build": "npm install && npm run migrate && next build",
     "start": "next start",
     "lint": "next lint"
   },
