@@ -42,4 +42,3 @@ prisma/zod
 # yarn
 yarn.lock
 
-public/uploads/*
