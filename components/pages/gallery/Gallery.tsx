@@ -2,9 +2,9 @@ import { AdminLayout } from "@/components/layouts";
 import { Image } from "@prisma/client";
 import GalleryTile from "./GalleryTile";
 import { UserData } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { api } from "@/util/client";
-import { Popup } from "@/components/general";
+import { LoadingOverlay, Popup } from "@/components/general";
 
 export default function Gallery({
   images,
@@ -15,9 +15,11 @@ export default function Gallery({
 }) {
   const [imageCache, setImageCache] = useState(images);
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <AdminLayout>
+      <LoadingOverlay show={loading} />
       <Popup show={showPopup} onClickAway={() => setShowPopup(false)}>
         <form
           onSubmit={e => {
@@ -30,13 +32,15 @@ export default function Gallery({
             }
 
             const imageFile = imageFiles[0];
+            setLoading(true);
             api.image.post(imageFile)
               .then(res => {
                 if (res.ok) {
                   setImageCache(prev => [...prev, res.body]);
-                  return;
+                } else {
+                  alert(res.error); 
                 }
-                //todo handle error
+                setLoading(false);               
               });
             setShowPopup(false);
           }}

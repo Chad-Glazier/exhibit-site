@@ -50,27 +50,31 @@ export default async function del(
       .json(deleted);
   }
 
-  const deleted: Image | null = await prisma.image.delete({
-    where: { url }
-  });
+  try {
+    const deleted: Image | null = await prisma.image.delete({
+      where: { url }
+    });    
 
-  if (!deleted) {
+    if (!deleted) {
+      throw new Error();
+    }
+  
+    deleteImageFile(deleted);
+  
+    return res
+      .status(200)
+      .json(deleted);
+      
+  } catch {
     return res
       .status(404)
       .json({ message: "Image not found." });
   }
-
-  deleteImageFile(deleted);
-
-  return res
-    .status(200)
-    .json(deleted);
 }
 
 function deleteImageFile(...images: Image[]) {
   for (let { url } of images) {
     const target = path.join(process.cwd(), "public/uploads", decodeURIComponent(url.split("/").pop()!));
-    console.log(target);
     fs.unlink(target, () => {});
   }
 }
