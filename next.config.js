@@ -10,7 +10,7 @@ const nextConfig = {
         pathname: '/vi/**',
       },
     ],
-  },
+  }
 }
 
 module.exports = nextConfig

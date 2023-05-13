@@ -104,7 +104,7 @@ export default function AddMediaPopup({
               Select an Image
             </option>
             {imageCache.map((image, index) => {
-              let basename = image.url.split("/").pop();
+              let basename = decodeURIComponent(image.url.split("/").pop() || "");
               return (
                 <option key={index} value={image.url} onClick={() => setMediaType(MediaType.ExistingImage)}>
                   {basename}

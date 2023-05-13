@@ -55,7 +55,7 @@ async function saveImageToFile(image: File): Promise<string> {
 
     readStream.on("error", reject);
     writeStream.on("error", reject);
-    writeStream.on("finish", () => resolve(path.join("/uploads", uniqueFileName)));
+    writeStream.on("finish", () => resolve(path.join("/api/image/upload?filename=", encodeURIComponent(uniqueFileName))));
 
     readStream.pipe(writeStream);
   });

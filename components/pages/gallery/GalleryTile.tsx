@@ -23,7 +23,7 @@ export default function ExhibitTile({
    * path to the image, but the user will only be concerned with the base
    * name.
    */
-  const imageBasename: string = image.url.split("/").pop() || "Unnamed";
+  const imageBasename = decodeURIComponent(image.url.split("/").pop() || "Unnamed");
 
   return (
     <>
