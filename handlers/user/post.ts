@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
-import { UserData, ErrorMessage, TokenPayload } from "@/types";
+import { UserData, ErrorMessage, TokenPayload, UserSchema } from "@/types";
 import { User } from "@prisma/client";
-import { UserSchema } from "@/prisma/zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "@/prisma";

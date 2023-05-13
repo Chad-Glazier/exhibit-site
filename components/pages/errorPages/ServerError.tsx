@@ -1,4 +1,4 @@
-import Styles from "./ServerError.module.css"
+import styles from "./ServerError.module.css"
 import { Layout } from "@/components/layouts";
 
 export default function ServerError() {

@@ -1,6 +1,5 @@
 import parseResponse from "../parseResponse";
-import { ImageSchema } from "@/prisma/zod";
-import { ApiResponse } from "@/types";
+import { ImageSchema, ApiResponse } from "@/types";
 import { Image } from "@prisma/client";
 
 /**

@@ -1,3 +1,9 @@
+export {
+  CardSchema,
+  ExhibitSchema,
+  ImageSchema,
+  UserSchema
+} from "./databaseModels";
 export type { 
   PopulatedExhibit, 
   PopulatedExhibitCreatable,

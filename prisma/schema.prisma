@@ -34,14 +34,3 @@ model Card {
 model Image {
   url String @id
 }
-
-generator zod {
-  provider              = "zod-prisma"
-  output                = "./zod"
-  relationModel         = true
-  modelCase             = "PascalCase"
-  modelSuffix           = "Schema"
-  useDecimalJs          = true
-  imports               = null
-  prismaJsonNullability = true
-}

@@ -1,5 +1,5 @@
 import { Exhibit, Card, User } from "@prisma/client";
-import { ExhibitSchema, CardSchema, UserSchema } from "@/prisma/zod";
+import { ExhibitSchema, CardSchema, UserSchema } from "./databaseModels";
 import * as z from "zod";
 
 export type UserData = Omit<User, "password">;

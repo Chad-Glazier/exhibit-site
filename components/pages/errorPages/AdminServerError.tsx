@@ -1,7 +1,7 @@
 import styles from "./ServerError.module.css";
 import { AdminLayout } from "@/components/layouts";
 
-export default function ServerError() {
+export default function AdminServerError() {
   return (
     <AdminLayout>
       <h1>500: Server Error</h1>
