@@ -1,10 +1,10 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -29,6 +29,8 @@ model Card {
   description String
   exhibitId   Int
   exhibit     Exhibit @relation(fields: [exhibitId], references: [id])
+
+  @@index([exhibitId])
 }
 
 model Image {
