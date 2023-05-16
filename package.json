@@ -6,7 +6,7 @@
     "push-db": "dotenv -e .env.local -- prisma db push",
     "migrate": "dotenv -e .env.local -- prisma migrate deploy; prisma generate",
     "dev": "dotenv -e .env.local -- next dev",
-    "build": "dotenv -e .env.local -- next build",
+    "build": "dotenv -e .env.local -- prisma generate && next build",
     "start": "dotenv -e .env.local -- next start",
     "lint": "dotenv -e .env.local -- next lint"
   },
