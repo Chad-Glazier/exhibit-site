@@ -41,5 +41,3 @@ prisma/zod
 
 # yarn
 yarn.lock
-
-credentials.md
