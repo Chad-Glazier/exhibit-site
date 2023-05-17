@@ -1,12 +1,12 @@
 import styles from "./Register.module.css";
 import { api } from "@/util/client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { LoadingOverlay } from "@/components/general";
 
 export default function Register() {
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     router.prefetch("/dashboard");
   });
@@ -25,6 +25,7 @@ export default function Register() {
       return;
     }
 
+    setLoading(true);
     const response = await api.user.post({
       name,
       email,
@@ -39,6 +40,7 @@ export default function Register() {
       return
     }
 
+    setLoading(false);
     alert(response.error);
   }
 

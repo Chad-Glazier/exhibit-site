@@ -4,6 +4,7 @@ import { Image as ImageInterface } from "@prisma/client";
 import { useState } from "react";
 import { Popup } from "@/components/general";
 import Link from "next/link";
+import { getBasename } from "@/util";
 
 export default function ExhibitTile({ 
   image,
@@ -23,7 +24,7 @@ export default function ExhibitTile({
    * path to the image, but the user will only be concerned with the base
    * name.
    */
-  const imageBasename = decodeURIComponent(image.url.split("/").pop() || "Unnamed");
+  const imageBasename = decodeURIComponent(getBasename(image.url));
 
   return (
     <>

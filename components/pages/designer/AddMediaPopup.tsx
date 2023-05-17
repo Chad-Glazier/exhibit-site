@@ -1,6 +1,6 @@
 import styles from "./AddMediaPopup.module.css";
 import { Popup } from "@/components/general";
-import { youTubePattern, isYouTube } from "@/util";
+import { youTubePattern, isYouTube, getBasename } from "@/util";
 import { useState } from "react";
 import { api } from "@/util/client";
 import { useRouter } from "next/router";
@@ -102,7 +102,7 @@ export default function AddMediaPopup({
               Select an Image
             </option>
             {imageCache.map((image, index) => {
-              let basename = decodeURIComponent(image.url.split("/").pop() || "");
+              let basename = decodeURIComponent(getBasename(image.url));
               return (
                 <option key={index} value={image.url} onClick={() => setMediaType(MediaType.ExistingImage)}>
                   {basename}

@@ -46,11 +46,15 @@ export default async function put(
         data: { 
           password: hashedPassword,
           email,
-          isMaster: wasMaster,
+          isMaster: wasMaster || allUsers.every(user => !user.isMaster),
           ...otherUserData
         }
       });
-      const userData: UserData = { email, isMaster: wasMaster, ...otherUserData};
+      const userData: UserData = { 
+        email, 
+        isMaster: wasMaster || allUsers.every(user => !user.isMaster), 
+        ...otherUserData
+      };
       const tokenPayload: TokenPayload = { email };
       const token: string = jwt.sign(tokenPayload, jwtSecret);
       if (dontLogIn) {

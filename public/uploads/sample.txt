@@ -1,1 +1,0 @@
-this has to be here because otherwise git doesn't include the `uploads` folder, for whatever reason.

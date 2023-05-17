@@ -5,6 +5,7 @@ import fs from "fs";
 import { ErrorMessage } from "@/types";
 import prisma from "@/prisma";
 import { Image } from "@prisma/client";
+import { s3Util } from "@/util/server";
 
 export default async function post(
   req: NextApiRequest,
@@ -14,7 +15,14 @@ export default async function post(
   let newFilename: string;
 
   try {
-    newFilename = await saveImageToFile(image);
+    const uploadResult = await s3Util.put(image);
+    if (typeof uploadResult === "string") {
+      newFilename = uploadResult;
+    } else {
+      return res
+        .status(500)
+        .json(uploadResult);
+    }
   } catch {
     return res
       .status(500)
@@ -30,33 +38,3 @@ export default async function post(
   return res.status(201).json({ url: newFilename });
 }
 
-async function saveImageToFile(image: File): Promise<string> {
-  if (image.originalFilename === null) {
-    throw new Error("No filename.");
-  }
-
-  const destinationDirectory = path.join(process.cwd(), "public/uploads");
-  const basename: string = path.basename(image.originalFilename);
-  const fileExtension: string = path.extname(basename);
-  const fileNameWithoutExtension: string = basename
-    .substring(0, basename.length - fileExtension.length);
-
-  let destinationPath: string = path.join(destinationDirectory, image.originalFilename);
-  let uniqueFileName = basename;
-  
-  for (let i = 1; fs.existsSync(destinationPath); i++) {
-    uniqueFileName = `${fileNameWithoutExtension} (${i})${fileExtension}`;
-    destinationPath = path.join(destinationDirectory, uniqueFileName);
-  }
-
-  return new Promise<string>((resolve, reject) => {
-    const readStream = fs.createReadStream(image.filepath);
-    const writeStream = fs.createWriteStream(destinationPath);
-
-    readStream.on("error", reject);
-    writeStream.on("error", reject);
-    writeStream.on("finish", () => resolve(path.join("/api/image/upload?filename=", encodeURIComponent(uniqueFileName))));
-
-    readStream.pipe(writeStream);
-  });
-}

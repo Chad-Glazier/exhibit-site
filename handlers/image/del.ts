@@ -4,6 +4,7 @@ import { Image, Prisma } from "@prisma/client";
 import { ErrorMessage } from "@/types";
 import fs from "fs";
 import path from "path";
+import { s3Util } from "@/util/server";
 
 export default async function del(
   req: NextApiRequest,
@@ -19,9 +20,12 @@ export default async function del(
 
   if (url === "*") {
     const deleted: Image[] = await prisma.image.findMany();
-    await prisma.image.deleteMany();
 
-    deleteImageFile(...deleted);
+    for (const image of deleted) {
+      await s3Util.del(image.url);
+    }
+
+    await prisma.image.deleteMany();
 
     return res
       .status(200)
@@ -29,38 +33,52 @@ export default async function del(
   }
 
   if (Array.isArray(url)) {
-    const deleted: Image[] = await prisma.image.findMany({
+    const targets: Image[] = await prisma.image.findMany({
       where: {
         url: { in: url }
       }
     });
 
-    deleteImageFile(...deleted);
-
-    const payload = await prisma.image.deleteMany({
-      where: {
-        url: { in: url }
+    let successfullyDeleted = [];
+    for (const { url } of targets) {
+      if (typeof (await s3Util.del(url)) !== "string") {
+        // deletion failed for some reason, most likely authorization
+        return res.status(403).json({
+          message: "You are not authorized to delete this image."
+        })
+      } else {
+        successfullyDeleted.push(await prisma.image.delete({
+          where: { url }
+        }));
       }
-    });
+    }
 
-    const status = payload.count === url.length ? 200 : 206;
+    const status = successfullyDeleted.length === url.length ? 200 : 206;
 
     return res
       .status(status)
-      .json(deleted);
+      .json(successfullyDeleted);
   }
 
   try {
+    const deletedFromR2 = await s3Util.del(url);
+    if (typeof deletedFromR2 !== "string") {
+      // deletion failed, most likely due to authorization
+      return res.status(403).json({
+        message: "You are not authorized to delete this image."
+      })
+    }
+
     const deleted: Image | null = await prisma.image.delete({
       where: { url }
     });    
 
     if (!deleted) {
-      throw new Error();
+      return res.status(200).json({
+        url
+      });
     }
-  
-    deleteImageFile(deleted);
-  
+    
     return res
       .status(200)
       .json(deleted);
@@ -69,12 +87,5 @@ export default async function del(
     return res
       .status(404)
       .json({ message: "Image not found." });
-  }
-}
-
-function deleteImageFile(...images: Image[]) {
-  for (let { url } of images) {
-    const target = path.join(process.cwd(), "public/uploads", decodeURIComponent(url.split("/").pop()!));
-    fs.unlink(target, () => {});
   }
 }

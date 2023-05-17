@@ -41,13 +41,17 @@ export default async function post(
     try {
       await prisma.user.create({
         data: {
-          isMaster: allUsers.length === 0,
+          isMaster: allUsers.every(user => !user.isMaster),
           password: hashedPassword,
           email,
           ...otherUserData
         }
       });
-      const userData: UserData = { email, isMaster: allUsers.length === 0, ...otherUserData};
+      const userData: UserData = { 
+        email, 
+        isMaster: allUsers.every(user => !user.isMaster), 
+        ...otherUserData
+      };
       const tokenPayload: TokenPayload = { email };
       const token: string = jwt.sign(tokenPayload, jwtSecret);
       if (dontLogIn) {

@@ -1,6 +1,9 @@
-import isYouTube, { youTubeRegExp, youTubePattern } from "./shared/isYouTube";
+import isYouTube, { youTubePattern } from "./shared/isYouTube";
+import { getBasename, getExtension } from "./shared/filenames";
 
 export {
   isYouTube,
-  youTubePattern
+  youTubePattern,
+  getBasename,
+  getExtension
 }
