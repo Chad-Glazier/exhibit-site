@@ -1,7 +1,7 @@
 import authorized from "./authorized";
-import s3Util from "./s3";
+import r2Bucket from "./r2Bucket";
 
 export {
   authorized,
-  s3Util
+  r2Bucket
 }

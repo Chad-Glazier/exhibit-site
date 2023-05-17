@@ -26,9 +26,12 @@ export default function OpenExhibit({
           : (document.getElementById("title-selector") as HTMLInputElement).value;
 
         if (createNew) {
+          // the summary field is a JSON string that represents an empty document,
+          // which is necessary for the Lexical text editor to parse (it throws a 
+          // fit otherwise)
           api.exhibit.post({
             title,
-            summary: "No description",
+            summary: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
             thumbnail: "/add.png",
             cards: [],
             published: false

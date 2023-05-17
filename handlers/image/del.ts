@@ -4,7 +4,7 @@ import { Image, Prisma } from "@prisma/client";
 import { ErrorMessage } from "@/types";
 import fs from "fs";
 import path from "path";
-import { s3Util } from "@/util/server";
+import { r2Bucket } from "@/util/server";
 
 export default async function del(
   req: NextApiRequest,
@@ -22,7 +22,7 @@ export default async function del(
     const deleted: Image[] = await prisma.image.findMany();
 
     for (const image of deleted) {
-      await s3Util.del(image.url);
+      await r2Bucket.del(image.url);
     }
 
     await prisma.image.deleteMany();
@@ -41,7 +41,7 @@ export default async function del(
 
     let successfullyDeleted = [];
     for (const { url } of targets) {
-      if (typeof (await s3Util.del(url)) !== "string") {
+      if (typeof (await r2Bucket.del(url)) !== "string") {
         // deletion failed for some reason, most likely authorization
         return res.status(403).json({
           message: "You are not authorized to delete this image."
@@ -61,7 +61,7 @@ export default async function del(
   }
 
   try {
-    const deletedFromR2 = await s3Util.del(url);
+    const deletedFromR2 = await r2Bucket.del(url);
     if (typeof deletedFromR2 !== "string") {
       // deletion failed, most likely due to authorization
       return res.status(403).json({

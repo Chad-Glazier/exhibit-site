@@ -24,7 +24,7 @@ const s3 = new S3Client({
 });
 
 async function put(file: File): Promise<string | ErrorMessage> {
-  const filename = encodeURIComponent(getBasename(file.originalFilename!) + getExtension(file.originalFilename!));
+  const filename = getBasename(file.originalFilename!) + getExtension(file.originalFilename!);
   
   try {
     await s3.send(new PutObjectCommand({
@@ -56,9 +56,9 @@ async function del(url: string): Promise<string | ErrorMessage> {
   return url;
 }
 
-const s3Util = {
+const r2Bucket = {
   put,
   del
 }
 
-export default s3Util;
+export default r2Bucket;
