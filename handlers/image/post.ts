@@ -17,6 +17,7 @@ export default async function post(
 
   let newFilename = encodeURIComponent(image.originalFilename);
   try {
+    // ensure the filename is unique
     const existingImages = await prisma.image.findMany();
     for (let i = 1; existingImages.some(({ url }) => getBasename(url) + getExtension(url) === newFilename); i++) {
       newFilename = encodeURIComponent(`${getBasename(image.originalFilename)} (${i})${getExtension(image.originalFilename)}`);
