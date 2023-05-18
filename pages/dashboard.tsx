@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
     include: { cards: true }
-  });
+  }) as PopulatedExhibit[];
 
   return { props: { exhibits, userData } };
 }

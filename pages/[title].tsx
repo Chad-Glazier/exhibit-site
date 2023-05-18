@@ -1,5 +1,6 @@
 import { Exhibit } from "@/components/pages";
 import { GetServerSideProps } from "next";
+import { PopulatedExhibitCreatable } from "@/types";
 import prisma from "@/prisma";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -12,12 +13,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   title = decodeURIComponent(title);
-  const exhibit = await prisma.exhibit.findUnique({ 
+  const exhibit: PopulatedExhibitCreatable | null = await prisma.exhibit.findUnique({ 
     where: {
       title,
     },
     include: { cards: true }
-  });
+  }) as PopulatedExhibitCreatable | null;
 
   if (!exhibit || !exhibit.published) {
     return {

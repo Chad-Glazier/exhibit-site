@@ -24,7 +24,7 @@ export default async function get(
       // get the exhibits for the response
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
       // send the success response; this specific request cannot fail by definition
       res
         .status(200)
@@ -50,7 +50,7 @@ export default async function get(
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         where: { id: { in: id.map(item => parseInt(item)) } },
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
 
       // if all exhibits were found => 200 OK
       if (exhibits.length === id.length) {
@@ -80,7 +80,7 @@ export default async function get(
     const exhibit: PopulatedExhibit | null = await prisma.exhibit.findUnique({
       where: { id: parseInt(id) },
       include: { cards: true }
-    });
+    }) as PopulatedExhibit | null;
 
     // if exhibit doesn't exist => 404 Not Found
     if (exhibit === null) {
@@ -99,7 +99,7 @@ export default async function get(
       // get the exhibits for the response
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
       // send the success response; this specific request cannot fail by definition
       res
         .status(200)
@@ -112,7 +112,7 @@ export default async function get(
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         where: { title: { in: title } },
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
 
       // if all exhibits were found => 200 OK
       if (exhibits.length === title.length) {
@@ -142,7 +142,7 @@ export default async function get(
     const exhibit: PopulatedExhibit | null = await prisma.exhibit.findUnique({
       where: { title: title },
       include: { cards: true }
-    });
+    }) as PopulatedExhibit | null;
 
     // if exhibit doesn't exist => 404 Not Found
     if (exhibit === null) {

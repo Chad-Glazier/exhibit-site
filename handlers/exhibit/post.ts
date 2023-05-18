@@ -22,13 +22,13 @@ export default async function post(
   let preExisting: PopulatedExhibit | null = await prisma.exhibit.findUnique({
     where: { title: newExhibit.title },
     include: { cards: true }
-  });
+  }) as PopulatedExhibit;
+
   if (preExisting) {
     res.status(409).json({
       ...preExisting,
       message: "An exhibit with that title already exists."
     })
-    await prisma.$disconnect();
     return;
   }
 
@@ -42,7 +42,7 @@ export default async function post(
     include: {
       cards: true
     }
-  });
+  }) as PopulatedExhibit;
 
   return res.status(201).json(createdExhibit);
 }

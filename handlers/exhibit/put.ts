@@ -22,7 +22,7 @@ export default async function put(
   let preExisting: PopulatedExhibit[] = await prisma.exhibit.findMany({
     where: { title: newExhibit.title },
     include: { cards: true }
-  });
+  }) as PopulatedExhibit[];
 
   if (preExisting.length > 0) {
     await prisma.card.deleteMany({
@@ -32,7 +32,7 @@ export default async function put(
     });
     await prisma.exhibit.deleteMany({
       where: {
-        id: { in: preExisting.map(exhibit => exhibit.id) }
+        title: newExhibit.title 
       }
     });
   }
@@ -47,7 +47,7 @@ export default async function put(
     include: {
       cards: true
     }
-  });  
+  }) as PopulatedExhibit;      
 
-  return res.status(201).json(createdExhibit);
+    return res.status(201).json(createdExhibit);
 }

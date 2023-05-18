@@ -31,7 +31,7 @@ export default async function del(
       // get the exhibits for the response
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
       // delete the cards
       await prisma.card.deleteMany();
       // delete the exhibits
@@ -62,7 +62,7 @@ export default async function del(
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         where: { id: { in: id.map(item => parseInt(item)) } },
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
 
       // delete the exhibit cards
       await prisma.card.deleteMany({
@@ -101,7 +101,7 @@ export default async function del(
     const exhibit: PopulatedExhibit | null = await prisma.exhibit.findUnique({
       where: { id: parseInt(id) },
       include: { cards: true }
-    });
+    }) as PopulatedExhibit | null;
 
     // if exhibit doesn't exist => 404 Not Found
     if (exhibit === null) {
@@ -125,7 +125,7 @@ export default async function del(
       // get the exhibits for the response
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
       // delete the cards
       await prisma.card.deleteMany();
       // delete the exhibits
@@ -143,7 +143,7 @@ export default async function del(
       let exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
         where: { title: { in: title } },
         include: { cards: true }
-      });
+      }) as PopulatedExhibit[];
 
       // delete the exhibit cards
       await prisma.card.deleteMany({
@@ -182,7 +182,7 @@ export default async function del(
     const exhibit: PopulatedExhibit | null = await prisma.exhibit.findUnique({
       where: { title: title },
       include: { cards: true }
-    });
+    }) as PopulatedExhibit | null;
 
     // if exhibit doesn't exist => 404 Not Found
     if (exhibit === null) {

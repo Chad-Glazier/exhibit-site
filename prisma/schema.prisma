@@ -18,7 +18,7 @@ model Exhibit {
   id        Int     @id @default(autoincrement())
   title     String  @unique
   thumbnail String
-  summary   String
+  summary   Json
   published Boolean
   cards     Card[]
 }
@@ -26,7 +26,7 @@ model Exhibit {
 model Card {
   id          Int     @id @default(autoincrement())
   media       String
-  description String
+  description Json
   exhibitId   Int
   exhibit     Exhibit @relation(fields: [exhibitId], references: [id])
 

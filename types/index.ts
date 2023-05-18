@@ -1,8 +1,14 @@
-export {
-  CardSchema,
-  ExhibitSchema,
-  ImageSchema,
-  UserSchema
+export { 
+  CardSchema, 
+  ExhibitSchema, 
+  ImageSchema, 
+  UserSchema 
+} from "./databaseModels";
+export type {
+  CardType,
+  ExhibitType,
+  ImageType,
+  UserType
 } from "./databaseModels";
 export type { 
   PopulatedExhibit, 

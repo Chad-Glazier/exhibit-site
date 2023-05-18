@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const allExhibits: PopulatedExhibitCreatable[] = await prisma.exhibit.findMany({
     include: { cards: true }
-  });
+  }) as PopulatedExhibitCreatable[];
 
   const originalExhibit = allExhibits.find(x => x.title === title);
 
