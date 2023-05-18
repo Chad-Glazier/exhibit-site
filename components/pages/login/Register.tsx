@@ -45,53 +45,56 @@ export default function Register() {
   }
 
   return (
-    <main className={styles.login}>
-      <h1 className={styles.heading}>
-        Register
-      </h1>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label} htmlFor="name">
-          Name
-        </label>
-        <input
-          className={styles.input}
-          type="text" id="name" name="name"
-          required={true}
-        />
-        <label className={styles.label} htmlFor="email">
-          Email
-        </label>
-        <input 
-          className={styles.input} 
-          type="email" id="email" name="email"
-          required={true}
-        />
-        <label className={styles.label} htmlFor="password">
-          Password
-        </label>
-        <input 
-          className={styles.input} 
-          type="password" id="password" name="password"
-          required={true}
-        />
-        <label className={styles.label} htmlFor="password-confirm">
-          Confirm Password
-        </label>
-        <input 
-          className={styles.input} 
-          type="password" id="password-confirm" name="password-confirm"
-          required={true}
-        />
-        <label className={styles.label} htmlFor="master-key">
-          Master Key
-        </label>
-        <input 
-          className={styles.input} 
-          type="password" id="master-key" name="master-key"
-          required={true}
-        />
-        <button>Register</button>
-      </form>
-    </main>
+    <>
+      <LoadingOverlay show={loading} />
+      <main className={styles.login}>
+        <h1 className={styles.heading}>
+          Register
+        </h1>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <label className={styles.label} htmlFor="name">
+            Name
+          </label>
+          <input
+            className={styles.input}
+            type="text" id="name" name="name"
+            required={true}
+          />
+          <label className={styles.label} htmlFor="email">
+            Email
+          </label>
+          <input 
+            className={styles.input} 
+            type="email" id="email" name="email"
+            required={true}
+          />
+          <label className={styles.label} htmlFor="password">
+            Password
+          </label>
+          <input 
+            className={styles.input} 
+            type="password" id="password" name="password"
+            required={true}
+          />
+          <label className={styles.label} htmlFor="password-confirm">
+            Confirm Password
+          </label>
+          <input 
+            className={styles.input} 
+            type="password" id="password-confirm" name="password-confirm"
+            required={true}
+          />
+          <label className={styles.label} htmlFor="master-key">
+            Master Key
+          </label>
+          <input 
+            className={styles.input} 
+            type="password" id="master-key" name="master-key"
+            required={true}
+          />
+          <button>Register</button>
+        </form>
+      </main>
+    </>
   )
 }
