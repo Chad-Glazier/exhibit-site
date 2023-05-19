@@ -1,4 +1,4 @@
-.form {
+.popup {
   padding: 1rem;
   background-color: #EEE;
   border-radius: 5px;
@@ -6,39 +6,33 @@
   flex-direction: column;
 }
 
-.title {
+.popupTitle {
   font-size: 1.4rem;
   text-transform: uppercase;
   text-align: center;
 }
 
-.label, .input, .submit {
-  margin: 2px 0;
+.popupButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
 }
 
-.input, .submit {
+.button {
+  flex: 1;
+  border: 1px solid var(--admin-dark-blue);
   padding: 2px;
   border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
-}
-
-.label, .submit {
-  text-transform: uppercase;
-}
-
-.input {
   font-size: 1rem;
-}
-
-.submit {
-  font-size: 1.2rem;
+  text-transform: uppercase;
   transition: all 400ms;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background-color: var(--admin-light-blue);
   color: #FFF;
 }
 
-.submit:hover {
+.button:hover {
   background-color: var(--admin-lighter-blue);
   cursor: pointer;
   color: var(--admin-dark-blue);

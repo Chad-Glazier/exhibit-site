@@ -1,5 +1,5 @@
 import styles from "./User.module.css";
-import { Popup } from "@/components/general";
+import DeleteUser from "./DeleteUser";
 import { UserData } from "@/types";
 import { useState } from "react";
 
@@ -10,45 +10,41 @@ export default function User({
 }: {
   userData: UserData;
   activeUserData: UserData;
-  onDelete: (userData: UserData) => void;
+  onDelete: () => void;
 }) {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   return (
     <>
-      <Popup
-        show={showPopup}
-        onClickAway={() => setShowPopup(false)}
-      >
-        <h1>Delete User</h1>
-        <p>Are you sure you want to delete user &quot;{userData.name}&quot;&#x3F;</p>
-        <button onClick={() => {
-          onDelete(userData);
-          setShowPopup(false);
-        }}>
-          Confirm
-        </button>
-        <button onClick={() => setShowPopup(false)}>
-          Cancel
-        </button>
-      </Popup>
-      <div>
-        <h2>
+      <DeleteUser 
+        show={showDeletePopup} 
+        onClose={() => setShowDeletePopup(false)}
+        onConfirm={onDelete}
+        userData={userData} 
+      />
+      <tr>
+        <td>
           {userData.email === activeUserData.email ?
             <em>{userData.name}</em>
             : 
             userData.name
           } 
           {userData.isMaster && ` (Admin)`}
-        </h2>
-        <p>Email: {userData.email}</p>
-        {activeUserData.isMaster && userData.email !== activeUserData.email &&
-          <button onClick={() => setShowPopup(true)}>
-            Delete
-          </button>
-        }
-      </div>    
+        </td>
+        <td>
+          {userData.email}
+        </td>
+        <td>
+          {activeUserData.isMaster && userData.email !== activeUserData.email &&
+            <button
+              className={styles.button}
+              onClick={() => setShowDeletePopup(true)}
+            >
+              Delete
+            </button>
+          }          
+        </td>
+      </tr>    
     </>
-
   )
 }

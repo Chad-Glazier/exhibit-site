@@ -1,10 +1,13 @@
+import styles from "./AdminLayout.module.css";
 import AdminNav from "./AdminNav";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AdminNav />
-      {children}
+      <main className={styles.main} >
+        {children}
+      </main>
     </>
   )
 }

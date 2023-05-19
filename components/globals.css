@@ -8,6 +8,12 @@
   --greenish: #8B8C4A;
   --bluish: #5B6670;
   --greyish: #AFA99F;
+
+  --admin-dark-blue: #002453;
+  --admin-lighter-blue: #54afff;
+  --admin-light-blue: #3474ff;
+  --admin-navbar-height: 55px;
+  --admin-theme-dark: rgba(0, 0, 0, 0.9);
 }
 
 * {

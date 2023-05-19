@@ -11,6 +11,7 @@ export default function CreateUserForm({
 }) {
   return (
     <form 
+      className={styles.form}
       onSubmit={async (e) => {
         e.preventDefault();
 
@@ -37,24 +38,24 @@ export default function CreateUserForm({
         });
       }}
     >
-      <h1>Create User</h1>
-      <label htmlFor="name">
+      <h1 className={styles.title}>Create User</h1>
+      <label className={styles.label} htmlFor="name">
         Name
       </label>
-      <input type="text" id="name" name="name" required />
-      <label htmlFor="email">
+      <input className={styles.input} type="text" id="name" name="name" required />
+      <label className={styles.label} htmlFor="email">
         Email
       </label>
-      <input type="email" id="email" name="email" required />
-      <label htmlFor="password">
+      <input className={styles.input} type="email" id="email" name="email" required />
+      <label className={styles.label} htmlFor="password">
         Password
       </label>
-      <input type="password" id="password" name="password" required />
-      <label htmlFor="password-confirm">
+      <input className={styles.input} type="password" id="password" name="password" required />
+      <label className={styles.label} htmlFor="password-confirm">
         Confirm Password
       </label>
-      <input type="password" id="password-confirm" name="password-confirm" required />
-      <button>
+      <input className={styles.input} type="password" id="password-confirm" name="password-confirm" required />
+      <button className={styles.submit}>
         Submit
       </button>
     </form>

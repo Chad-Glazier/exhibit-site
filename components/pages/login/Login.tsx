@@ -57,6 +57,5 @@ export default function Login() {
         </form>
       </main>    
     </>
-
-  )
+  );
 }

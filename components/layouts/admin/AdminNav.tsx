@@ -7,10 +7,10 @@ export default function AdminNav() {
     <nav className={styles.navbar}>
       <Link href="/dashboard">
         <Image
-          src="/logo.svg"
+          src="/logo-white.svg"
           alt="The Museum & Archives of Vernon Logo"
-          width={356}
-          height={93}
+          width={191}
+          height={50}
         />
       </Link>
       <ul className={styles.navbarList}>

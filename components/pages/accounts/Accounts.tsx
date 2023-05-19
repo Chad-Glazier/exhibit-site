@@ -5,8 +5,8 @@ import { api } from "@/util/client";
 import { useState } from "react";
 import User from "./User";
 import CreateUserForm from "./CreateUserForm";
-import MyAccount from "./MyAccount";
 import { Popup, LoadingOverlay } from "@/components/general";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 export default function Accounts({
   users,
@@ -17,6 +17,7 @@ export default function Accounts({
 }) {
   const [userCache, setUserCache] = useState<UserData[]>(users);
   const [showUserCreateForm, setShowUserCreateForm] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -39,34 +40,71 @@ export default function Accounts({
         />
       </Popup>
       <AdminLayout>
-        <MyAccount userData={userData} />
-        <h1>Other Users</h1>
-        {userCache.filter(({ email }) => email !== userData.email).map((user, index) => (
-          <User
-            key={index}
-            activeUserData={userData}
-            userData={user}
-            onDelete={async (userData) => {
-              setLoading(true);
-              const res = await api.user.deleteOne(userData.email);
-              if (!res.ok) {
-                alert(res.error);
-              } else {
-                setUserCache(prev => prev.filter(el => el.email !== userData.email));
-              }
-              setLoading(false);
-            }}
-          />
-        ))}
-        {userData.isMaster && 
-          <button
-            onClick={() => setShowUserCreateForm(true)}
-          >
-            Add User
-          </button>
-        }
+        <ChangePasswordForm 
+          show={showPasswordForm} 
+          userData={userData} 
+          onClose={() => setShowPasswordForm(false)}
+        />
+        <section className={styles.section}>
+          <h1 className={styles.title}>My Account</h1>
+          <div className={styles.tableContainer}>
+            <table
+              className={styles.table}
+            >
+              <tbody>
+                <tr>
+                  <td className={styles.label}>Name</td>
+                  <td>{userData.name}</td>
+                </tr>
+                <tr>
+                  <td className={styles.label}>Email</td>
+                  <td>{userData.email}</td>
+                </tr>            
+              </tbody>
+            </table>
+            <button 
+              className={styles.button}
+              onClick={() => {
+                setShowPasswordForm(true);
+              }}
+            > 
+              Change Password
+            </button>  
+          </div>      
+        </section>
+        <section className={styles.section}>
+          <h1 className={styles.title}>Other Users</h1>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  {userData.isMaster && <th>Actions</th>}
+                </tr>
+              </thead>
+              <tbody>
+              {userCache.filter(({ email }) => email !== userData.email).map((user, index) => (
+                <User
+                  key={index}
+                  activeUserData={userData}
+                  userData={user}
+                  onDelete={() => setUserCache(userCache.filter(({ email }) => email !== user.email))}
+                />
+              ))}                          
+              </tbody>
+            </table>
+            {userData.isMaster && 
+              <button
+                className={styles.button}
+                onClick={() => setShowUserCreateForm(true)}
+              >
+                Add User
+              </button>
+            } 
+          </div>           
+        </section>
       </AdminLayout>     
     </>
-   
   );
 }
