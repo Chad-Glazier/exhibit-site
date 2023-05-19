@@ -6,7 +6,7 @@ import { useState } from "react";
 import User from "./User";
 import CreateUserForm from "./CreateUserForm";
 import MyAccount from "./MyAccount";
-import { Popup } from "@/components/general";
+import { Popup, LoadingOverlay } from "@/components/general";
 
 export default function Accounts({
   users,
@@ -17,20 +17,24 @@ export default function Accounts({
 }) {
   const [userCache, setUserCache] = useState<UserData[]>(users);
   const [showUserCreateForm, setShowUserCreateForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
+      <LoadingOverlay show={loading} />
       <Popup show={showUserCreateForm} onClickAway={() => setShowUserCreateForm(false)}>
         <CreateUserForm
           existingUsers={userCache}
           onUserCreate={async (user) => {
-            setUserCache([...userCache, user]);
             setShowUserCreateForm(false);
+            setLoading(true);
             const res = await api.user.post(user, { dontLogIn: true });
             if (!res.ok) {
               alert(res.error);
-              setUserCache(userCache.filter(({ email }) => email !== user.email));
+            } else {
+              setUserCache([...userCache, user]);
             }
+            setLoading(false);
           }}
         />
       </Popup>
@@ -42,9 +46,15 @@ export default function Accounts({
             key={index}
             activeUserData={userData}
             userData={user}
-            onDelete={(userData) => {
-              api.user.deleteOne(userData.email);
-              setUserCache(userCache.filter(({ email }) => email !== userData.email))
+            onDelete={async (userData) => {
+              setLoading(true);
+              const res = await api.user.deleteOne(userData.email);
+              if (!res.ok) {
+                alert(res.error);
+              } else {
+                setUserCache(prev => prev.filter(el => el.email !== userData.email));
+              }
+              setLoading(false);
             }}
           />
         ))}
