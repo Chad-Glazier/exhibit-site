@@ -3,6 +3,7 @@ import { api } from "@/util/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LoadingOverlay } from "@/components/general";
+import Head from "next/head";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -33,10 +34,13 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <title>Login &#124; The Museum &amp; Archives of Vernon</title>
+      </Head>
       <LoadingOverlay show={loading} />
       <main className={styles.login}>
-        <h1 className={styles.heading}>Login</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
+          <h1 className={styles.title}>Login</h1>
           <label className={styles.label} htmlFor="email">
             Email
           </label>
@@ -53,7 +57,7 @@ export default function Login() {
             type="password" id="password" name="password"
             required={true}
           />
-          <button>Log In</button>
+          <button className={styles.submit}>Log In</button>
         </form>
       </main>    
     </>

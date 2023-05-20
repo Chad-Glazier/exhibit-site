@@ -42,7 +42,10 @@ export default function Designer({
             return;
           }
           setLoading(true);
-          const res = await api.exhibit.put(cache.current);
+          if (titleWasChanged && originalExhibit.title !== cache.current.title) {
+            api.exhibit.deleteOne(originalExhibit.title);
+          }
+          const res = await api.exhibit.post(cache.current);
           if (!res.ok) {
             router.push("/500_Admin");
           }

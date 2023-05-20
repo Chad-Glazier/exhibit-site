@@ -47,11 +47,11 @@ export default function Register() {
   return (
     <>
       <LoadingOverlay show={loading} />
-      <main className={styles.login}>
-        <h1 className={styles.heading}>
-          Register
-        </h1>
+      <main className={styles.register}>
         <form className={styles.form} onSubmit={handleSubmit}>
+          <h1 className={styles.title}>
+            Register
+          </h1>
           <label className={styles.label} htmlFor="name">
             Name
           </label>
@@ -92,7 +92,7 @@ export default function Register() {
             type="password" id="master-key" name="master-key"
             required={true}
           />
-          <button>Register</button>
+          <button className={styles.submit}>Register</button>
         </form>
       </main>
     </>

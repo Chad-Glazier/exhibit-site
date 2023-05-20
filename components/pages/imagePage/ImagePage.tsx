@@ -6,6 +6,7 @@ import { api } from "@/util/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Popup, LoadingOverlay } from "@/components/general";
+import Link from "next/link";
 
 export default function ImagePage({
   imageName,
@@ -93,7 +94,11 @@ export default function ImagePage({
               <p>This image is being used by the following exhibits:</p>
               <ul>
               {relevantExhibitTitles.map((title, index) => 
-                <li key={index}>{title}</li>
+                <li key={index}>
+                  <Link href={`/designer/${encodeURIComponent(title)}`}>
+                    {title}
+                  </Link>
+                </li>
               )}
               </ul>            
             </>

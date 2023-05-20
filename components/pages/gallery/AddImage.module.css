@@ -1,6 +1,7 @@
 .form {
   padding: 1rem;
-  background-color: #EEE;
+  background-color: #fff;
+  border: 1px solid var(--admin-dark-blue);
   border-radius: 5px;
   display: flex;
   flex-direction: column;

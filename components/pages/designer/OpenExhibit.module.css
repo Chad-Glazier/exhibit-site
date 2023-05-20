@@ -1,0 +1,69 @@
+.form {
+  margin: 8rem auto;
+  max-width: min(400px, 90%);
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--admin-dark-blue);
+  font-size: 1rem;
+}
+
+.title {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.label, .input, .select, .submit {
+  margin: 5px 0;
+}
+
+.input, .select, .submit {
+  font-size: 1rem;
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--admin-dark-blue);
+}
+
+.label, .submit { 
+  text-transform: uppercase;
+}
+
+.submit {
+  font-size: 1rem;
+  transition: all 400ms;
+  margin-top: 1rem;
+  background-color: var(--admin-light-blue);
+  color: #FFF;
+}
+
+.submit:hover {
+  background-color: var(--admin-lighter-blue);
+  cursor: pointer;
+  color: var(--admin-dark-blue);
+}
+
+.select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid var(--admin-dark-blue);
+  font-size: 16px;
+  background-color: #fff;
+  color: #000;
+  -webkit-appearance: none; /* this will remove the default dropdown arrow in Webkit browsers */
+  -moz-appearance: none; /* this will remove the default dropdown arrow in Mozilla browsers */
+  appearance: none; /* this will remove the default dropdown arrow in standard syntax */
+  position: relative;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--admin-light-blue); /* Change to your preferred color */
+}
+
+.select:hover {
+  cursor: pointer;
+}

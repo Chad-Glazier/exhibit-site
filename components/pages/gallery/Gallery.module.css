@@ -1,6 +1,6 @@
 .heading {
   font-size: 2rem;
-  text-transform: uppercase;
+  font-variant: small-caps;
   text-align: center;
   padding: 1.5rem;
 }
