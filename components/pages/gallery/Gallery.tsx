@@ -1,10 +1,12 @@
+import styles from "./Gallery.module.css";
 import { AdminLayout } from "@/components/layouts";
 import { Image } from "@prisma/client";
 import GalleryTile from "./GalleryTile";
 import { UserData } from "@/types";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import { api } from "@/util/client";
-import { LoadingOverlay, Popup } from "@/components/general";
+import AddImage from "./AddImage";
+import { LoadingOverlay } from "@/components/general";
 
 export default function Gallery({
   images,
@@ -15,55 +17,50 @@ export default function Gallery({
 }) {
   const [imageCache, setImageCache] = useState(images);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   return (
-    <AdminLayout>
+    <>
       <LoadingOverlay show={loading} />
-      <Popup show={showPopup} onClickAway={() => setShowPopup(false)}>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-
-            const imageInputElement = document.getElementById("image") as HTMLInputElement;
-            const imageFiles = imageInputElement.files;
-            if (!imageFiles || imageFiles.length === 0) {
-              return;
-            }
-
-            const imageFile = imageFiles[0];
-            setLoading(true);
-            api.image.post(imageFile)
-              .then(res => {
-                if (res.ok) {
-                  setImageCache(prev => [...prev, res.body]);
+      <AddImage
+        show={showPopup && !loading}
+        onUpload={(newImageUrl) => {
+          setImageCache(prev => [...prev, { url: newImageUrl }]);
+          setShowPopup(false);
+        }}
+        onCancel={() => setShowPopup(false)}
+      />
+      <AdminLayout
+        pageName="Gallery"
+        userData={userData}
+      >
+        <h1 className={styles.heading}>Gallery</h1>
+        <section className={styles.images}>
+          {imageCache.map((el, index) =>
+            <GalleryTile
+              key={index}
+              image={el}
+              onDelete={async () => {
+                setLoading(true);
+                const res = await api.image.deleteOne(el.url);
+                if (!res.ok) {
+                  alert(res.error);
+                  setLoading(false);
                 } else {
-                  alert(res.error); 
+                  setImageCache(prev => prev.filter(({ url }) => url !== el.url))         
+                  setLoading(false);
                 }
-                setLoading(false);               
-              });
-            setShowPopup(false);
-          }}
-        >
-          <label htmlFor="image">Add Image</label>
-          <input type="file" id="image" name="image" accept="image/" />
-          <button type="submit">Upload</button>
-        </form>
-      </Popup>
-      <h1>Gallery</h1>
-      {imageCache.map((el, index) =>
-        <GalleryTile
-          key={index}
-          image={el}
-          onDelete={() => {
-            api.image.deleteOne(el.url);
-            setImageCache(prev => prev.filter(({ url }) => url !== el.url))         
-          }}
-        />
-      )}
-      <button onClick={() => setShowPopup(true)}>
-        Add Image
-      </button>
-    </AdminLayout>
+              }}
+            />
+          )}    
+          <button 
+            onClick={() => setShowPopup(true)}
+            className={styles.button}
+          >
+            Add Image
+          </button>  
+        </section>  
+      </AdminLayout>    
+    </>
   );
 }

@@ -4,56 +4,75 @@ import { Image as ImageInterface } from "@prisma/client";
 import { useState } from "react";
 import { Popup } from "@/components/general";
 import Link from "next/link";
-import { getBasename } from "@/util";
+import { getBasename, getExtension } from "@/util";
 
 export default function ExhibitTile({ 
   image,
-  onDelete 
+  onDelete
 }: { 
-  image: ImageInterface 
-  /**
-   * This prop is a callback that's invoked after the user clicks the "delete"
-   * button, and confirms the deletion.
-   */ 
-  onDelete: () => void
+  image: ImageInterface; 
+  onDelete?: () => void;
 }) {
   const [showPopup, setShowPopup] = useState(false);
 
-  /**
-   * images returned from the api will have `url`s that provide a complete
-   * path to the image, but the user will only be concerned with the base
-   * name.
-   */
   const imageBasename = decodeURIComponent(getBasename(image.url));
 
   return (
     <>
       <Popup show={showPopup} onClickAway={() => setShowPopup(false)}>
-        <p>Are you sure you want to delete &quot;{imageBasename}&quot;&#x3F;</p>
-        <button onClick={() => {
-          if (onDelete) onDelete();
-          setShowPopup(false);
-        }}>
-          Delete
-        </button>
-        <button onClick={() => setShowPopup(false)}>
-          Cancel
-        </button>
+        <div className={styles.popup}>
+          <h2 className={styles.popupTitle}>
+            Delete Image
+          </h2>
+          <p>
+            Are you sure you want to delete &quot;{imageBasename}&quot;&#x3F;
+          </p>
+          <div className={styles.popupButtons}>
+            <button 
+              className={styles.button}
+              onClick={() => {
+                if (onDelete) onDelete();
+                setShowPopup(false);
+              }}
+            >
+              Delete
+            </button>
+            <button
+              className={styles.button} 
+              onClick={() => setShowPopup(false)}
+            >
+              Cancel
+            </button>        
+          </div>
+        </div>
       </Popup>
-      <div>
-        <h2 className={styles.heading}>{imageBasename}</h2>
+      <div className={styles.imageTile}>
+        <h2 className={styles.imageTitle}>{imageBasename}</h2>
         <Image
+          className={styles.imageThumbnail}
           src={image.url}
           alt={imageBasename}
           width={300}
           height={300}
         />
-        <div className={styles.buttons}>
-          <button onClick={() => setShowPopup(true)}>
+        <div className={styles.imageButtons}>
+          <button
+            className={styles.imageButton} 
+            onClick={() => setShowPopup(true)}
+          >
             Delete
           </button>
-          <Link target="_blank" href={image.url}>
+          <Link 
+            className={styles.imageButton}
+            target="_blank" href={image.url}
+          >
             Download
+          </Link>
+          <Link
+            className={styles.imageButton + " " + styles.detailsButton}
+            href={`/gallery/${encodeURIComponent(imageBasename + getExtension(image.url))}`}
+          >
+            View Details    
           </Link>
         </div>
       </div>    

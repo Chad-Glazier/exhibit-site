@@ -25,7 +25,7 @@ const s3 = new S3Client({
 
 async function put(file: File): Promise<string | ErrorMessage> {
   const filename = getBasename(file.originalFilename!) + getExtension(file.originalFilename!);
-  
+
   try {
     await s3.send(new PutObjectCommand({
       Bucket,

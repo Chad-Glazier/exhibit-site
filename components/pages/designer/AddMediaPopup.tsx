@@ -38,18 +38,18 @@ export default function AddMediaPopup({
 }) {
   const router = useRouter();
   const [mediaType, setMediaType] = useState<MediaType>(MediaType.NewImage);
-  const [waitingForUpload, setWaitingForUpload] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <>   
-      <LoadingOverlay show={waitingForUpload} />
+      <LoadingOverlay show={loading} />
       <Popup
-        show={show}
+        show={show && !loading}
         onClickAway={onClickAway}
       >
         <form onSubmit={async (e) => {
           e.preventDefault();
-          if (waitingForUpload) return;
+          if (loading) return;
 
           switch (mediaType) {
             case MediaType.ExistingImage:
@@ -59,7 +59,7 @@ export default function AddMediaPopup({
             case MediaType.NewImage:
               const image = (document.getElementById("image-upload") as HTMLInputElement).files?.[0];
               if (!image) return;
-              setWaitingForUpload(true);
+              setLoading(true);
               const res = await api.image.post(image);
               if (!res.ok) {
                 router.push("/500_Admin");
@@ -67,7 +67,7 @@ export default function AddMediaPopup({
               }
               imageCache.push(res.body);
               onUrlSubmit(res.body.url);  
-              setWaitingForUpload(false);
+              setLoading(false);
               break;
             case MediaType.YouTube:
               const youTubeLink = (document.getElementById("youtube-link") as HTMLInputElement).value;

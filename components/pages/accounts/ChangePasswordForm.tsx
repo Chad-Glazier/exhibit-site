@@ -20,7 +20,7 @@ export default function ChangePasswordForm({
   return (
     <>
       <LoadingOverlay show={loading} />
-      <Popup show={show} onClickAway={onClose}>
+      <Popup show={show && !loading} onClickAway={onClose}>
         <form 
           className={styles.popupForm}
           onSubmit={async (e) => {

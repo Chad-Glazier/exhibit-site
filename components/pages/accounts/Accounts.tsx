@@ -7,6 +7,7 @@ import User from "./User";
 import CreateUserForm from "./CreateUserForm";
 import { Popup, LoadingOverlay } from "@/components/general";
 import ChangePasswordForm from "./ChangePasswordForm";
+import Head from "next/head";
 
 export default function Accounts({
   users,
@@ -23,7 +24,7 @@ export default function Accounts({
   return (
     <>
       <LoadingOverlay show={loading} />
-      <Popup show={showUserCreateForm} onClickAway={() => setShowUserCreateForm(false)}>
+      <Popup show={showUserCreateForm && !loading} onClickAway={() => setShowUserCreateForm(false)}>
         <CreateUserForm
           existingUsers={userCache}
           onUserCreate={async (user) => {
@@ -39,7 +40,10 @@ export default function Accounts({
           }}
         />
       </Popup>
-      <AdminLayout>
+      <AdminLayout
+        pageName="Accounts"
+        userData={userData}
+      >
         <ChangePasswordForm 
           show={showPasswordForm} 
           userData={userData} 

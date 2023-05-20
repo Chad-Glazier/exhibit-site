@@ -1,4 +1,4 @@
-import { PopulatedExhibit } from "@/types";
+import { PopulatedExhibit, UserData } from "@/types";
 import styles from "./OpenExhibit.module.css";
 import { AdminLayout } from "@/components/layouts";
 import { ChangeEvent, useState } from "react";
@@ -7,9 +7,11 @@ import { api } from "@/util/client";
 import { LoadingOverlay } from "@/components/general";
 
 export default function OpenExhibit({
-  exhibitCache
+  exhibitCache,
+  userData
 }: {
-  exhibitCache: PopulatedExhibit[]
+  exhibitCache: PopulatedExhibit[];
+  userData: UserData;
 }) {
   const router = useRouter();
   const [createNew, setCreateNew] = useState<boolean>(true);
@@ -18,7 +20,10 @@ export default function OpenExhibit({
   return (
     <>
       <LoadingOverlay show={loading} />
-      <AdminLayout>
+      <AdminLayout
+        pageName="Open Exhibit"
+        userData={userData}
+      >
         <form onSubmit={async (e) => {
           e.preventDefault();
           setLoading(true);

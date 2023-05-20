@@ -1,0 +1,61 @@
+.image {
+  object-fit: contain;
+}
+
+.imagePage {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.imageDescription {
+  padding: 1rem;
+}
+
+.imageDescription li {
+  margin-left: 1rem;
+}
+
+.popup {
+  padding: 1rem;
+  background-color: #EEE;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+
+.popupTitle {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.popupButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+.button {
+  width: 100%;
+  border: 1px solid var(--admin-dark-blue);
+  padding: 2px;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: var(--admin-light-blue);
+  color: #FFF;
+}
+
+.button:hover {
+  background-color: var(--admin-lighter-blue);
+  cursor: pointer;
+  color: var(--admin-dark-blue);
+}

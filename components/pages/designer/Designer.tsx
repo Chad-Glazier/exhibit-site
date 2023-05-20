@@ -29,7 +29,10 @@ export default function Designer({
   return (
     <>
       <LoadingOverlay show={loading} />
-      <AdminLayout>
+      <AdminLayout
+        pageName={cache.current.title}
+        userData={userData}
+      >
         <button onClick={async () => {
           if (
             titleWasChanged.current 

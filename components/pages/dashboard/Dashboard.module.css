@@ -1,0 +1,34 @@
+.heading {
+  font-size: 2rem;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.exhibits {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  transition: all 400ms;
+}
+
+.button {
+  width: 90%;
+  border: 1px solid var(--admin-dark-blue);
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  transition: all 400ms;
+  margin: 1rem;
+  background-color: var(--admin-light-blue);
+  color: #FFF;
+}
+
+.button:hover {
+  background-color: var(--admin-lighter-blue);
+  cursor: pointer;
+  color: var(--admin-dark-blue);
+}

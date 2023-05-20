@@ -1,0 +1,44 @@
+.form {
+  padding: 1rem;
+  background-color: #EEE;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.fileUploadLabel {
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.input {
+  display: none;
+}
+
+.submit {
+  text-transform: uppercase;
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--admin-dark-blue);
+  font-size: 1.2rem;
+  transition: all 400ms;
+  margin-top: 1rem;
+  background-color: var(--admin-light-blue);
+  color: #FFF;
+}
+
+.submit:hover {
+  background-color: var(--admin-lighter-blue);
+  cursor: pointer;
+  color: var(--admin-dark-blue);
+}

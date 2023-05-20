@@ -21,7 +21,7 @@ export default function DeleteUser({
     <>
       <LoadingOverlay show={loading} />
       <Popup
-        show={show}
+        show={show && !loading}
         onClickAway={() => onClose()}
       >
         <div className={styles.popup}>

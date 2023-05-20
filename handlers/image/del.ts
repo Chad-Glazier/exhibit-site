@@ -2,8 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next/types";
 import prisma from "@/prisma";
 import { Image, Prisma } from "@prisma/client";
 import { ErrorMessage } from "@/types";
-import fs from "fs";
-import path from "path";
 import { r2Bucket } from "@/util/server";
 
 export default async function del(
