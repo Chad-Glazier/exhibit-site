@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { File } from "formidable";
-import { ErrorMessage } from "@/types";
+import { ErrorMessage, ImageType } from "@/types";
 import prisma from "@/prisma";
-import { Image } from "@prisma/client";
 import { r2Bucket } from "@/util/server";
 import { getBasename, getExtension } from "@/util";
 
 export default async function post(
   req: NextApiRequest,
-  res: NextApiResponse<ErrorMessage | Image>,
+  res: NextApiResponse<ErrorMessage | ImageType>,
   image: File
 ): Promise<void> {
   if (!image.originalFilename) {

@@ -19,8 +19,7 @@ enum MediaType {
  *    - this is why the `imageCache` prop is needed.
  * -  A new image
  *    - this popup allows users to upload images to the server.
- * -  A YouTube video
- *    - this popup allows users to include a YouTube link.
+ * -  A link to a Youtube video.
  * 
  * In all of these cases, the `onUrlSubmit` prop is called with a URL to
  * the media.

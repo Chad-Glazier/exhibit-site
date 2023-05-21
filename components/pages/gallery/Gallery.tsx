@@ -10,10 +10,12 @@ import { LoadingOverlay } from "@/components/general";
 
 export default function Gallery({
   images,
+  imageTitles,
   userData
 }: {
-  images: Image[],
-  userData: UserData
+  images: Image[];
+  imageTitles: Record<string, string[]>;
+  userData: UserData;
 }) {
   const [imageCache, setImageCache] = useState(images);
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -40,6 +42,7 @@ export default function Gallery({
             <GalleryTile
               key={index}
               image={el}
+              dependantExhibits={imageTitles[el.url] || []}
               onDelete={async () => {
                 setLoading(true);
                 const res = await api.image.deleteOne(el.url);

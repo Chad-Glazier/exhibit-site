@@ -12,6 +12,7 @@
 
 .navbarList {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: left;
   width: 100%;
@@ -28,4 +29,19 @@
 
 .navbarList li :hover {
   color: #fff;
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    position: absolute;
+    flex-direction: column;
+  }
+
+  .navbarList {
+    flex-direction: column;
+    padding: 0;
+    margin-top: -2px;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+  }
 }

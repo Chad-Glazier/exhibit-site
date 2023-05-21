@@ -1,5 +1,5 @@
 .form {
-  margin: 8rem auto;
+  margin: 12rem auto 0 auto;
   max-width: min(400px, 90%);
   padding: 1rem;
   border-radius: 5px;
@@ -50,8 +50,8 @@
   padding: 5px;
   border-radius: 5px;
   border: 1px solid var(--admin-dark-blue);
+  background-color: #FFF;
   font-size: 16px;
-  background-color: #fff;
   color: #000;
   -webkit-appearance: none; /* this will remove the default dropdown arrow in Webkit browsers */
   -moz-appearance: none; /* this will remove the default dropdown arrow in Mozilla browsers */

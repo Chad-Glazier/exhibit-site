@@ -42,13 +42,22 @@ export default function Designer({
             return;
           }
           setLoading(true);
-          if (titleWasChanged && originalExhibit.title !== cache.current.title) {
-            api.exhibit.deleteOne(originalExhibit.title);
+          if (
+            titleWasChanged.current
+            && originalExhibit.title !== cache.current.title
+          ) {
+            await api.exhibit.deleteOne(originalExhibit.title);
+            const res = await api.exhibit.post(cache.current);
+            if (!res.ok) {
+              alert(res.error);
+            }
+          } else {
+            const res = await api.exhibit.put(cache.current);
+            if (!res.ok) {
+              alert(res.error);
+            }
           }
-          const res = await api.exhibit.post(cache.current);
-          if (!res.ok) {
-            router.push("/500_Admin");
-          }
+
           setLoading(false);
         }}>
           Save

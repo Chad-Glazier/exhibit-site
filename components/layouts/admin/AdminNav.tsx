@@ -8,7 +8,7 @@ export default function AdminNav() {
       <Link href="/dashboard">
         <Image
           src="/logo-white.svg"
-          alt="The Museum & Archives of Vernon Logo"
+          alt="The Museum Logo"
           width={191}
           height={50}
         />

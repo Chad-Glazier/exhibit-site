@@ -1,24 +1,35 @@
 import styles from "./GalleryTile.module.css";
 import Image from "next/image";
-import { Image as ImageInterface } from "@prisma/client";
+import { ImageType } from "@/types";
 import { useState } from "react";
 import { Popup } from "@/components/general";
 import Link from "next/link";
 import { getBasename, getExtension } from "@/util";
+import Details from "./Details";
 
 export default function ExhibitTile({ 
   image,
+  dependantExhibits,
   onDelete
 }: { 
-  image: ImageInterface; 
+  image: ImageType; 
+  dependantExhibits: string[];
   onDelete?: () => void;
 }) {
   const [showPopup, setShowPopup] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const imageBasename = decodeURIComponent(getBasename(image.url));
 
   return (
     <>
+      <Details
+        show={showDetails}
+        onClose={() => setShowDetails(false)}
+        imageName={imageBasename + getExtension(image.url)}
+        imageUrl={image.url}
+        dependantExhibits={dependantExhibits}
+      />
       <Popup show={showPopup} onClickAway={() => setShowPopup(false)}>
         <div className={styles.popup}>
           <h2 className={styles.popupTitle}>
@@ -68,12 +79,12 @@ export default function ExhibitTile({
           >
             Download
           </Link>
-          <Link
+          <button
+            onClick={() => setShowDetails(true)}
             className={styles.imageButton + " " + styles.detailsButton}
-            href={`/gallery/${encodeURIComponent(imageBasename + getExtension(image.url))}`}
           >
             View Details    
-          </Link>
+          </button>
         </div>
       </div>    
     </>

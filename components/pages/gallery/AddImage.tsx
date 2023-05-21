@@ -19,7 +19,10 @@ export default function AddImage({
   return (
     <>
       <LoadingOverlay show={loading} />
-      <Popup show={show && !loading} onClickAway={onCancel}>
+      <Popup show={show && !loading} onClickAway={() => {
+        setImagePreview(null);
+        onCancel();
+      }}>
         <form
           className={styles.form}
           onSubmit={async (e) => {
@@ -60,7 +63,7 @@ export default function AddImage({
             className={styles.input} 
             type="file" 
             id="image" name="image" 
-            accept="image/" 
+            accept="image/*" 
             onChange={(e) => {
               const imageFile = e.target.files ? e.target.files[0] : null;
               if (!imageFile || imageFile.length === 0) {
