@@ -5,8 +5,7 @@ import GalleryTile from "./GalleryTile";
 import { UserData } from "@/types";
 import React, { useState } from "react";
 import { api } from "@/util/client";
-import AddImage from "./AddImage";
-import { LoadingOverlay } from "@/components/general";
+import { LoadingOverlay, AddImage } from "@/components/general";
 
 export default function Gallery({
   images,

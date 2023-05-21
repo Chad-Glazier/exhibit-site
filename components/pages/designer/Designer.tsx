@@ -82,6 +82,7 @@ export default function Designer({
             cache.current.summary = description;
             forceUpdate(x => !x);
           }}
+          acceptYouTube={false}
         />
         {cache.current.cards.map((card, index) => 
           <Card
@@ -95,6 +96,7 @@ export default function Designer({
               cache.current.cards = cache.current.cards.filter((_, i) => i !== index);
               forceUpdate(x => !x);
             }}
+            acceptYouTube
           />
         )}
         <button

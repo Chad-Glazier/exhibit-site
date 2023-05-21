@@ -13,12 +13,14 @@ export default function Card({
   card,
   onChange,
   onDelete,
-  allImages
+  allImages,
+  acceptYouTube
 }: {
   card: CardCreatable;
   onChange: (updatedCard: CardCreatable) => void;
   onDelete?: (updatedCard: CardCreatable) => void;
   allImages: ImageType[];
+  acceptYouTube?: boolean;
 }) {
   const updatedCard = useRef<CardCreatable>(card);
   const [showMediaPopup, setShowMediaPopup] = useState<boolean>(false);
@@ -27,12 +29,15 @@ export default function Card({
   return (
     <>
       <AddMediaPopup
+        acceptYouTube={acceptYouTube}
         imageCache={imageCache}
         show={showMediaPopup}
-        onClickAway={() => setShowMediaPopup(false)}
+        onClose={() => setShowMediaPopup(false)}
         onUrlSubmit={(newUrl) => {
           updatedCard.current.media = newUrl;
-          setImageCache(prev => [...prev, { url: newUrl }]);
+          if (!isYouTube(newUrl) && !imageCache.map(({ url }) => url).includes(newUrl)) {
+            setImageCache(prev => [...prev, { url: newUrl }])
+          }
           setShowMediaPopup(false);
           onChange(updatedCard.current);
         }}

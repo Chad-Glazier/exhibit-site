@@ -36,8 +36,10 @@ export default function Details({
           </Link>
         </p>
         {dependantExhibits.length > 0 ?
-          <p>
-            This image is used in the following exhibits:
+          <>
+            <p>
+              This image is used in the following exhibits:
+            </p>
             <ul>
               {Array.from(dependantExhibits).map(exhibitTitle => (
                 <li key={exhibitTitle}>
@@ -51,7 +53,7 @@ export default function Details({
                 </li>
               ))}
             </ul>
-          </p>
+          </>
           :
           <p>
             This image is not used in any exhibits.

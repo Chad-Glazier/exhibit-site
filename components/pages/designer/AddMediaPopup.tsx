@@ -1,144 +1,124 @@
 import styles from "./AddMediaPopup.module.css";
 import { Popup } from "@/components/general";
-import { youTubePattern, isYouTube, getBasename } from "@/util";
 import { useState } from "react";
-import { api } from "@/util/client";
-import { useRouter } from "next/router";
 import { Image } from "@prisma/client";
-import { LoadingOverlay } from "@/components/general";
+import { AddImage, AddYouTube } from "@/components/general";
+import { getBasename } from "@/util";
 
-enum MediaType {
-  ExistingImage,
-  NewImage,
-  YouTube
-}
-
-/**
- * This is a popup that allows users to upload media in on of three forms:
- * -  An existing image on the server
- *    - this is why the `imageCache` prop is needed.
- * -  A new image
- *    - this popup allows users to upload images to the server.
- * -  A link to a Youtube video.
- * 
- * In all of these cases, the `onUrlSubmit` prop is called with a URL to
- * the media.
- */
 export default function AddMediaPopup({
   show,
   imageCache,
-  onClickAway,
-  onUrlSubmit
+  onClose,
+  onUrlSubmit,
+  acceptYouTube
 }: {
-  show?: boolean;
+  show: boolean;
   imageCache: Image[];
-  onClickAway?: () => void;
+  onClose: () => void;
   onUrlSubmit: (newUrl: string) => void;
+  acceptYouTube?: boolean;
 }) {
-  const router = useRouter();
-  const [mediaType, setMediaType] = useState<MediaType>(MediaType.NewImage);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [showUploadImage, setShowUploadImage] = useState<boolean>(false);
+  const [showAddYouTube, setShowAddYouTube] = useState<boolean>(false);
+  const [existingImage, setExistingImage] = useState<string | null>(null);
 
   return (
     <>   
-      <LoadingOverlay show={loading} />
+      <AddImage
+        show={showUploadImage}
+        onUpload={(newImageUrl) => {
+          onUrlSubmit(newImageUrl);
+          setShowUploadImage(false);
+        }}
+        onCancel={() => {
+          setShowUploadImage(false);
+        }}
+      />
+      {acceptYouTube &&
+        <AddYouTube
+          show={showAddYouTube}
+          onSubmit={(youtubeUrl) => {
+            onUrlSubmit(youtubeUrl);
+            setShowAddYouTube(false);
+          }}
+          onCancel={() => {
+            setShowAddYouTube(false);
+          }}
+        />        
+      }
       <Popup
-        show={show && !loading}
-        onClickAway={onClickAway}
+        show={show}
+        onClickAway={() => {
+          onClose();
+          setExistingImage(null);
+        }}
       >
-        <form onSubmit={async (e) => {
-          e.preventDefault();
-          if (loading) return;
-
-          switch (mediaType) {
-            case MediaType.ExistingImage:
-              const url = (document.getElementById("existing-image") as HTMLSelectElement).value;
-              onUrlSubmit(url);
-              break;
-            case MediaType.NewImage:
-              const image = (document.getElementById("image-upload") as HTMLInputElement).files?.[0];
-              if (!image) return;
-              setLoading(true);
-              const res = await api.image.post(image);
-              if (!res.ok) {
-                router.push("/500_Admin");
-                return;
-              }
-              imageCache.push(res.body);
-              onUrlSubmit(res.body.url);  
-              setLoading(false);
-              break;
-            case MediaType.YouTube:
-              const youTubeLink = (document.getElementById("youtube-link") as HTMLInputElement).value;
-              onUrlSubmit(youTubeLink);
-              break;
-          }    
-        }}>
-          <h1>Add Media</h1>
-          <label htmlFor="image-upload">Upload an Image</label>
-          <input 
-            type="file" 
-            id="image-upload" 
-            accept="image/*" 
-            onChange={() => setMediaType(MediaType.NewImage)} 
-            required={mediaType === MediaType.NewImage} 
-          />
-          <br />
-          <em>OR</em>
-          <br />
-          <label htmlFor="existing-image">Select an Existing Image</label>
-          <select id="existing-image">
-            <option value={""} onClick={() => {
-              if (
-                isYouTube((document.getElementById("youtube-link") as HTMLInputElement).value) 
-                && !(document.getElementById("image-upload") as HTMLInputElement).files
-              ) {
-                setMediaType(MediaType.YouTube);
-              } else {
-                setMediaType(MediaType.NewImage);
-              }
-            }}>
-              Select an Image
-            </option>
-            {imageCache.map((image, index) => {
-              let basename = decodeURIComponent(getBasename(image.url));
-              return (
-                <option key={index} value={image.url} onClick={() => setMediaType(MediaType.ExistingImage)}>
-                  {basename}
-                </option>
-              )
-            })}
-          </select>
-          <br />
-          <em>OR</em>
-          <br />
-          <label htmlFor="youtube-link">Enter a YouTube URL:</label>
-          <input 
-            type="text" 
-            id="youtube-link" 
-            placeholder="https://youtu.be/cV0_DFkJU_w" 
-            accept={youTubePattern} 
+        <form 
+          className={styles.form}
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <h2 className={styles.title}>Add Media</h2>
+          <p>Select the type of media to add.</p>
+          <button 
+            className={styles.button}
+            onClick={() => {
+              onClose();
+              setShowUploadImage(true);
+            }}
+          >
+            Upload a New Image
+          </button>
+          {acceptYouTube &&
+            <button
+              className={styles.button} 
+              onClick={() => {
+                onClose();
+                setShowAddYouTube(true);
+              }}
+            >
+              Add a YouTube Video
+            </button>          
+          }
+          <em className={styles.divider}>or</em>
+          <select 
+            className={styles.select}
+            name="select-image" 
+            id="select-image"
             onChange={(e) => {
-              if (isYouTube(e.target.value)) {
-                setMediaType(MediaType.YouTube);
-                return;
+              if (e.target.value === "") {
+                setExistingImage(null);
+              } else {
+                setExistingImage(e.target.value);
               }
-              if (
-                (document.getElementById("existing-image") as HTMLSelectElement).value
-                && !(document.getElementById("image-upload") as HTMLInputElement).files
-              ) {
-                setMediaType(MediaType.ExistingImage);
-                return;
-              }
-              setMediaType(MediaType.NewImage);
-            }} 
-          />
-          <br />
-          <input type="submit" value={
-            mediaType === MediaType.ExistingImage ? "Select Image" : 
-            mediaType === MediaType.NewImage ? "Upload Image" :
-            "Submit URL"
-          } />
+            }}
+          >
+            <option 
+              className={styles.option}
+              value={""}
+            >
+              Select an Existing Image
+            </option>
+            {imageCache.map(({ url }, index) => (
+              <option 
+                key={index}
+                className={styles.option} 
+                value={url}
+              >
+                {decodeURIComponent(getBasename(url))}
+              </option>  
+            ))}
+          </select>
+          {existingImage && 
+            <button className={styles.button} onClick={() => {
+              onClose();
+              onUrlSubmit(existingImage);
+              setExistingImage(null);
+            }}>
+              Use Selected Image
+            </button> 
+          }
         </form>
       </Popup>
     </>
