@@ -2,7 +2,7 @@ import styles from "./Details.module.css";
 import { Popup } from "@/components/general";
 import Link from "next/link";
 
-export default function({
+export default function Details({
   show,
   imageName,
   imageUrl,
