@@ -1,0 +1,123 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
+  margin: 1rem 0;
+  background-color: #eee;
+  width: min(calc(100% - 1rem), 950px);
+}
+
+.image {
+  object-fit: contain;
+  max-width: calc(100% - 1rem);
+  height: auto;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+  margin: 10px;
+}
+
+.image:hover {
+  cursor: pointer;
+}
+
+.editor {
+  border-radius: 0;
+  width: min(calc(100% - 1rem), 520px);
+  margin: 10px;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.editorInner {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: 24px;
+  height: 24px;
+  opacity: 0.3;
+}
+
+@media (max-width: 970px) {
+  .deleteButton {
+    right: 10px;
+    top: 5px;
+  }
+
+  .card {
+    width: calc(100% - 1rem);
+    flex-direction: column;
+  }
+
+  .editor {
+    width: calc(100% - 1rem);
+  }
+}
+
+.deleteButton:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.deleteButton:before, .deleteButton:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 24px;
+  width: 2px;
+  background-color: #333;
+}
+
+.deleteButton:before {
+  transform: rotate(45deg);
+}
+
+.deleteButton:after {
+  transform: rotate(-45deg);
+}
+
+.popup {
+  padding: 1rem;
+  background-color: #EEE;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popupTitle {
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.popupButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+.popupButton {
+  flex: 1;
+  border: 1px solid var(--admin-dark-blue);
+  padding: 2px;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: var(--admin-light-blue);
+  color: #FFF;
+}
+
+.popupButton:hover {
+  background-color: var(--admin-lighter-blue);
+  cursor: pointer;
+  color: var(--admin-dark-blue);
+}

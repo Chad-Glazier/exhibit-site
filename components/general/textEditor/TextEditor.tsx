@@ -22,9 +22,16 @@ import { EditorState, LexicalEditor } from "lexical";
 
 export default function TextEditor({
   onChange,
+  className,
+  innerClassName,
   initialState,
+  placeholder,
   readonly
 }: {
+  className?: string;
+  innerClassName?: string;
+  title?: string;
+  placeholder?: string;
   onChange?: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void;
   initialState?: string;
   readonly?: boolean;
@@ -54,14 +61,16 @@ export default function TextEditor({
         editable: !readonly
       }}
     >
-      <div className={styles.editorContainer}>
+      <div
+        className={styles.editorContainer + ` ${className ? className : ""}`}
+      >
         {!readonly &&
           <ToolbarPlugin />
         }
-        <div className={styles.editorInner}>
+        <div className={styles.editorInner + ` ${innerClassName ? innerClassName : ""}`}>
           <RichTextPlugin
             contentEditable={<ContentEditable className={styles.editorInput}/>}
-            placeholder={<div className={theme.placeholder}>{readonly ? ""  : "Enter text..."}</div>}
+            placeholder={<div className={theme.placeholder}>{readonly ? "" : placeholder ? placeholder : "Enter text..."}</div>}
             ErrorBoundary={LexicalErrorBoundary}
           />
           <HistoryPlugin />
@@ -75,8 +84,4 @@ export default function TextEditor({
       </div>
     </LexicalComposer>
   );
-}
-
-function Placeholder() {
-  return <div className={theme.placeholder}>Enter text...</div>;
 }

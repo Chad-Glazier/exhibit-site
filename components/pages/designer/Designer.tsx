@@ -1,13 +1,15 @@
 import styles from "./Designer.module.css";
 import { AdminLayout } from "@/components/layouts";
-import { PopulatedExhibitCreatable, UserData } from "@/types";
+import { UserData, PopulatedExhibitCreatable } from "@/types";
 import { useState, useRef } from "react";
 import Card from "./Card";
-import { Image } from "@prisma/client";
+import { ImageType } from "@/types";
 import { api } from "@/util/client";
-import { useRouter } from "next/router";
-import { LoadingOverlay } from "@/components/general";
+import { LoadingOverlay, TextEditor } from "@/components/general";
 import Link from "next/link";
+import ConfirmExit from "./ConfirmExit";
+import Image from "next/image";
+import AddMediaPopup from "./AddMediaPopup";
 
 export default function Designer({ 
   originalExhibit,
@@ -18,101 +20,163 @@ export default function Designer({
   originalExhibit: PopulatedExhibitCreatable;
   userData: UserData;
   allExhibits: PopulatedExhibitCreatable[];
-  allImages: Image[];
+  allImages: ImageType[];
 }) {
+  const lastSavedVersion = useRef<string>(JSON.stringify(originalExhibit));
   const cache = useRef<PopulatedExhibitCreatable>({ ...originalExhibit });
-  const router = useRouter();
+  const [showExitWarning, setShowExitWarning] = useState(false);
   const [_, forceUpdate] = useState(false);
   const titleWasChanged = useRef(false);
   const [loading, setLoading] = useState(false);
+  const [showImagePopup, setShowImagePopup] = useState(false);
 
   return (
     <>
       <LoadingOverlay show={loading} />
+      <AddMediaPopup
+        show={showImagePopup}
+        imageCache={allImages}
+        onClose={() => setShowImagePopup(false)}
+        onUrlSubmit={(newUrl) => {
+          cache.current.thumbnail = newUrl;
+          setShowImagePopup(false);
+        }}
+      />
+      <ConfirmExit
+        show={showExitWarning}
+        onCancel={() => setShowExitWarning(false)}
+      />
       <AdminLayout
         pageName={cache.current.title}
         userData={userData}
       >
-        <button onClick={async () => {
-          if (
-            titleWasChanged.current 
-            && allExhibits.find(el => el.title === cache.current.title) !== undefined
-          ) {
-            alert("An exhibit with that title already exists!");
-            return;
-          }
-          setLoading(true);
-          if (
-            titleWasChanged.current
-            && originalExhibit.title !== cache.current.title
-          ) {
-            await api.exhibit.deleteOne(originalExhibit.title);
-            const res = await api.exhibit.post(cache.current);
-            if (!res.ok) {
-              alert(res.error);
-            }
-          } else {
-            const res = await api.exhibit.put(cache.current);
-            if (!res.ok) {
-              alert(res.error);
-            }
-          }
+        <div className={styles.buttons}>
+          <button 
+            className={styles.button}
+            onClick={async () => {
+              if (
+                titleWasChanged.current 
+                && allExhibits.find(el => el.title === cache.current.title) !== undefined
+              ) {
+                alert("An exhibit with that title already exists!");
+                return;
+              }
+              setLoading(true);
+              if (
+                titleWasChanged.current
+                && originalExhibit.title !== cache.current.title
+              ) {
+                await api.exhibit.deleteOne(originalExhibit.title);
+                const res = await api.exhibit.post(cache.current);
+                if (!res.ok) {
+                  alert(res.error);
+                }
+                lastSavedVersion.current = JSON.stringify(cache.current);
+              } else {
+                const res = await api.exhibit.put(cache.current);
+                if (!res.ok) {
+                  alert(res.error);
+                }
+                lastSavedVersion.current = JSON.stringify(cache.current);
+              }
 
-          setLoading(false);
-        }}>
-          Save
-        </button>
-        <Link href={`/preview/${encodeURIComponent(cache.current.title)}`} target="_blank">
-          Preview
-        </Link>
-        <input type="text" defaultValue={cache.current.title} onChange={(e) => {
-          if (e.target.value.length > 0) {
-            cache.current.title = e.target.value;
-            titleWasChanged.current = cache.current.title !== originalExhibit.title;
-          }
-        }}/>
-        <Card
-          allImages={allImages}
-          card={{
-            media: cache.current.thumbnail,
-            description: cache.current.summary
-          }}
-          onChange={({ media, description }) => {
-            cache.current.thumbnail = media; 
-            cache.current.summary = description;
-            forceUpdate(x => !x);
-          }}
-          acceptYouTube={false}
-        />
-        {cache.current.cards.map((card, index) => 
-          <Card
-            onChange={(updatedCard) => {
-              cache.current.cards[index] = updatedCard;
+              setLoading(false);
             }}
-            allImages={allImages}
-            key={index}
-            card={card}
-            onDelete={() => {
-              cache.current.cards = cache.current.cards.filter((_, i) => i !== index);
+          >
+            Save
+          </button>
+          <Link
+            className={styles.button} 
+            href={`/preview/${encodeURIComponent(cache.current.title)}`} 
+            target="_blank"
+          >
+            Preview
+          </Link>
+          <Link
+            onClick={(e) => {
+              if (
+                JSON.stringify(cache.current) 
+                !== 
+                lastSavedVersion.current
+              ) {
+                e.preventDefault();
+                setShowExitWarning(true);
+              }
+            }}
+            className={styles.button}
+            href="/dashboard"
+          >
+            Exit
+          </Link>
+        </div>
+        <div className={styles.cards}>
+          <input 
+            className={styles.title}
+            type="text" 
+            defaultValue={cache.current.title} 
+            onChange={(e) => {
+              if (e.target.value.length > 0) {
+                cache.current.title = e.target.value;
+                titleWasChanged.current = cache.current.title !== originalExhibit.title;
+              }
+            }}
+          />
+          <Image
+            className={styles.thumbnail}
+            src={cache.current.thumbnail}
+            width={356}
+            height={200}
+            alt="thumbnail"
+            title="Click to change the thumbnail"
+            onClick={() => {
+              setShowImagePopup(true);
+            }}
+          />
+          <TextEditor
+            className={styles.summary}
+            innerClassName={styles.summaryInner}
+            placeholder="Enter a summary..."
+            initialState={cache.current.summary}
+            onChange={(newSummary) => {
+              cache.current.summary = JSON.stringify(newSummary);
+            }}
+          />
+          {cache.current.cards.map((card, index) => {
+            // necessary since cards don't have any other intrinsic identifier.
+            if ((card as any).id === undefined) {
+              (card as any).id = `${card.media} ${Math.random()}`;
+            }
+            
+            return <Card
+              key={(card as any).id}
+              onChange={(updatedCard) => {
+                cache.current.cards[index] = updatedCard;
+              }}
+              allImages={allImages}
+              card={card}
+              onDelete={() => {
+                cache.current.cards = cache.current.cards.filter((_, i) => i !== index);
+                forceUpdate(x => !x);
+              }}
+              acceptYouTube
+            />;
+          })}
+          <button
+            className={styles.addCardButton}
+            onClick={() => {
+              // the description field is a JSON string that represents an empty document,
+              // which is necessary for the Lexical text editor to parse (it throws a 
+              // fit otherwise)
+              cache.current.cards.push({
+                media: "/no-image.png",
+                description: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+              });
               forceUpdate(x => !x);
             }}
-            acceptYouTube
-          />
-        )}
-        <button
-          onClick={() => {
-            // the description field is a JSON string that represents an empty document,
-            // which is necessary for the Lexical text editor to parse (it throws a 
-            // fit otherwise)
-            cache.current.cards.push({
-              media: "/add.png",
-              description: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-            });
-            forceUpdate(x => !x);
-          }}
-        >
-          Add Card
-        </button>
+          >
+            Add Card
+          </button>
+        </div>
       </AdminLayout>    
     </>
 

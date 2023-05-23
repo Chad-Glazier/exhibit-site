@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--admin-dark-blue);
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  margin: 0.5rem;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.button {
+  width: 100px;
+  text-align: center;
+  margin: 5px;
+  border: 1px solid var(--admin-dark-blue);
+  border-radius: 5px;
+  background-color: var(--admin-light-blue);
+  font-size: 1rem;
+  color: #fff;
+  transition: all 400ms;
+  min-width: 200px;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: var(--admin-lighter-blue);
+  color: var(--admin-dark-blue);
+}

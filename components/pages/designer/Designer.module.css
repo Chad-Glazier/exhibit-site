@@ -1,0 +1,89 @@
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.6rem;
+  margin: 3rem 0 1rem 0;
+  border-radius: 5px;
+  border: 1px solid black;
+  max-width: min(calc(100% - 1rem), 800px);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+  padding: 3px;
+}
+
+.thumbnail {
+  object-fit: contain;
+  max-width: calc(100% - 1rem);
+  height: auto;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.thumbnail:hover {
+  cursor: pointer;
+}
+
+.summary {
+  border-radius: 0;
+  width: min(calc(100% - 1rem), 800px);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+  margin: 1rem 0;
+}
+
+.summaryInner {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.buttons {
+  width: 100%;
+  margin: 5px 1rem;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 99;
+}
+
+@media (max-width: 700px) {
+  .buttons {
+    position: static;
+    justify-content: center;
+    margin: 5px;
+  }
+
+  .title {
+    margin: 1rem 0 1rem 0;
+    width: fit-content;
+  }
+}
+
+.button, .addCardButton {
+  width: 100px;
+  text-align: center;
+  margin: 5px;
+  border: 1px solid var(--admin-dark-blue);
+  border-radius: 5px;
+  background-color: var(--admin-light-blue);
+  font-size: 1rem;
+  color: #fff;
+  transition: all 400ms;
+}
+
+.button:hover, .addCardButton:hover {
+  cursor: pointer;
+  background-color: var(--admin-lighter-blue);
+  color: var(--admin-dark-blue);
+}
+
+.addCardButton {
+  width: min(calc(100% - 1rem), 950px);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding: 5px;
+}

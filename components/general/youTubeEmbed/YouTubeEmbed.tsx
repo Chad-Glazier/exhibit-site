@@ -1,12 +1,16 @@
 import Image from "next/image";
 
 export default function YouTubeEmbed({
+  className,
+  title,
   src,
   height,
   width,
   thumbnailOnly,
   onClick
 }: {
+  className?: string;
+  title?: string;
   src: string;
   height: number;
   width: number;
@@ -20,9 +24,11 @@ export default function YouTubeEmbed({
   return ( 
     <div
       onClick={onClick}
+      title={title}
     >
       {thumbnailOnly ?
         <Image
+          className={className}
           src={thumbnailUrl}
           alt={src}
           width={width}
@@ -30,6 +36,7 @@ export default function YouTubeEmbed({
         />
         :
         <iframe
+          className={className}
           width={width}
           height={height}
           src={embedUrl}
