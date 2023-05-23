@@ -2,10 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./AdminNav.module.css";
 
-export default function AdminNav() {
+export default function AdminNav({
+  onRedirect
+}: {
+  /**
+   * A function that's invoked before the user attempts to redirect, and
+   * determines whether or not to proceed with the redirect.
+   * 
+   * @returns Whether or not to redirect the user.
+   */
+  onRedirect?: (target: string) => boolean;
+}) {
   return (
     <nav className={styles.navbar}>
-      <Link href="/dashboard">
+      <Link href="/dashboard" onClick={(e) => {
+        if (onRedirect && !onRedirect("/dashboard")) e.preventDefault();
+      }}>
         <Image
           src="/logo-white.svg"
           alt="The Museum Logo"
@@ -15,22 +27,46 @@ export default function AdminNav() {
       </Link>
       <ul className={styles.navbarList}>
         <li className={styles.navbarItem}>
-          <Link href="/gallery" className={styles.navbarLink}>
+          <Link 
+            href="/gallery" 
+            className={styles.navbarLink} 
+            onClick={(e) => {
+              if (onRedirect && !onRedirect("/gallery")) e.preventDefault();
+            }}
+          >
             Gallery
           </Link>
         </li>
         <li className={styles.navbarItem}>
-          <Link href="/dashboard" className={styles.navbarLink}>
+          <Link 
+            href="/dashboard" 
+            className={styles.navbarLink} 
+            onClick={(e) => {
+              if (onRedirect && !onRedirect("/dashboard")) e.preventDefault();
+            }}
+          >
             Exhibits
           </Link>
         </li>
         <li className={styles.navbarItem}>
-          <Link href="/designer" className={styles.navbarLink}>
+          <Link 
+            href="/designer"
+            className={styles.navbarLink} 
+            onClick={(e) => {
+              if (onRedirect && !onRedirect("/designer")) e.preventDefault();
+            }}  
+          >
             Designer
           </Link>
         </li>
         <li className={styles.navbarItem}>
-          <Link href="/accounts" className={styles.navbarLink}>
+          <Link 
+            href="/accounts"
+            className={styles.navbarLink} 
+            onClick={(e) => {
+              if (onRedirect && !onRedirect("/accounts")) e.preventDefault();
+            }}  
+          >
             Accounts
           </Link>
         </li>

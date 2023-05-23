@@ -6,10 +6,12 @@ import Link from "next/link";
 
 export default function ConfirmExit({
   show,
-  onCancel
+  onCancel,
+  target
 }: {
   show: boolean;
   onCancel: () => void;
+  target: string;
 }) {
   const [loading, setLoading] = useState(false);  
   
@@ -17,7 +19,7 @@ export default function ConfirmExit({
     <>
       <LoadingOverlay show={loading} />
       <Popup
-        show={show}
+        show={show && !loading}
         onClickAway={onCancel}
       >
         <div className={styles.container}>
@@ -28,7 +30,7 @@ export default function ConfirmExit({
           <div className={styles.buttons}>
             <Link 
               className={styles.button}
-              href="/dashboard"
+              href={target}
               onClick={() => setLoading(true)}
             >
               Exit Without Saving

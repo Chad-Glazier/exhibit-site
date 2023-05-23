@@ -29,6 +29,7 @@ export default function Designer({
   const titleWasChanged = useRef(false);
   const [loading, setLoading] = useState(false);
   const [showImagePopup, setShowImagePopup] = useState(false);
+  const redirectTarget = useRef<string>("/dashboard");
 
   return (
     <>
@@ -43,12 +44,25 @@ export default function Designer({
         }}
       />
       <ConfirmExit
+        target={redirectTarget.current}
         show={showExitWarning}
         onCancel={() => setShowExitWarning(false)}
       />
       <AdminLayout
         pageName={cache.current.title}
         userData={userData}
+        onRedirect={(target) => {
+          if (
+            JSON.stringify(cache.current) 
+            !== 
+            lastSavedVersion.current
+          ) {
+            redirectTarget.current = target;
+            setShowExitWarning(true);
+            return false;
+          }
+          return true;
+        }}
       >
         <div className={styles.buttons}>
           <button 
@@ -100,6 +114,7 @@ export default function Designer({
                 lastSavedVersion.current
               ) {
                 e.preventDefault();
+                redirectTarget.current = "/dashboard";
                 setShowExitWarning(true);
               }
             }}
