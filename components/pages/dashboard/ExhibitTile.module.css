@@ -7,7 +7,6 @@
   justify-content: center;
   border-radius: 5px;
   transition: all 400ms;
-  transition: all 400ms;
   width: calc(300px + 1rem);
   box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 }

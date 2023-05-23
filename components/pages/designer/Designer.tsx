@@ -110,37 +110,42 @@ export default function Designer({
           </Link>
         </div>
         <div className={styles.cards}>
-          <input 
-            className={styles.title}
-            type="text" 
-            defaultValue={cache.current.title} 
-            onChange={(e) => {
-              if (e.target.value.length > 0) {
-                cache.current.title = e.target.value;
-                titleWasChanged.current = cache.current.title !== originalExhibit.title;
-              }
-            }}
-          />
-          <Image
-            className={styles.thumbnail}
-            src={cache.current.thumbnail}
-            width={356}
-            height={200}
-            alt="thumbnail"
-            title="Click to change the thumbnail"
-            onClick={() => {
-              setShowImagePopup(true);
-            }}
-          />
-          <TextEditor
-            className={styles.summary}
-            innerClassName={styles.summaryInner}
-            placeholder="Enter a summary..."
-            initialState={cache.current.summary}
-            onChange={(newSummary) => {
-              cache.current.summary = JSON.stringify(newSummary);
-            }}
-          />
+          <div className={styles.mainCard}>
+            <input 
+              className={styles.title}
+              title="Click to change the title"
+              type="text" 
+              defaultValue={cache.current.title} 
+              onChange={(e) => {
+                if (e.target.value.length > 0) {
+                  cache.current.title = e.target.value;
+                  titleWasChanged.current = cache.current.title !== originalExhibit.title;
+                }
+              }}
+            />
+            <div className={styles.mainCardInner}>
+              <Image
+                className={styles.thumbnail}
+                src={cache.current.thumbnail}
+                width={356}
+                height={200}
+                alt="thumbnail"
+                title="Click to change the thumbnail"
+                onClick={() => {
+                  setShowImagePopup(true);
+                }}
+              />
+              <TextEditor
+                className={styles.summary}
+                innerClassName={styles.summaryInner}
+                placeholder="Enter a summary..."
+                initialState={cache.current.summary}
+                onChange={(newSummary) => {
+                  cache.current.summary = JSON.stringify(newSummary);
+                }}
+              />                
+            </div>
+          </div>
           {cache.current.cards.map((card, index) => {
             // necessary since cards don't have any other intrinsic identifier.
             if ((card as any).id === undefined) {
@@ -151,6 +156,7 @@ export default function Designer({
               key={(card as any).id}
               onChange={(updatedCard) => {
                 cache.current.cards[index] = updatedCard;
+                forceUpdate(x => !x);
               }}
               allImages={allImages}
               card={card}

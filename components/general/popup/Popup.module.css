@@ -16,3 +16,9 @@
   flex-direction: column;
   z-index: 101;
 }
+
+@media (max-width: 500px) {
+  .popup {
+    margin: 0 1rem;
+  }
+}

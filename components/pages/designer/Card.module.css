@@ -17,7 +17,6 @@
   object-fit: contain;
   max-width: calc(100% - 1rem);
   height: auto;
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
   margin: 10px;
 }
 
@@ -26,15 +25,21 @@
 }
 
 .editor {
-  border-radius: 0;
-  width: min(calc(100% - 1rem), 520px);
-  margin: 10px;
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+  height: 300px;
+  width: min(calc(100% - 1rem), 550px);
 }
 
 .editorInner {
   max-height: 400px;
   overflow-y: scroll;
+
+  height: calc(100% - 44px);
+}
+
+@media (max-width: 535px) {
+  .editorInner {
+    height: calc(100% - 76px);
+  }
 }
 
 .deleteButton {

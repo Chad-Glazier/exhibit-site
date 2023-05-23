@@ -5,40 +5,6 @@
   align-items: center;
 }
 
-.title {
-  font-size: 1.6rem;
-  margin: 3rem 0 1rem 0;
-  border-radius: 5px;
-  border: 1px solid black;
-  max-width: min(calc(100% - 1rem), 800px);
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
-  padding: 3px;
-}
-
-.thumbnail {
-  object-fit: contain;
-  max-width: calc(100% - 1rem);
-  height: auto;
-  border: 1px solid black;
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
-}
-
-.thumbnail:hover {
-  cursor: pointer;
-}
-
-.summary {
-  border-radius: 0;
-  width: min(calc(100% - 1rem), 800px);
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
-  margin: 1rem 0;
-}
-
-.summaryInner {
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
 .buttons {
   width: 100%;
   margin: 5px 1rem;
@@ -56,12 +22,7 @@
     position: static;
     justify-content: center;
     margin: 5px;
-    padding: 0 5px;
-  }
-
-  .title {
-    margin: 1rem 0 1rem 0;
-    width: fit-content;
+    padding: 5px 5px 0 0;
   }
 }
 
@@ -88,4 +49,80 @@
   text-transform: uppercase;
   font-size: 1.2rem;
   padding: 5px;
+}
+
+.title {
+  font-size: 1.6rem;
+  margin: 3rem 0 1rem 0;
+  border-radius: 5px;
+  border: 1px solid black;
+  width: min(calc(100% - 1rem), fit-content);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+  padding: 3px 8px;
+}
+
+.mainCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: min(calc(100% - 1rem), 950px);
+}
+
+.mainCardInner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  width: min(calc(100% - 1rem), 950px);
+}
+
+.thumbnail {
+  object-fit: contain;
+  max-width: calc(100% - 1rem);
+  height: auto;
+  margin: 10px;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.thumbnail:hover {
+  cursor: pointer;
+}
+
+.summary {
+  height: 300px;
+  width: min(calc(100% - 1rem), 550px);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.summaryInner {
+  max-height: 400px;
+  overflow-y: scroll;
+
+  height: calc(100% - 44px);
+}
+
+@media (max-width: 535px) {
+  .summaryInner {
+    height: calc(100% - 76px);
+  }
+}
+
+@media (max-width: 550px) {
+  .summaryInner {
+    height: calc(100% - 76px);
+  }
+}
+
+@media (max-width: 970px) {
+  .mainCard {
+    width: calc(100% - 1rem);
+    flex-direction: column;
+  }
+
+  .summary {
+    width: calc(100% - 1rem);
+  }
 }
