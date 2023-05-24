@@ -41,6 +41,7 @@ export default function Designer({
         onUrlSubmit={(newUrl) => {
           cache.current.thumbnail = newUrl;
           setShowImagePopup(false);
+          forceUpdate(x => !x);
         }}
       />
       <ConfirmExit
