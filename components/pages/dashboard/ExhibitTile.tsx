@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { Popup, LoadingOverlay } from "@/components/general";
 import Link from "next/link";
-import { api } from "@/util/client";
 
 export default function ExhibitTile({ 
   exhibit,
@@ -90,7 +89,7 @@ export default function ExhibitTile({
           src={exhibit.thumbnail}
           alt={exhibit.title}
           width={300}
-          height={300}
+          height={200}
           className={styles.exhibitThumbnail}
         />
         <div className={styles.exhibitButtons}>

@@ -64,7 +64,7 @@ export default function ExhibitTile({
           src={image.url}
           alt={imageBasename}
           width={300}
-          height={300}
+          height={200}
         />
         <div className={styles.imageButtons}>
           <button
