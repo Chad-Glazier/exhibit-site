@@ -39,7 +39,7 @@ export default function Gallery({
         <section className={styles.images}>
           {imageCache.map((el, index) =>
             <GalleryTile
-              key={index}
+              key={el.url}
               image={el}
               dependantExhibits={imageTitles[el.url] || []}
               onDelete={async () => {

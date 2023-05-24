@@ -63,9 +63,9 @@ export default function Dashboard({
       >
         <h1 className={styles.heading}>Published Exhibits</h1>
         <div className={styles.exhibits}>
-          {exhibitCache.filter(el => el.published).map((el, index) => 
+          {exhibitCache.filter(el => el.published).map((el) => 
             <ExhibitTile 
-              key={index} 
+              key={el.title} 
               exhibit={el} 
               onDelete={() => deleteExhibit(el)}
               onTogglePublic={togglePublic}
