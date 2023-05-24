@@ -5,6 +5,12 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
+
+  background-color: #74EBD5;
+  background-image: radial-gradient(circle at center, #b3cde0 0%, #97dcff 50%, #56acfc 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .form {
