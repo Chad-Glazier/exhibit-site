@@ -1,30 +1,35 @@
-import Image from "next/image";
-import Link from "next/link";
 import styles from "./NavBar.module.css";
+import Link from "next/link";
 
 export default function NavBar() {
   return (
     <nav className={styles.navbar}>
-      <Link className={styles.logo} href="/">
-        <Image
-          src="/logo.svg"
-          alt="The Museum & Archives of Vernon Logo"
-          width={356}
-          height={93}
-        />
-      </Link>
       <ul className={styles.navbarList}>
-        <li className={styles.navbarItem}>
-          <Link href="/" className={styles.navbarLink}>
-            Virtual Exhibits
-          </Link>
-        </li>
-        <li className={styles.navbarItem}>
-          <Link href="https://vernonmuseum.ca/contact-us-mav/" className={styles.navbarLink}>
-            Contact
-          </Link>
-        </li>
+        <Button 
+          url="/" 
+          text="Exhibits" 
+        />
+        <Button
+          url="https://vernonmuseum.ca/contact-us-mav/"
+          text="Contact Us"
+        />
       </ul>
     </nav>
+  );
+}
+
+function Button({
+  url,
+  text
+}: {
+  url: string;
+  text: string;
+}) {
+  return (
+    <li className={styles.navbarItem}>
+      <Link href={url} className={styles.navbarLink}>
+        {text}
+      </Link>
+    </li>
   );
 }

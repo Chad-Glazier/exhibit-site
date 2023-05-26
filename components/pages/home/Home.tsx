@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import { Layout } from "@/components/layouts";
 import { PopulatedExhibit } from "@/types";
 import Thumbnail from "./Thumbnail";
+import Carousel from "./Carousel";
 
 export default function Home({
   allExhibits
@@ -9,11 +10,16 @@ export default function Home({
   allExhibits: PopulatedExhibit[];
 }) {
   return (
-    <Layout>
+    <Layout pageName="Exhibits">
       <main className={styles.home}>
-        <h1 className={styles.heading}>Home</h1>
-        {allExhibits.map((exhibit, index) => 
-          <Thumbnail key={index} exhibit={exhibit} />
+        <Carousel 
+          exhibits={allExhibits}
+        />
+        {allExhibits.map(exhibit => 
+          <Thumbnail 
+            key={exhibit.title} 
+            exhibit={exhibit} 
+          />
         )}
       </main>
     </Layout>

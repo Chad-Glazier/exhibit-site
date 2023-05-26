@@ -18,6 +18,7 @@
   max-width: calc(100% - 1rem);
   height: auto;
   margin: 10px;
+  position: relative;
 }
 
 .image:hover {

@@ -8,6 +8,7 @@ import { isYouTube } from "@/util";
 const TextEditor = dynamic(() => import("../../general/textEditor/TextEditor"), { ssr: false });
 import { Image as ImageType } from "@prisma/client";
 import { Popup, YouTubeEmbed } from "@/components/general";
+import { getBasename } from "@/util";
 
 export default function Card({
   card,
@@ -71,7 +72,7 @@ export default function Card({
       <div className={styles.card}>
         {isYouTube(updatedCard.current.media) ?
           <YouTubeEmbed
-            title="Click to change media"
+            title="YouTube Video | Click to change"
             className={styles.image}
             onClick={() => setShowMediaPopup(true)} 
             src={updatedCard.current.media}
@@ -80,7 +81,7 @@ export default function Card({
             thumbnailOnly
           />
         : <Image
-            title="Click to change media"
+            title={decodeURIComponent(getBasename(updatedCard.current.media)) + " | Click to change"}
             className={styles.image}
             onClick={() => setShowMediaPopup(true)}
             src={updatedCard.current.media}

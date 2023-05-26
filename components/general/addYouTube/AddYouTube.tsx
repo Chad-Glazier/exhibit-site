@@ -44,7 +44,14 @@ export default function AddYouTube({
           onChange={(e) => setIsValid(isYouTube(e.target.value))}
           required
         />
-        <button disabled={!isValid} className={styles.submit}>
+        <button 
+          title={isValid ?
+            "Use this YouTube video" :
+            "Please enter a valid YouTube URL"
+          }
+          disabled={!isValid} 
+          className={styles.submit}
+        >
           Use YouTube Video
         </button>
       </form>

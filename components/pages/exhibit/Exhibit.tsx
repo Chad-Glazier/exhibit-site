@@ -14,7 +14,7 @@ export default function Exhibit({
   const [activeCard, setActiveCard] = useState<CardCreatable | null>(null);
 
   return (
-    <Layout>
+    <Layout pageName={exhibit.title}>
       <h1>{exhibit.title}</h1>
       <TextEditor readonly={true} initialState={exhibit.summary} />
       {activeCard && 

@@ -1,0 +1,11 @@
+.footer {
+  width: 100%;
+  background-color: var(--blackish);
+  color: var(--greyish);
+  text-align: center;
+  padding: 1rem;
+}
+
+.footer a:hover {
+  color: #fff;
+}

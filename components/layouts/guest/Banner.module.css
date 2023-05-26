@@ -1,0 +1,53 @@
+.banner {
+  height: 140px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1170px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.logo {
+  position: relative;
+  top: 1.2rem;
+}
+
+.logoImage {
+  aspect-ratio: 356 / 93;
+  width: min(calc(100% - 10px), 356px);
+  height: auto;
+}
+
+.socialIcons {
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  list-style: none;
+  padding: 1rem;
+  margin-right: 2rem;
+}
+
+.socialIcons * {
+  margin: 0 5px;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    top: 0;
+  }
+
+  .socialIcons {
+    width: 140px;
+    padding: 5px;
+    margin-right: 0;
+  }
+
+  .banner {
+    height: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
