@@ -32,10 +32,11 @@
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
-  background-color: var(--blackish);
+  background-color: #222;
   margin: 0 0.5rem;
   cursor: pointer;
-  transition: all 600ms;
+  transition: all 400ms;
+  border: 2px solid #000;
 }
 
 .dot[data-status="active"] {
@@ -47,7 +48,7 @@
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 3fr;
+  grid-template-rows: 1fr 5fr;
   height: 100%;
   transition: all 600ms;
   overflow-y: hidden;
@@ -64,9 +65,9 @@
 }
 
 .thumbnail img {
-  aspect-ratio: 2 / 1;
+  aspect-ratio: auto;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-height: calc(100% - 1rem);
   object-fit: cover;
 }
@@ -80,7 +81,7 @@
 
 .summary {
   grid-column: span 1;
-  grid-row: span 2;
+  grid-row: span 1;
   width: 100%;
   max-height: 100%;
   background-color: inherit;
@@ -125,12 +126,12 @@
 
 @media (max-width: 700px) {
   .carousel {
-    height: calc(0.85 * 100vh);
+    height: calc(0.70 * 100vh);
   }
 
   .exhibit {
     grid-template-columns: 1fr;
-    grid-template-rows: 3fr 1fr 3fr;
+    grid-template-rows: 5fr 0.5fr 5fr;
   }
 
   .thumbnail {
@@ -157,6 +158,7 @@
 @media (max-width: 500px) {
   .carousel {
     transition-duration: 400ms;
+    height: calc(0.8 * 100vh);
   }
 
   .thumbnail img {
