@@ -14,3 +14,7 @@
   text-transform: uppercase;
   text-align: center;
 }
+
+.navbarItem {
+  padding: 0 0.5rem;
+}

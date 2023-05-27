@@ -3,7 +3,7 @@ import { PopulatedExhibit } from "@/types";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TextEditor } from "@/components/general";
+import { TextEditor, Swipeable } from "@/components/general";
 import { useRouter } from "next/router";
 
 export default function Carousel({
@@ -19,7 +19,23 @@ export default function Carousel({
   });
 
   return (
-    <div className={styles.carousel}>
+    <Swipeable 
+      className={styles.carousel}
+      onSwipeLeft={() => setCurrent(prev => prev === exhibits.length - 1 ? prev : prev + 1)}
+      onSwipeRight={() => setCurrent(prev => prev ? prev - 1 : 0)}
+    >
+      <div className={styles.indicator}>
+        {exhibits.map(({ title }, index) => {
+          return (
+            <div 
+              key={title}
+              className={styles.dot}
+              data-status={index === current ? "active" : "inactive"}
+              onClick={() => setCurrent(index)}
+            />
+          );
+        })}
+      </div>
       <Image 
         className={styles.arrow}
         src="/arrow.svg"
@@ -27,13 +43,10 @@ export default function Carousel({
         height={32}
         width={32}
         style={{ transform: "rotate(180deg)" }}
-        onClick={() => setCurrent(prev => {
-          if (prev === 0) return exhibits.length - 1;
-          return prev - 1;
-        })}
+        onClick={() => setCurrent(prev => prev ? prev - 1 : 0)}
       />
       {
-        exhibits.map((exhibit, index) =>
+        exhibits.map((exhibit, index) => 
           <article
             key={exhibit.title}
             data-status={index === current ? "center" : index > current ? "right" : "left"}
@@ -58,9 +71,9 @@ export default function Carousel({
               {exhibit.title}
             </Link>
             <TextEditor
-              key={exhibit.title}
               className={styles.summary}
               innerClassName={styles.summaryInner}
+              key={exhibit.title}
               initialState={exhibit.summary}
               readonly={true}
             />
@@ -70,11 +83,11 @@ export default function Carousel({
       <Image 
         className={styles.arrow}
         src="/arrow.svg"
-        alt="<"
+        alt=">"
         height={32}
         width={32}
-        onClick={() => setCurrent(prev => (prev + 1) % exhibits.length)}
+        onClick={() => setCurrent(prev => prev === exhibits.length - 1 ? prev : prev + 1)}
       />
-    </div>
+    </Swipeable>
   );
 }

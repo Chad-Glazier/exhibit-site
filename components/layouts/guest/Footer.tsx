@@ -1,5 +1,6 @@
 import styles from "./Footer.module.css";
 import Link from "next/link";
+import { Fragment } from "react";
 
 const links = new Map();
 links.set("Visit", "https://vernonmuseum.ca/visit/");
@@ -14,7 +15,15 @@ links.set("Shop", "https://greatervernonmuseum.square.site/s/shop");
 links.set("Donate", "https://www.canadahelps.org/en/charities/greater-vernon-museum-and-archives/");
 links.set("Contact", "https://vernonmuseum.ca/contact-us-mav/");
 
-const toLink = (str: string) => <Link href={links.get(str) ?? "/404"}>{str}</Link>;
+function FooterLink({ label }: { label: string }) {
+  return (
+    <Link 
+      href={links.get(label) ?? "/404"}
+    >
+      {label}
+    </Link>
+  );
+}
 
 export default function Footer() {
   return (
@@ -22,11 +31,11 @@ export default function Footer() {
       <p>
         {"Visit Archives Exhibits Programs Rentals Repatriation Blog Volunteer Shop Donate Contact"
           .split(" ")
-          .map((str, index, { length }) => {
+          .map((label, index, { length }) => {
             if (index === length - 1) {
-              return toLink(str);
+              return <FooterLink key={Math.random()} label={label} />;
             } else {
-              return <>{toLink(str)} | </>;
+              return <Fragment key={index}><FooterLink key={Math.random()} label={label} /> | </Fragment>;
             }
           })
         } 

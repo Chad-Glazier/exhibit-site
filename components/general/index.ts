@@ -4,6 +4,7 @@ import YouTubeEmbed from "./youTubeEmbed/YouTubeEmbed";
 import LoadingOverlay from "./loadingOverlay/LoadingOverlay";
 import AddImage from "./addImage/AddImage";
 import AddYouTube from "./addYouTube/AddYouTube";
+import Swipeable from "./swipeable/Swipeable";
 
 export {
   Popup,
@@ -11,5 +12,6 @@ export {
   YouTubeEmbed,
   LoadingOverlay,
   AddImage,
-  AddYouTube
+  AddYouTube,
+  Swipeable
 }
