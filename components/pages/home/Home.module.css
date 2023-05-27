@@ -23,24 +23,19 @@
   height: 2rem;
   border: none;
   background-color: transparent;
-  /* border-bottom: 2px solid var(--blackish); */
-  /* background-color: var(--blackish); */
-  /* color: #fff; */
-  color: #000;
+  color: var(--bluish);
   cursor: pointer;
   transition: all 400ms;
   font-size: 1.2rem;
 }
 
 .pageButton:hover {
-  /* box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.5);
-  transform: translate(-3px, -3px); */
   background-color: #eee;
+  color: #000;
 }
 
 .pageButton[data-status="active"] {
-  /* background-color: var(--greyish); */
-  color: var(--bluish);
+  color: #000;
   border-bottom: 5px solid var(--blackish);
 }
 

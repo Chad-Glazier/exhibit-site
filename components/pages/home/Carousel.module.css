@@ -7,7 +7,9 @@
   align-items: center;
   background-color: var(--greyish);
   padding-bottom: 1rem;
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 5px 2px rgba(0, 0, 0, 0.5);
+  border-top: 2px solid var(--blackish);
+  border-bottom: 2px solid var(--blackish);
 }
 
 .carousel > * {
@@ -33,7 +35,7 @@
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
-  background-color: #222;
+  background-color: var(--greyish);
   margin: 0 0.5rem;
   cursor: pointer;
   transition: all 400ms;
@@ -41,7 +43,7 @@
 }
 
 .dot[data-status="active"] {
-  background-color: var(--greyish);
+  background-color: #000;
 }
 
 .exhibit {
@@ -51,7 +53,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   height: 100%;
-  transition: all 600ms;
+  transition: transform 600ms ease;
   overflow-y: hidden;
 }
 
@@ -101,13 +103,17 @@
 }
 
 .exhibit[data-status="left"] {
+  border-top: 2px solid var(--blackish);
   position: absolute;
   transform: translateX(-100vw);
+  margin-top: 11px;
 }
 
 .exhibit[data-status="right"] {
+  border-top: 2px solid var(--blackish);
   position: absolute;
   transform: translateX(100vw);
+  margin-top: 11px;
 }
 
 .arrow {
