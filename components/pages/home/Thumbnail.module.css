@@ -1,0 +1,88 @@
+.tile {
+  --tileHeight: 300px;
+}
+
+.tile {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 4fr;
+  width: min(1000px, calc(100% - 2rem));
+  height: var(--tileHeight);
+  border: 1px solid black;
+  overflow: hidden;
+  padding: 1rem;
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.5);
+  transition: all 400ms;
+  background-color: #eee;
+}
+
+.tile:hover {
+  box-shadow: 8px 8px 8px 3px rgba(0, 0, 0, 0.5);
+  transform: translate(-5px, -5px);
+}
+
+.tile > * {
+  height: 100%;
+  background-color: inherit;
+}
+
+.thumbnail {
+  grid-row: span 2;
+  grid-column: span 1;
+}
+
+.thumbnail img {
+  aspect-ratio: 3 / 2;
+  height: calc(var(--tileHeight) - 2rem);
+  width: auto;
+  object-fit: cover;
+  object-position: center;
+  transition: all 400ms;
+}
+
+.title {
+  text-align: center;
+  grid-row: span 1;
+  grid-column: span 1;
+  padding: 0 10px;
+}
+
+.summary {
+  grid-row: span 1;
+  grid-column: span 1;
+  position: relative;
+  top: -1rem;
+  overflow: auto;
+  background-color: inherit;
+}
+
+.summaryInner {
+  background-color: inherit;
+}
+
+@media (max-width: 900px) {
+  .thumbnail img {
+    aspect-ratio: 1/1;
+  }
+}
+
+@media (max-width: 750px) {
+  .tile {
+    grid-template-columns: 1fr;
+    grid-template-rows: 10fr 1fr 10fr;
+    height: fit-content;
+    max-height: 500px;
+  }
+
+  .thumbnail, .title, .summary {
+    grid-row: span 1;
+    grid-column: span 1;
+  }
+
+  .thumbnail img {
+    aspect-ratio: 3/2;
+    width: 100%;
+    height: auto;
+    max-height: calc(400px / 2);
+  }
+}

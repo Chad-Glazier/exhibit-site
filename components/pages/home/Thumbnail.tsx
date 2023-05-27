@@ -10,20 +10,30 @@ export default function Thumbnail({
   exhibit: PopulatedExhibit;
 }) {
   return (
-    <div>
-      <Link href={`/${encodeURIComponent(exhibit.title)}`}>
-        <h1>{exhibit.title}</h1>
+    <div className={styles.tile}>
+      <Link 
+        className={styles.thumbnail}
+        href={`/${encodeURIComponent(exhibit.title)}`}
+      >
         <Image 
           src={exhibit.thumbnail} 
           alt="Thumbnail Image" 
-          width={200}
-          height={200}
-        />
-        <TextEditor
-          initialState={exhibit.summary}
-          readonly={true}
+          width={1000}
+          height={1000}
         />
       </Link>
+      <Link 
+        className={styles.title}
+        href={`/${encodeURIComponent(exhibit.title)}`}
+      >
+        <h1>{exhibit.title}</h1>
+      </Link>
+      <TextEditor
+        className={styles.summary}
+        innerClassName={styles.summaryInner}
+        initialState={exhibit.summary}
+        readonly={true}
+      />
     </div>
   );
 }
