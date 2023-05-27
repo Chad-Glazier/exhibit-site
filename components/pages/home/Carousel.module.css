@@ -161,7 +161,7 @@
 @media (max-width: 500px) {
   .carousel {
     transition-duration: 400ms;
-    height: calc(0.75 * 100vh);
+    height: calc(0.90 * 100vh);
   }
 
   .thumbnail img {

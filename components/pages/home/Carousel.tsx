@@ -21,8 +21,8 @@ export default function Carousel({
   return (
     <Swipeable 
       className={styles.carousel}
-      onSwipeLeft={() => setCurrent(prev => prev === exhibits.length - 1 ? prev : prev + 1)}
-      onSwipeRight={() => setCurrent(prev => prev ? prev - 1 : 0)}
+      onSwipeLeft={() => setCurrent(prev => (prev + 1) % exhibits.length)}
+      onSwipeRight={() => setCurrent(prev => prev ? prev - 1 : exhibits.length - 1)}
     >
       <div className={styles.indicator}>
         {exhibits.map(({ title }, index) => {
@@ -43,7 +43,7 @@ export default function Carousel({
         height={32}
         width={32}
         style={{ transform: "rotate(180deg)" }}
-        onClick={() => setCurrent(prev => prev ? prev - 1 : 0)}
+        onClick={() => setCurrent(prev => prev ? prev - 1 : exhibits.length - 1)}
       />
       {
         exhibits.map((exhibit, index) => 
@@ -86,7 +86,7 @@ export default function Carousel({
         alt=">"
         height={32}
         width={32}
-        onClick={() => setCurrent(prev => prev === exhibits.length - 1 ? prev : prev + 1)}
+        onClick={() => setCurrent(prev => (prev + 1) % exhibits.length)}
       />
     </Swipeable>
   );
