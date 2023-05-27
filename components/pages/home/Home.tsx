@@ -19,7 +19,7 @@ export default function Home({
       <Carousel 
         exhibits={allExhibits.slice(0, pageLength)}
       />
-      <h1 className={styles.title}>Virtual Exhibits</h1>
+      <h1 className={styles.title}>All Virtual Exhibits</h1>
       <main className={styles.page}>
         {
           allExhibits
