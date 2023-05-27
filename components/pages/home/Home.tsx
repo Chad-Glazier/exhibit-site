@@ -13,7 +13,7 @@ export default function Home({
     <Layout pageName="Exhibits">
       <main className={styles.home}>
         <Carousel 
-          exhibits={allExhibits}
+          exhibits={allExhibits.slice(0, 5)}
         />
         {allExhibits.map(exhibit => 
           <Thumbnail 
