@@ -33,6 +33,9 @@ export default function YouTubeEmbed({
           alt={src}
           width={width}
           height={height}
+          style={{
+            objectFit: "cover"
+          }}
         />
         :
         <iframe

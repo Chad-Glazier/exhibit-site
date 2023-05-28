@@ -6,7 +6,7 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr 4fr;
-  width: min(1000px, calc(100% - 2rem));
+  width: min(1000px, calc(100% - 1rem));
   height: var(--tileHeight);
   border: 1px solid black;
   overflow: hidden;

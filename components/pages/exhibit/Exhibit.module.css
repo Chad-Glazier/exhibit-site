@@ -1,0 +1,46 @@
+.tiles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: all 400ms;
+}
+
+.tile {
+  width: 300px;
+  height: 300px;
+}
+
+.article {
+  height: 400px;
+  width: 100%;
+  position: relative;
+}
+
+.article .media, .article .text {
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  transition: all 600ms;
+}
+
+.article .media {
+  left: 0;
+  transform: translateX(-100vw);
+}
+
+.article .text {
+  right: 0;
+  transform: translateX(100vw);
+}
+
+.article .media.active {
+  transform: translateX(50%);
+}
+
+.article .text.active {
+  transform: translateX(-50%);
+}
+

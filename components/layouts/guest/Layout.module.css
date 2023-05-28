@@ -13,7 +13,7 @@
   z-index: 1;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px) or (max-height: 600px) {
   .header {
     position: static;
   }

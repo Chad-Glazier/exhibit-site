@@ -18,6 +18,7 @@ links.set("Contact", "https://vernonmuseum.ca/contact-us-mav/");
 function FooterLink({ label }: { label: string }) {
   return (
     <Link 
+      className={styles.link}
       href={links.get(label) ?? "/404"}
     >
       {label}
