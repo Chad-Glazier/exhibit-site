@@ -6,10 +6,12 @@ import Footer from "./Footer";
 
 export default function Layout({ 
   children,
-  pageName
+  pageName,
+  className
 }: { 
   children: React.ReactNode;
   pageName?: string;
+  className?: string;
 }) {
   return (
     <>
@@ -20,7 +22,7 @@ export default function Layout({
         <Banner />
         <NavBar />        
       </header>
-      <main className={styles.main}>
+      <main className={styles.main + (className ? " " + className : "")}>
         {children}
       </main>
       <Footer />

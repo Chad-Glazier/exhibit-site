@@ -1,46 +1,97 @@
+.background  {
+  background-color: var(--greyish);
+}
+
 .tiles {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 1fr;
   gap: 1rem;
   transition: all 400ms;
+  padding: 1rem;
 }
 
 .tile {
-  width: 300px;
-  height: 300px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: all 400ms;
+  border: 2px solid #000;
+}
+
+.tile:hover {
+  cursor: pointer;
+}
+
+.tile.active {
+  box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+  margin: -5px 5px 5px -5px;
+}
+
+.tile:not(.active):hover {
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.5);
+  margin: -3px 3px 3px -3px;
 }
 
 .article {
-  height: 400px;
+  --article-height: 400px;
+  height: calc(var(--article-height) + 1rem);
   width: 100%;
   position: relative;
+  background-color: var(--blackish);
+  color: #eee;
 }
 
 .article .media, .article .text {
-  height: 400px;
-  width: 400px;
+  height: var(--article-height);
+  width: 50%;
   position: absolute;
   transition: all 600ms;
+  padding: 1rem;
+  background-color: inherit;
+  color: inherit;
 }
+
+.textInner {
+  background-color: inherit;
+  color: inherit;
+}
+
 
 .article .media {
   left: 0;
+  top: 0;
+  aspect-ratio: 3 / 2;
+  height: min(100%, auto);
+  width: 50%;
   transform: translateX(-100vw);
+  object-fit: cover;
 }
 
 .article .text {
   right: 0;
+  bottom: 0;
   transform: translateX(100vw);
+  overflow-y: auto;
 }
 
 .article .media.active {
-  transform: translateX(50%);
+  transform: translateX(0);
 }
 
 .article .text.active {
-  transform: translateX(-50%);
+  transform: translateX(0);
 }
 
+
+@media (max-width: 800px) and (min-height: 600px) {
+  .article {
+    --article-height: 600px;
+  }
+
+  .article .media, .article .text {
+    height: calc(var(--article-height) / 2);
+    height: 50%;
+    width: 100%;
+  }
+}

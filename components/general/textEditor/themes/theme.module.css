@@ -88,7 +88,7 @@
 
 .editorHeadingH1 {
   font-size: 24px;
-  color: rgb(5, 5, 5);
+  color: inherit;
   font-weight: 400;
   margin: 0;
   margin-bottom: 12px;
@@ -97,7 +97,7 @@
 
 .editorHeadingH2 {
   font-size: 15px;
-  color: rgb(101, 103, 107);
+  color: inherit;
   font-weight: 700;
   margin: 0;
   margin-top: 10px;
@@ -109,8 +109,8 @@
   margin: 0;
   margin-left: 20px;
   font-size: 15px;
-  color: rgb(101, 103, 107);
-  border-left-color: rgb(206, 208, 212);
+  color: calc(inherit + #111);
+  border-left-color: calc(inherit + #181818);
   border-left-width: 4px;
   border-left-style: solid;
   padding-left: 16px;

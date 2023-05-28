@@ -9,7 +9,8 @@
 }
 
 .main {
-  margin-top: 205px;
+  padding-top: 205px;
+  padding-bottom: 3rem;
   z-index: 1;
 }
 
@@ -19,6 +20,6 @@
   }
 
   .main {
-    margin-top: 5px;
+    padding-top: 5px;
   }
 }
