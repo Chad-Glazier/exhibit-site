@@ -1,6 +1,6 @@
 import styles from "./Exhibit.module.css";
 import { PopulatedExhibitCreatable } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "@/components/layouts";
 import { Swipeable, TextEditor, YouTubeEmbed } from "@/components/general";
 import Image from "next/image";
@@ -14,6 +14,13 @@ export default function Exhibit({
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  useEffect(() => {
+    document.getElementById(activeIndex.toString())?.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, [activeIndex])
+
   return (
     <Layout pageName={exhibit.title} className={styles.background}>
       <Swipeable 
@@ -22,21 +29,24 @@ export default function Exhibit({
         onSwipeRight={() => setActiveIndex(prev => prev ? prev - 1 : exhibit.cards.length - 1)}
       >
       {exhibit.cards.map(({ media, description }, index) => (
-        <Fragment key={index}>
+        <article 
+          key={index}
+          id={index.toString()}
+        >
           <Media
-            key={index}
+            key={media + index}
             mediaUrl={media}
             className={styles.media + " " + (index === activeIndex ? styles.active : "")}
             thumbnailOnly={index !== activeIndex}
           />
           <TextEditor
-            key={index}
+            key={media + index + "text"}
             className={styles.text + " " + (index === activeIndex ? styles.active : "")}
             innerClassName={styles.textInner}
             initialState={description}
             readonly
           />        
-        </Fragment>
+        </article>
       ))}
       </Swipeable>
       <section
