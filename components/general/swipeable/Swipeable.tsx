@@ -2,18 +2,36 @@ import styles from "./Swipeable.module.css";
 import { ReactNode, useRef } from "react";
 
 /**
- * Creates a container that can be swiped left or right.
+ * Creates a container that can be swiped in any direction to trigger a callback.
  * 
- * @param children The elements to be wrapped and swipeable.
- * @param onSwipeLeft A callback to be called when the user swipes left.
- * @param onSwipeRight A callback to be called when the user swipes right.
- * @param minSwipeDistance The minimum distance the user must swipe to trigger a callback.
- * @param className a className to be applied to the container.
  * @returns 
  * ```tsx
  *  <div className={className} ...>
  *    {...children}
  *  </div>
+ * ```
+ * 
+ * @example
+ * Let `pages` be some array of `JSX.Element`s. The following code will create a container
+ * that can be swiped left or right to change the current page.
+ * 
+ * ```tsx
+ * const [currentPageIndex, setCurrentPageIndex] = useState(0);
+ * 
+ * <Swipeable
+ *   onSwipeLeft={() => 
+ *     setCurrentPageIndex(prev => (prev + 1) % pages.length)
+ *   }
+ *   onSwipeRight={() => 
+ *     setCurrentPageIndex(prev => prev ? prev - 1 : pages.length - 1)
+ *   }
+ * >
+ *   {pages.map((page, index) => (
+ *     <section key={index}>
+ *       {page}
+ *     </section>   
+ *   )}
+ * </Swipeable>
  * ```
  */
 export default function Swipeable({
@@ -39,18 +57,26 @@ export default function Swipeable({
    * | 90      | Up        | `Math.PI / 2`      |
    * | 180     | Left      | `Math.PI`          |
    * | 270     | Down      | `Math.PI * 3 / 2`  |
-   * @param displacement the magnitude of the swipe; how many pixels the swipe covered.
+   * @param displacement the magnitude of the swipe in pixels.
+   * @param originalVector the vector of the swipe, with the origin at the start of the 
+   * swipe. the `originalVector.x` represents the horizontal displacement (positive for
+   * right, negative for left) and `originalVector.y` represents the vertical displacement
+   * (positive for down, negative for up).
    */
-  onSwipe?: (angleInRadians: number, displacement: number) => void;
+  onSwipe?: (
+    angleInRadians: number, 
+    displacement: number, 
+    originalVector: { x: number, y: number}
+  ) => void;
   /**
-   * the number of pixels the user must swipe to trigger a callback, defaults to 100.
+   * the number of pixels the user must swipe to trigger a callback, defaults to 70.
    */ 
   minSwipeDistance?: number;
   className?: string;
 }) {
   const initialX = useRef(0);
   const initialY = useRef(0);
-  const defaultMinSwipeDistance = 100;
+  const defaultMinSwipeDistance = 70;
 
   return (
     <div 
@@ -84,7 +110,10 @@ export default function Swipeable({
         let angle = Math.atan2(verticalDisplacement, horizontalDisplacement);
         if (angle < 0) angle += Math.PI * 2;
         const magnitude = Math.sqrt(horizontalDisplacement ** 2 + verticalDisplacement ** 2);
-        onSwipe?.(angle, magnitude);
+        onSwipe?.(angle, magnitude, {
+          x: horizontalDisplacement,
+          y: verticalDisplacement
+        });
 
         initialX.current = 0;
         initialY.current = 0;

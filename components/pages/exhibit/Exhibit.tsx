@@ -1,11 +1,10 @@
 import styles from "./Exhibit.module.css";
 import { PopulatedExhibitCreatable } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Layout } from "@/components/layouts";
 import { Swipeable, TextEditor, YouTubeEmbed } from "@/components/general";
 import Image from "next/image";
 import { getBasename, isYouTube } from "@/util";
-import { Fragment } from "react";
 
 export default function Exhibit({
   exhibit
@@ -13,13 +12,6 @@ export default function Exhibit({
   exhibit: PopulatedExhibitCreatable;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    document.getElementById(activeIndex.toString())?.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-  }, [activeIndex])
 
   return (
     <Layout pageName={exhibit.title} className={styles.background}>
@@ -52,14 +44,28 @@ export default function Exhibit({
       <section
         className={styles.tiles}
       >
-        {exhibit.cards.map(({ media, description }, index) => (
+        {exhibit.cards.map(({ media }, index) => (
           <Media
             key={index}
             mediaUrl={media}
             className={styles.tile + " " + (index === activeIndex ? styles.active : "")}
             thumbnailOnly
-            onClick={() => setActiveIndex(index)}
-          />
+            onClick={() => {
+              // unfortunately, browsers will sometimes interrupt the scroll because of the re-render. I 
+              // tried using a couple of specialized react libraries to scroll to the element, but even 
+              // those had weird behavior (the scroll finished, but the speed was wildly inconsistent). 
+              // I decided that this is just the best way to do it.
+              const target = document.getElementById(index.toString());
+              if (!target) {
+                console.error(`Could not find the card for ${getBasename(exhibit.cards[index].media)}`);
+                return;
+              }
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: window.innerHeight > 600 && window.innerWidth > 600 ? "center" : "start"
+              })
+              setActiveIndex(index);
+            }}/>
         ))}
       </section>
     </Layout>

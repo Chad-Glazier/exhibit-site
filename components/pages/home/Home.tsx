@@ -19,7 +19,7 @@ export default function Home({
       <Carousel 
         exhibits={allExhibits.slice(0, pageLength)}
       />
-      <h1 className={styles.title}>All Virtual Exhibits</h1>
+      <h1 className={styles.title} id="top-of-exhibit-page">All Virtual Exhibits</h1>
       <main className={styles.page}>
         {
           allExhibits
@@ -38,7 +38,13 @@ export default function Home({
             <button
               className={styles.pageButton}
               key={i}
-              onClick={() => setPageIndex(i)}
+              onClick={() => {
+                setPageIndex(i)
+                document.getElementById("top-of-exhibit-page")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center"
+                });
+              }}
               data-status={i === pageIndex ? "active" : "inactive"}
             >
               {i + 1}
