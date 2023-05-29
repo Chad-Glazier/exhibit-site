@@ -27,6 +27,7 @@ export default function Exhibit({
             key={index}
             mediaUrl={media}
             className={styles.media + " " + (index === activeIndex ? styles.active : "")}
+            thumbnailOnly={index !== activeIndex}
           />
           <TextEditor
             key={index}
