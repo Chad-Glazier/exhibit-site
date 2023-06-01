@@ -40,7 +40,7 @@
 }
 
 .article {
-  --article-height: min(calc(100vh - 2rem), 500px);
+  --article-height: min(calc(100vh - 2rem), max(500px, 35vh));
   height: calc(var(--article-height) + 1rem);
   width: 100%;
   position: relative;
