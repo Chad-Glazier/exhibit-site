@@ -37,7 +37,7 @@
   border-bottom: 1px solid var(--admin-dark-blue);
 }
 
-.table tbody tr {
+.table tbody tr:not(:last-of-type) {
   border-bottom: 1px solid var(--admin-dark-blue);
 }
 

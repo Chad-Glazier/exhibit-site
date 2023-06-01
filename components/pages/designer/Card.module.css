@@ -37,25 +37,22 @@
   height: calc(100% - 44px);
 }
 
+.buttons {
+  position: absolute;
+  top: 0;
+  right: -30px;
+}
+
 @media (max-width: 535px) {
   .editorInner {
     height: calc(100% - 76px);
   }
 }
 
-.deleteButton {
-  position: absolute;
-  top: 0;
-  right: -30px;
-  width: 24px;
-  height: 24px;
-  opacity: 0.3;
-}
-
-@media (max-width: 970px) {
-  .deleteButton {
-    right: 10px;
+@media (max-width: 970px) { 
+  .buttons {
     top: 5px;
+    right: 5px;
   }
 
   .card {
@@ -66,28 +63,6 @@
   .editor {
     width: calc(100% - 1rem);
   }
-}
-
-.deleteButton:hover {
-  cursor: pointer;
-  opacity: 1;
-}
-
-.deleteButton:before, .deleteButton:after {
-  position: absolute;
-  left: 15px;
-  content: ' ';
-  height: 24px;
-  width: 2px;
-  background-color: #333;
-}
-
-.deleteButton:before {
-  transform: rotate(45deg);
-}
-
-.deleteButton:after {
-  transform: rotate(-45deg);
 }
 
 .popup {

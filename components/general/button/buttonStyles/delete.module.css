@@ -1,0 +1,26 @@
+.button {
+  opacity: 0.4;
+  position: relative;
+}
+
+.button:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.button:before, .button:after {
+  position: absolute;
+  left: 12px;
+  content: ' ';
+  height: 24px;
+  width: 3px;
+  background-color: #333;
+}
+
+.button:before {
+  transform: rotate(45deg);
+}
+
+.button:after {
+  transform: rotate(-45deg);
+}

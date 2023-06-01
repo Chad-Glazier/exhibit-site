@@ -1,0 +1,18 @@
+.button {
+  opacity: 0.4;
+  position: relative;
+
+  left: 1px;
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 18px solid #555;
+
+  transform: rotate(180deg);
+}
+
+.button:hover {
+  cursor: pointer;
+  opacity: 1;
+}

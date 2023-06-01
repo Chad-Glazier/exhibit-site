@@ -1,5 +1,5 @@
 import styles from "./Card.module.css";
-import { CardCreatable } from "@/types";
+import { CardType } from "@/types";
 import { useState, useRef } from "react";
 import AddMediaPopup from "./AddMediaPopup";
 import Image from "next/image";
@@ -9,21 +9,28 @@ const TextEditor = dynamic(() => import("../../general/textEditor/TextEditor"), 
 import { Image as ImageType } from "@prisma/client";
 import { Popup, YouTubeEmbed } from "@/components/general";
 import { getBasename } from "@/util";
+import { Buttons } from "@/components/general";
 
 export default function Card({
   card,
   onChange,
   onDelete,
+  onMoveUp,
+  onMoveDown,
   allImages,
-  acceptYouTube
+  acceptYouTube,
+  id
 }: {
-  card: CardCreatable;
-  onChange: (updatedCard: CardCreatable) => void;
-  onDelete?: (updatedCard: CardCreatable) => void;
+  card: CardType;
+  onChange: (updatedCard: CardType) => void;
+  onDelete?: (updatedCard: CardType) => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
   allImages: ImageType[];
   acceptYouTube?: boolean;
+  id?: string;
 }) {
-  const updatedCard = useRef<CardCreatable>(card);
+  const updatedCard = useRef<CardType>(card);
   const [showMediaPopup, setShowMediaPopup] = useState<boolean>(false);
   const [imageCache, setImageCache] = useState<ImageType[]>(allImages);
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
@@ -69,7 +76,7 @@ export default function Card({
           onChange(updatedCard.current);
         }}
       />
-      <div className={styles.card}>
+      <div className={styles.card} id={id}>
         {isYouTube(updatedCard.current.media) ?
           <YouTubeEmbed
             title="YouTube Video | Click to change"
@@ -100,15 +107,12 @@ export default function Card({
             onChange(updatedCard.current);
           }}
         />
-        {onDelete &&
-          <div
-            className={`${styles.button} ${styles.deleteButton}`}
-            onClick={() => {
-              setShowDeletePopup(true);
-            }}
-          >
-          </div>
-        }          
+        <Buttons
+          className={styles.buttons}
+          onDelete={() => setShowDeletePopup(true)}
+          onMoveUp={onMoveUp}
+          onMoveDown={onMoveDown}
+        />
       </div>    
     </>
   );

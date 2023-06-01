@@ -2,87 +2,51 @@ import { PopulatedExhibitCreatable } from "@/types";
 import styles from "./ExhibitTile.module.css";
 import Image from "next/image";
 import { useState } from "react";
-import { Popup, LoadingOverlay } from "@/components/general";
+import { LoadingOverlay } from "@/components/general";
 import Link from "next/link";
+import DeleteExhibit from "./popups/DeleteExhibit";
+import TogglePublishExhibit from "./popups/TogglePublishExhibit";
+import Details from "./popups/Details";
 
 export default function ExhibitTile({ 
   exhibit,
+  allExhibits,
   onDelete,
   onTogglePublic
 }: { 
   exhibit: PopulatedExhibitCreatable;
+  allExhibits: PopulatedExhibitCreatable[];
   onDelete: () => void;
   onTogglePublic: (exhibit: PopulatedExhibitCreatable) => void;
 }) {
   const [showDelete, setShowDelete] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
     <>
       <LoadingOverlay show={loading} />
-      <Popup show={showDelete && !loading} onClickAway={() => setShowDelete(false)}>
-        <div className={styles.popup}>
-          <h2 className={styles.popupTitle}>Delete Exhibit</h2>
-          <p>Are you sure you want to delete &quot;{exhibit.title}&quot;&#x3F;</p>
-          <div className={styles.popupButtons}>
-            <button 
-              className={styles.button}
-              onClick={() => {
-                if (onDelete) onDelete();
-                setShowDelete(false);
-              }}
-            >
-              Delete
-            </button>
-            <button 
-              className={styles.button}
-              onClick={() => {
-                setShowDelete(false);
-              }}
-            >
-              Cancel
-            </button>            
-          </div>
-        </div>
-      </Popup>
-      <Popup show={showPublish && !loading} onClickAway={() => setShowPublish(false)}>
-        <div className={styles.popup}>
-          <h2 className={styles.popupTitle}>
-            {exhibit.published ? 
-              "Unpublish Exhibit"
-              :
-              "Publish Exhibit"
-            }
-          </h2>
-          <p>
-            {exhibit.published ? 
-              `Are you sure you want to unpublish "${exhibit.title}"? This will hide it from the public.` 
-              : 
-              `Are you sure you want to publish "${exhibit.title}"? This will make it visible to the public.`
-            }
-          </p>      
-            <div className={styles.popupButtons}>
-            <button
-              className={styles.button}
-              onClick={() => {
-                onTogglePublic(exhibit);
-                setShowPublish(false);
-              }}
-            >
-              {exhibit.published ? "Unpublish" : "Publish"}
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => {
-                setShowPublish(false);
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </Popup>
+      <DeleteExhibit
+        show={showDelete && !loading}
+        close={() => setShowDelete(false)}
+        exhibit={exhibit}
+        onDelete={onDelete}
+      />
+      <TogglePublishExhibit
+        show={showPublish && !loading}
+        close={() => setShowPublish(false)}
+        exhibit={exhibit}
+        onTogglePublic={() => {
+          onTogglePublic(exhibit);
+        }}
+      />
+      <Details
+        allExhibits={allExhibits}
+        show={showDetails && !loading}
+        close={() => setShowDetails(false)}
+        exhibit={exhibit}
+      />
       <div className={styles.exhibitCard}>
         <h2 className={styles.exhibitTitle}>{exhibit.title}</h2>
         <Image
@@ -112,13 +76,12 @@ export default function ExhibitTile({
           >
             Edit
           </Link>
-          <Link 
+          <button 
             className={styles.exhibitButton}
-            href={`/preview/${encodeURIComponent(exhibit.title)}`} 
-            target="_blank"
+            onClick={() => setShowDetails(true)}
           >
-            Preview
-          </Link>
+            View Details
+          </button>
         </div>
       </div>    
     </>

@@ -15,6 +15,7 @@ model User {
 }
 
 model Exhibit {
+  priority  Int     @default(0)
   id        Int     @id @default(autoincrement())
   title     String  @unique
   thumbnail String

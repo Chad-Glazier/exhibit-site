@@ -10,11 +10,13 @@ import { LoadingOverlay, AddImage } from "@/components/general";
 export default function Gallery({
   images,
   imageTitles,
-  userData
+  userData,
+  targetImage
 }: {
   images: Image[];
   imageTitles: Record<string, string[]>;
   userData: UserData;
+  targetImage?: string;
 }) {
   const [imageCache, setImageCache] = useState(images);
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -39,6 +41,7 @@ export default function Gallery({
         <section className={styles.images}>
           {imageCache.map((el, index) =>
             <GalleryTile
+              openDetails={targetImage === el.url}
               key={el.url}
               image={el}
               dependantExhibits={imageTitles[el.url] || []}

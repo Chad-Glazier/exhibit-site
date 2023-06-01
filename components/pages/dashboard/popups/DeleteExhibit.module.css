@@ -1,10 +1,10 @@
-.form {
+.container {
   padding: 1rem;
-  background-color: #fff;
-  border: 1px solid var(--admin-dark-blue);
+  background-color: #EEE;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  max-width: min(calc(100vw - 1rem), 500px);
 }
 
 .title {
@@ -14,33 +14,27 @@
   margin-bottom: 0.5rem;
 }
 
-.label, .input, .submit {
-  margin: 2px 0;
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
 }
 
-.input, .submit {
+.button {
+  flex: 1;
+  border: 1px solid var(--admin-dark-blue);
   padding: 2px;
   border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
-}
-
-.input {
   font-size: 1rem;
-}
-
-.label, .submit { 
   text-transform: uppercase;
-}
-
-.submit {
-  font-size: 1.2rem;
   transition: all 400ms;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background-color: var(--admin-light-blue);
   color: #FFF;
 }
 
-.submit:hover {
+.button:hover {
   background-color: var(--admin-lighter-blue);
   cursor: pointer;
   color: var(--admin-dark-blue);

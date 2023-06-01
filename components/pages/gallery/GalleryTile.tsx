@@ -10,14 +10,16 @@ import Details from "./Details";
 export default function ExhibitTile({ 
   image,
   dependantExhibits,
-  onDelete
+  onDelete,
+  openDetails
 }: { 
   image: ImageType; 
   dependantExhibits: string[];
   onDelete?: () => void;
+  openDetails?: boolean;
 }) {
   const [showPopup, setShowPopup] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(openDetails ?? false);
 
   const imageBasename = decodeURIComponent(getBasename(image.url));
 

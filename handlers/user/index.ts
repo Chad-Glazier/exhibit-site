@@ -7,12 +7,11 @@ import put from "./put";
 import aggregateHandlers from "@/handlers/aggregateHandlers";
 import { withAuth } from "@/handlers/middleware";
 
-const handlers: Record<string, NextApiHandler<ErrorMessage | UserData>> = {
-  "GET": withAuth(get),
-  "POST": withAuth(post),
-  "PUT": withAuth(put),
-  "DELETE": withAuth(del)
-};
+const handlers = new Map<string, NextApiHandler<ErrorMessage | UserData>>();
+handlers.set("GET", withAuth(get));
+handlers.set("POST", withAuth(post));
+handlers.set("PUT", withAuth(put));
+handlers.set("DELETE", withAuth(del));
 
 const handler: NextApiHandler = aggregateHandlers(handlers);
 

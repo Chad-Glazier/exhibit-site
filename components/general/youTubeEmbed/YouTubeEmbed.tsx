@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getYouTubeId } from "@/util";
 
 export default function YouTubeEmbed({
   className,
@@ -17,7 +18,7 @@ export default function YouTubeEmbed({
   thumbnailOnly?: boolean;
   onClick?: () => void;
 }) {
-  let videoId = (src.split("v=")[1] || src.split("/").pop())?.split("&")[0];
+  let videoId = getYouTubeId(src);
   const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
 

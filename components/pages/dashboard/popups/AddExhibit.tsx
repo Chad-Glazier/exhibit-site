@@ -3,7 +3,12 @@ import styles from "./AddExhibit.module.css";
 import { LoadingOverlay, Popup } from "@/components/general";
 import { api } from "@/util/client";
 import { useState } from "react";
+import { TextEditor } from "@/components/general";
 
+
+/**
+ * A popup form that prompts the user to create a new exhibit.
+ */
 export default function AddExhibit({
   show,
   existingExhibits,
@@ -32,8 +37,9 @@ export default function AddExhibit({
               newTitle = baseTitle + ` (${i})`;
             }
             const newExhibit: PopulatedExhibitCreatable = {
+              priority: 0,
               title: newTitle,
-              summary: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
+              summary: TextEditor.emptyEditorState(),
               thumbnail: "/no-image.png",
               cards: [],
               published: false

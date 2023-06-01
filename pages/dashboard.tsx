@@ -10,9 +10,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: { destination: "/login", permanent: false } };
   }
 
-  const exhibits: PopulatedExhibit[] = await prisma.exhibit.findMany({
-    include: { cards: true }
-  }) as PopulatedExhibit[];
+  const exhibits: PopulatedExhibit[] = 
+    (await prisma.exhibit.findMany({
+      include: { cards: true }
+    }) as PopulatedExhibit[])
+    .reverse()
+    .sort((a, b) => a.priority - b.priority);
 
   return { props: { exhibits, userData } };
 }

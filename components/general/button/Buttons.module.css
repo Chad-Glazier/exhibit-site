@@ -1,0 +1,13 @@
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  gap: 5px;
+}
+
+.button {
+  width: 24px;
+  height: 24px;
+}

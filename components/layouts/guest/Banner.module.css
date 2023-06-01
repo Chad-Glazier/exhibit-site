@@ -9,6 +9,8 @@
 }
 
 .logo {
+  display: block;
+  width: min(calc(100% - 10px), 356px);
   position: relative;
   top: 1.2rem;
 }

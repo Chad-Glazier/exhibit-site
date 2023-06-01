@@ -5,6 +5,7 @@ import LoadingOverlay from "./loadingOverlay/LoadingOverlay";
 import AddImage from "./addImage/AddImage";
 import AddYouTube from "./addYouTube/AddYouTube";
 import Swipeable from "./swipeable/Swipeable";
+import Buttons from "./button/Buttons";
 
 export {
   Popup,
@@ -13,5 +14,6 @@ export {
   LoadingOverlay,
   AddImage,
   AddYouTube,
-  Swipeable
+  Swipeable,
+  Buttons
 }

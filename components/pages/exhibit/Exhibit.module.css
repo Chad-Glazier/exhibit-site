@@ -20,8 +20,6 @@
 .tile {
   height: 100%;
   width: 100%;
-  max-width: 400px;
-  max-height: 400px;
   object-fit: cover;
   transition: all 400ms;
   border: 2px solid #000;
@@ -42,7 +40,7 @@
 }
 
 .article {
-  --article-height: 400px;
+  --article-height: min(calc(100vh - 2rem), 500px);
   height: calc(var(--article-height) + 1rem);
   width: 100%;
   position: relative;
@@ -50,7 +48,7 @@
   color: #eee;
 }
 
-.article .media, .article .text {
+.media, .text {
   height: var(--article-height);
   width: 50%;
   position: absolute;
@@ -58,22 +56,24 @@
   padding: 1rem;
   background-color: inherit;
   color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .textInner {
   background-color: inherit;
   color: inherit;
+  padding-right: 10px;
 }
-
 
 .article .media {
   left: 0;
   top: 0;
-  aspect-ratio: 3 / 2;
   height: min(100%, auto);
-  width: 50%;
+  width: min(calc(50%), auto);
   transform: translateX(-100vw);
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .article .text {
@@ -81,6 +81,27 @@
   bottom: 0;
   transform: translateX(100vw);
   overflow-y: auto;
+}
+
+.arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  height: 100%;
+  width: 40px;
+  z-index: 10;
+  background-color: transparent;
+  opacity: 0.15;
+  transition: all 400ms;
+}
+
+.arrow:first-of-type {
+  left: 0;
+}
+
+.arrow:hover {
+  opacity: 0.8;
 }
 
 .article .media.active {
@@ -93,6 +114,10 @@
 
 
 @media (max-width: 800px) and (min-height: 600px) {
+  .arrow {
+    display: none;
+  }
+
   .article {
     --article-height: 600px;
   }
@@ -101,5 +126,9 @@
     height: calc(var(--article-height) / 2);
     height: 50%;
     width: 100%;
+  }
+
+  .textInner {
+    padding-right: 0;
   }
 }

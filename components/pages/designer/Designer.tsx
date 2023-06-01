@@ -1,6 +1,6 @@
 import styles from "./Designer.module.css";
 import { AdminLayout } from "@/components/layouts";
-import { UserData, PopulatedExhibitCreatable } from "@/types";
+import { UserData, PopulatedExhibit, CardType } from "@/types";
 import { useState, useRef } from "react";
 import Card from "./Card";
 import { ImageType } from "@/types";
@@ -17,13 +17,13 @@ export default function Designer({
   allExhibits,
   allImages
 }: { 
-  originalExhibit: PopulatedExhibitCreatable;
+  originalExhibit: PopulatedExhibit;
   userData: UserData;
-  allExhibits: PopulatedExhibitCreatable[];
+  allExhibits: PopulatedExhibit[];
   allImages: ImageType[];
 }) {
   const lastSavedVersion = useRef<string>(JSON.stringify(originalExhibit));
-  const cache = useRef<PopulatedExhibitCreatable>({ ...originalExhibit });
+  const cache = useRef<PopulatedExhibit>({ ...originalExhibit });
   const [showExitWarning, setShowExitWarning] = useState(false);
   const [_, forceUpdate] = useState(false);
   const titleWasChanged = useRef(false);
@@ -81,6 +81,8 @@ export default function Designer({
                 titleWasChanged.current
                 && originalExhibit.title !== cache.current.title
               ) {
+                // cannot use "PUT" because the original exhibit won't be identified
+                // by the new title, meaning that it will persist.
                 await api.exhibit.deleteOne(originalExhibit.title);
                 const res = await api.exhibit.post(cache.current);
                 if (!res.ok) {
@@ -91,12 +93,14 @@ export default function Designer({
                 const res = await api.exhibit.put(cache.current);
                 if (!res.ok) {
                   alert(res.error);
+                  return;
                 }
+                cache.current = res.body;
                 lastSavedVersion.current = JSON.stringify(cache.current);
               }
-
               setLoading(false);
             }}
+            title="Save the exhibit"
           >
             Save
           </button>
@@ -104,6 +108,7 @@ export default function Designer({
             className={styles.button} 
             href={`/preview/${encodeURIComponent(cache.current.title)}`} 
             target="_blank"
+            title="Preview the last saved version in a new tab"
           >
             Preview
           </Link>
@@ -121,6 +126,7 @@ export default function Designer({
             }}
             className={styles.button}
             href="/dashboard"
+            title="Return to the dashboard"
           >
             Exit
           </Link>
@@ -163,13 +169,9 @@ export default function Designer({
             </div>
           </div>
           {cache.current.cards.map((card, index) => {
-            // necessary since cards don't have any other intrinsic identifier.
-            if ((card as any).id === undefined) {
-              (card as any).id = `${card.media} ${Math.random()}`;
-            }
-            
             return <Card
-              key={(card as any).id}
+              key={card.id}
+              id={`card ${card.id}`}
               onChange={(updatedCard) => {
                 cache.current.cards[index] = updatedCard;
                 forceUpdate(x => !x);
@@ -180,18 +182,39 @@ export default function Designer({
                 cache.current.cards = cache.current.cards.filter((_, i) => i !== index);
                 forceUpdate(x => !x);
               }}
+              onMoveUp={index !== 0 ? 
+                () => {
+                  if (index === 0) return;
+                  const temp = cache.current.cards[index - 1];
+                  cache.current.cards[index - 1] = card;
+                  cache.current.cards[index] = temp;
+                  forceUpdate(x => !x);
+                } 
+                : 
+                undefined
+              }
+              onMoveDown={index !== cache.current.cards.length - 1 ? 
+                () => {
+                  if (index === cache.current.cards.length - 1) return;
+                  const temp = cache.current.cards[index + 1];
+                  cache.current.cards[index + 1] = card;
+                  cache.current.cards[index] = temp;
+                  forceUpdate(x => !x);
+                }
+                : 
+                undefined
+              }
               acceptYouTube
             />;
           })}
           <button
             className={styles.addCardButton}
             onClick={() => {
-              // the description field is a JSON string that represents an empty document,
-              // which is necessary for the Lexical text editor to parse (it throws a 
-              // fit otherwise)
               cache.current.cards.push({
+                exhibitId: cache.current.id,
+                id: Math.random(),
                 media: "/no-image.png",
-                description: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+                description: TextEditor.emptyEditorState(),
               });
               forceUpdate(x => !x);
             }}
@@ -201,6 +224,5 @@ export default function Designer({
         </div>
       </AdminLayout>    
     </>
-
   );
 }

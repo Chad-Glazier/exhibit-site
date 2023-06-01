@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: { destination: "/login", permanent: false } };
   }
 
-  const images: Image[] = await prisma.image.findMany();
+  const images: Image[] = (await prisma.image.findMany()).reverse();
   const imageTitles: Record<string, string[]> = {};
 
   for (const { url } of images) {
@@ -32,7 +32,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  return { props: { images, imageTitles, userData } };
+  let targetImage = context.query.image ?? null;
+  
+  if (Array.isArray(targetImage)) targetImage = targetImage[0];
+
+  return { props: { images, imageTitles, userData, targetImage } };
 } 
 
 export default Gallery;

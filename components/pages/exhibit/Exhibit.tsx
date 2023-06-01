@@ -20,26 +20,43 @@ export default function Exhibit({
         onSwipeLeft={() => setActiveIndex(prev => (prev + 1) % exhibit.cards.length)}
         onSwipeRight={() => setActiveIndex(prev => prev ? prev - 1 : exhibit.cards.length - 1)}
       >
-      {exhibit.cards.map(({ media, description }, index) => (
-        <article 
-          key={index}
-          id={index.toString()}
-        >
-          <Media
-            key={media + index}
-            mediaUrl={media}
-            className={styles.media + " " + (index === activeIndex ? styles.active : "")}
-            thumbnailOnly={index !== activeIndex}
-          />
-          <TextEditor
-            key={media + index + "text"}
-            className={styles.text + " " + (index === activeIndex ? styles.active : "")}
-            innerClassName={styles.textInner}
-            initialState={description}
-            readonly
-          />        
-        </article>
-      ))}
+        <Image 
+          className={styles.arrow}
+          src="/arrow-white.svg"
+          alt="<"
+          height={32}
+          width={32}
+          style={{ transform: "rotate(180deg)" }}
+          onClick={() => setActiveIndex(prev => prev ? prev - 1 : exhibit.cards.length - 1)}
+        />
+        {exhibit.cards.map(({ media, description }, index) => (
+          <article 
+            key={index}
+            id={index.toString()}
+          >
+            <Media
+              key={media + index}
+              mediaUrl={media}
+              className={styles.media + " " + (index === activeIndex ? styles.active : "")}
+              thumbnailOnly={index !== activeIndex}
+            />
+            <TextEditor
+              key={media + index + "text"}
+              className={styles.text + " " + (index === activeIndex ? styles.active : "")}
+              innerClassName={styles.textInner}
+              initialState={description}
+              readonly
+            />        
+          </article>
+        ))}
+        <Image 
+          className={styles.arrow}
+          src="/arrow-white.svg"
+          alt=">"
+          height={32}
+          width={32}
+          onClick={() => setActiveIndex(prev => (prev + 1) % exhibit.cards.length)}
+        />
       </Swipeable>
       <section
         className={styles.tiles}

@@ -19,6 +19,7 @@ export default function AdminNav({
         if (onRedirect && !onRedirect("/dashboard")) e.preventDefault();
       }}>
         <Image
+          className={styles.logo}
           src="/logo-white.svg"
           alt="The Museum Logo"
           width={191}

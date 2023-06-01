@@ -1,11 +1,11 @@
 import styles from "./Dashboard.module.css";
-import { PopulatedExhibit, PopulatedExhibitCreatable, UserData } from "@/types";
+import { CardType, PopulatedExhibit, PopulatedExhibitCreatable, UserData } from "@/types";
 import { AdminLayout } from "@/components/layouts";
 import { useState } from "react";
 import { LoadingOverlay } from "@/components/general";
 import { api } from "@/util/client";
 import ExhibitTile from "./ExhibitTile";
-import AddExhibit from "./AddExhibit";
+import AddExhibit from "./popups/AddExhibit";
 
 export default function Dashboard({ 
   userData,
@@ -63,25 +63,36 @@ export default function Dashboard({
       >
         <h1 className={styles.heading}>Published Exhibits</h1>
         <div className={styles.exhibits}>
-          {exhibitCache.filter(el => el.published).map((el) => 
-            <ExhibitTile 
-              key={el.title} 
-              exhibit={el} 
-              onDelete={() => deleteExhibit(el)}
-              onTogglePublic={togglePublic}
-            />
-          )}  
+          {exhibitCache
+            .filter(el => el.published)
+            .sort((a, b) => b.priority - a.priority)
+            .map((el) => 
+              <ExhibitTile 
+                allExhibits={exhibitCache}
+                key={el.title} 
+                exhibit={el} 
+                onDelete={() => deleteExhibit(el)}
+                onTogglePublic={togglePublic}
+              />
+            )
+          }  
         </div>
         <h1 className={styles.heading}>Unpublished Exhibits</h1>
         <div className={styles.exhibits}>
-          {exhibitCache.filter(el => !el.published).map((el, index) => 
-            <ExhibitTile 
-              key={index} 
-              exhibit={el} 
-              onDelete={() => deleteExhibit(el)}
-              onTogglePublic={togglePublic}
-            />
-          )}
+          {exhibitCache
+            .filter(el => !el.published)
+            .sort((a, b) => b.priority - a.priority)
+            .map((el, index) => 
+              <ExhibitTile 
+                allExhibits={exhibitCache}
+                key={index} 
+                exhibit={el} 
+                onDelete={() => deleteExhibit(el)}
+                onTogglePublic={togglePublic}
+                
+              />
+            )
+          }
           <button className={styles.button} onClick={() => setShowPopup(true)}>
             Add Exhibit
           </button>

@@ -2,13 +2,13 @@ import { ErrorMessage } from "@/types";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next/types";
 
 export default function aggregateHandlers<T>(
-  handlers: Record<string, NextApiHandler>
+  handlers: Map<string, NextApiHandler>
 ): NextApiHandler<T | ErrorMessage> {
   return async function(
     req: NextApiRequest,
     res: NextApiResponse<T | ErrorMessage>
   ) {
-    const handler = handlers[req.method ?? ""];
+    const handler = handlers.get(req.method ?? "");
     
     if (!handler) {
       res.status(400)
@@ -20,7 +20,7 @@ export default function aggregateHandlers<T>(
 
     try {
       await handler(req, res);
-    } catch(error: unknown) {
+    } catch {
       res.status(500).json({
         message: "Unknown internal server error."
       });

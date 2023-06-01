@@ -5,7 +5,8 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  max-width: min(500px, calc(100% - 1rem));
+  min-width: min(500px, calc(100vw - 1rem));
+  margin-right: 1rem;
 }
 
 .container p {
@@ -14,6 +15,12 @@
 
 .container li {
   margin-left: 1rem;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .link { 

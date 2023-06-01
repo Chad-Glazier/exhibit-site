@@ -19,8 +19,9 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import { EditorState, LexicalEditor } from "lexical";
+import emptyEditorState from "./emptyEditorState";
 
-export default function TextEditor({
+function TextEditor({
   onChange,
   className,
   innerClassName,
@@ -85,3 +86,7 @@ export default function TextEditor({
     </LexicalComposer>
   );
 }
+
+TextEditor.emptyEditorState = emptyEditorState;
+
+export default TextEditor;

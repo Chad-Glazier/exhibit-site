@@ -1,6 +1,7 @@
 import styles from "./Details.module.css";
 import { Popup } from "@/components/general";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Details({
   show,
@@ -24,6 +25,13 @@ export default function Details({
         <h2 className={styles.title}>
           {imageName}
         </h2>
+        <Image
+          className={styles.image}
+          src={imageUrl}
+          height={500}
+          width={500}
+          alt={imageName}
+        />
         <p>
           Full image path:
           <br />

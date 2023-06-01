@@ -10,6 +10,15 @@
   min-width: 100vw;
 }
 
+.logo {
+  opacity: 0.6;
+  transition: all 400ms;
+}
+
+.logo:hover {
+  opacity: 1;
+}
+
 .navbarList {
   display: flex;
   align-items: center;
@@ -26,7 +35,12 @@
   text-transform: uppercase;
 }
 
-.navbarList li :hover {
+.navbarLink {
+  color: #aaa;
+  transition: all 400ms;
+}
+
+.navbarLink:hover {
   color: #fff;
 }
 

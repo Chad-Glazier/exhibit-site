@@ -6,11 +6,10 @@ import get from "./get";
 import aggregateHandlers from "@/handlers/aggregateHandlers";
 import { withAuth, withImage } from "@/handlers/middleware";
 
-const handlers: Record<string, NextApiHandler<any>> = {
-  "POST": withAuth(withImage(post)),
-  "DELETE": withAuth(del),
-  "GET": get
-};
+const handlers = new Map<string, NextApiHandler<any>>();
+handlers.set("POST", withAuth(withImage(post)));
+handlers.set("DELETE", withAuth(del));
+handlers.set("GET", get);
 
 const handler: NextApiHandler = aggregateHandlers(handlers);
 
