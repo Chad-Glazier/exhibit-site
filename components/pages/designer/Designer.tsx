@@ -212,7 +212,8 @@ export default function Designer({
             onClick={() => {
               cache.current.cards.push({
                 exhibitId: cache.current.id,
-                id: Math.random(),
+                id: Math.random(), // this will get ignored by the server when you ship 
+                                   // the updated version, so it's okay to do this.
                 media: "/no-image.png",
                 description: TextEditor.emptyEditorState(),
               });

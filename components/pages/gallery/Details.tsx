@@ -64,7 +64,7 @@ export default function Details({
           </>
           :
           <p>
-            This image is not used in any exhibits.
+            This image is not used in any exhibit{dependantExhibits.length > 1 ? "s" : ""}.
           </p>
         }
         <button className={styles.button} onClick={onClose}>
