@@ -19,6 +19,10 @@
   border: 1px solid var(--admin-dark-blue);
 }
 
+.input {
+  padding: 5px;
+}
+
 .label, .button { 
   text-transform: uppercase;
 }
