@@ -2,6 +2,15 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { NextApiImageHandler } from "@/types";
 import { IncomingForm, File } from "formidable";
 
+/**
+ * Middleware that parses the request body as a `FormData` object, and then calls the
+ * `next` handler with the `File` object if it succeeds.
+ * 
+ * @param next a `NextApiImageHandler`, which is a special type of `NextApiHandler` that
+ * includes a `File` object, which is an image.
+ * @returns a `NextApiHandler` that will parse the request body as a `FormData` object,
+ * and then call the `next` handler with the `File` object if it succeeds.
+ */
 export default function withImage(
   next: NextApiImageHandler
 ): NextApiHandler {

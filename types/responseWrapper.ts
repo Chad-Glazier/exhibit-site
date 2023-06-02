@@ -1,3 +1,6 @@
+/**
+ * This is a special type used by the `parseResponse` function in `@/util/client/ApiClient`.
+ */
 export type ApiResponse<T> = {
   ok: boolean,
   status: number,

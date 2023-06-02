@@ -31,7 +31,7 @@ you need to set up the environment variables. The `example.env.local` file descr
 
 ### R2 Variables
 
-The following variables are associated with the R2 bucket I used to store images. If you're not familiar with <a href="https://www.cloudflare.com/products/r2/">Cloudflare's R2</a>, it's essentially a replacement for AWS S3. It even goes as far as to implement the S3 API, so the code for this app uses the `@aws-sdk/client-s3` to interact with it in the `@/util/server/r2Bucket.ts` file. That is the only file that interacts with R2, so it is the only file where you will find these environment variables.
+The following variables are associated with the R2 bucket I used to store images. If you're not familiar with <a href="https://www.cloudflare.com/products/r2/">Cloudflare's R2</a>, it's essentially a replacement for AWS S3. It even goes as far as to implement the S3 API, so the code for this app uses the `@aws-sdk/client-s3` package to interact with it in the `@/util/server/r2Bucket.ts` file. That is the only file that interacts with R2, so it is the only file where you will find these environment variables.
 
 - `R2_ACCOUNT_ID`: This is a credential that is assigned to you when you create an R2 bucket on Cloudflare.
 - `R2_ENDPOINT`: This can be found in the settings of your R2/S3 bucket.

@@ -7,6 +7,14 @@ import { TokenPayload, TokenPayloadSchema } from "@/types";
 const jwtSecret: string = process.env.JWT_SECRET as string;
 const masterKey: string = process.env.MASTER_KEY as string;
 
+/**
+ * Middleware that verifies the user's authorization token before executing the wrapped
+ * handler. If the token is invalid, the request will be rejected with a `401` error.
+ * 
+ * @param next the `NextApiHandler` to wrap
+ * @returns a new `NextApiHandler` that will verify the user's authorization token before
+ * executing `next`.
+ */
 export default function withAuth(
   next: NextApiHandler
 ): NextApiHandler {

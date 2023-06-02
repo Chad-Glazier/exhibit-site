@@ -10,28 +10,6 @@ const jwtSecret: string = process.env.JWT_SECRET as string;
  * `NextApiRequest`, or the `req.cookie` field of the context object
  * provided to a `GetServerSideProps` function.
  * 
- * E.g.,
- * 
- * to verify a valid cookie for a page request:
- * 
- * ```ts
- * export const getServerSideProps: GetServerSideProps = async (context) => {
- *  if (!(await authorized(context.req.cookies))) {
- *    return { redirect: { destination: "/login", permanent: false }};
- *  }
- *  // get the serverside props    
- * }
- * ```
- * 
- * to verify an API request instead:
- * 
- * ```ts
- *  if (!(await authorized(req.cookies))) {
- *    res.status(405).json({ message: "Unauthorized token." });
- *  }
- *  // handle the authenticated request
- * ```
- * 
  * @returns the `UserData` associated with the verified token, or
  * `null` if the token isn't verified.
  */

@@ -1,6 +1,16 @@
 import { ErrorMessage } from "@/types";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next/types";
 
+/**
+ * This function takes a map of HTTP methods to handlers, and returns a single
+ * `NextApiHandler` that will call the appropriate handler based on each request. 
+ * 
+ * This also wraps the handlers in a try/catch block, so that any errors thrown 
+ * by the handlers will be caught and return a `500` error.
+ *
+ * @param handlers A map of HTTP methods to handlers
+ * @returns A single, aggregate `NextApiHandler`.
+ */
 export default function aggregateHandlers<T>(
   handlers: Map<string, NextApiHandler>
 ): NextApiHandler<T | ErrorMessage> {
