@@ -209,3 +209,9 @@
   }
 }
 
+
+@media screen and (orientation: landscape) and (min-height: 500px) {
+  .carousel {
+    height: min(calc(70vh - 2rem), max(500px, 35vh));
+  }
+}

@@ -133,8 +133,8 @@
   }
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (orientation: landscape) and (min-height: 500px) {
   .article {
-    --article-height: min(calc(60vh - 2rem), max(500px, 35vh));
+    --article-height: min(calc(70vh - 2rem), max(500px, 35vh));
   }
 }
