@@ -62,7 +62,7 @@ export default function Accounts({
                 </tr>
                 <tr>
                   <td className={styles.label}>Email</td>
-                  <td>{userData.email}</td>
+                  <td className={styles.email}>{userData.email}</td>
                 </tr>            
               </tbody>
             </table>

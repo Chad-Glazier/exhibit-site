@@ -21,6 +21,7 @@
   padding: 0.5rem;
   min-width: min(100%, 500px);
   max-width: 90%;
+  overflow-x: auto;
 }
 
 .table {

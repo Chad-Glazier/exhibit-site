@@ -15,7 +15,7 @@ export default function Home({
   const numberOfPages = Math.ceil(allExhibits.length / pageLength);
 
   return (
-    <Layout pageName="Exhibits">
+    <Layout pageName="Exhibits" className={styles.home}>
       <Carousel 
         exhibits={allExhibits.slice(0, pageLength)}
       />

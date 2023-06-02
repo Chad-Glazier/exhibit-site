@@ -4,7 +4,7 @@ import { AdminLayout } from "@/components/layouts";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "@/util/client";
-import { LoadingOverlay } from "@/components/general";
+import { LoadingOverlay, TextEditor } from "@/components/general";
 
 export default function OpenExhibit({
   exhibitCache,
@@ -35,12 +35,9 @@ export default function OpenExhibit({
               : (document.getElementById("title-selector") as HTMLInputElement).value;
 
             if (createNew) {
-              // the summary field is a JSON string that represents an empty document,
-              // which is necessary for the Lexical text editor to parse (it throws a 
-              // fit otherwise)
               const res = await api.exhibit.post({
                 title,
-                summary: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
+                summary: TextEditor.emptyEditorState(),
                 thumbnail: "/add.png",
                 cards: [],
                 published: false,

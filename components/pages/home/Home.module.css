@@ -1,3 +1,7 @@
+.home {
+  background-color: #eee;
+}
+
 .page {
   display: flex;
   flex-direction: column;

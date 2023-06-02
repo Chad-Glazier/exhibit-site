@@ -9,7 +9,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: { destination: "/login", permanent: false } };
   }
 
-  const users = await prisma.user.findMany();
+  const users = (await prisma.user.findMany())
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return {
     props: {

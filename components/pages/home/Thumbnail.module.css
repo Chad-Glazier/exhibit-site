@@ -11,14 +11,14 @@
   border: 1px solid black;
   overflow: hidden;
   padding: 1rem;
-  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
   transition: all 400ms;
-  background-color: #eee;
+  background-color: #fff;
 }
 
 .tile:hover {
-  box-shadow: 8px 8px 8px 3px rgba(0, 0, 0, 0.5);
-  transform: translate(-5px, -5px);
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.5);
+  transform: translate(-3px, -3px);
 }
 
 .tile > * {

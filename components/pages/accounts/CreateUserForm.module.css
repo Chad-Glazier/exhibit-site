@@ -4,6 +4,7 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  min-width: min(400px, calc(100vw - 1rem));
 }
 
 .title {
@@ -27,6 +28,7 @@
 }
 
 .input {
+  padding: 5px;
   font-size: 1rem;
 }
 

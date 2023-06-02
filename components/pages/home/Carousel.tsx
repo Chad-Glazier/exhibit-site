@@ -38,7 +38,7 @@ export default function Carousel({
       </div>
       <Image 
         className={styles.arrow}
-        src="/arrow.svg"
+        src="/arrow-white.svg"
         alt="<"
         height={32}
         width={32}
@@ -82,7 +82,7 @@ export default function Carousel({
       }
       <Image 
         className={styles.arrow}
-        src="/arrow.svg"
+        src="/arrow-white.svg"
         alt=">"
         height={32}
         width={32}
