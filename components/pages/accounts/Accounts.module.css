@@ -7,6 +7,10 @@
   padding: 1rem;
 }
 
+.section:last-of-type {
+  margin-bottom: 0;
+}
+
 .title {
   font-size: 2rem;
   font-variant: small-caps;
@@ -44,7 +48,7 @@
 
 .table tbody td {
   padding: 10px 10px;
-  max-width: min(300px, calc(20vw));
+  max-width: min(350px, calc(20vw));
   overflow: auto;
 }
 
