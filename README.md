@@ -58,6 +58,115 @@ npm run dev
 
 ## Creating the first Admin Account
 
-In order to log in and create exhibits, users must use an account. In order to create an account, the admin user must create it. This is circular, so the creation of the first (admin) account is special. You will navigate to <a href="http://localhost:3000/register">localhost:3000/register</a>, and then enter the information for the account. The "Master Key" will be the environment variable you set in `.env.local`. Note that the account you create this way will have the unique privilege of being able to create and delete other users.
+In order to log in to the administrator pages, users must have an account. Accounts can only be created by the admin user. This is circular, so the creation of the first (admin) account is special. You will navigate to <a href="http://localhost:3000/register">localhost:3000/register</a>, and then enter the information for the account. The "Master Key" will be the environment variable you set in `.env.local`. Note that the account you create this way will have the unique privilege of being able to create and delete other users.
 
 Once you have this, you're ready to use the full website; navigate to <a href="http://localhost:3000/login">localhost:3000/login</a> to login in the future.
+
+# The Database
+
+The database for this app is fairly simple, you can find the schema in `@/prisma/schema.prisma`. For each of these tables, Prisma will generate interfaces. However, I would recommend that you avoid using those types and instead use their aliases in `@/types`. I will discuss the types in more depth in the next section.
+
+<table>
+  <thead>
+    <tr colspan="2">
+      <th>User</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>name</code></td>
+      <td>The name of the user</td>
+    </tr>
+    <tr>
+      <td><code>email</code></td>
+      <td>The email of the user</td>
+    </tr>
+    <tr>
+      <td><code>password</code></td>
+      <td>The hashed password of the user</td>
+    </tr>
+    <tr>
+      <td><code>isMaster</code></td>
+      <td>Indicates if the user is the Admin user; i.e., if they were the original account created with the Master Key.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr colspan="2">
+      <th>Exhibit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>The ID of the exhibit. This isn't used much, and in most cases the <code>title</code> field is used as a unique identifier for exhibits.</td>
+    </tr>
+    <tr>
+      <td><code>title</code></td>
+      <td>The title of the exhibit</td>
+    </tr>
+    <tr>
+      <td><code>priority</code></td>
+      <td>The priority of the exhibit. <code>0</code> for "low" priority, <code>1</code> for "medium", and <code>2</code> for "high". This used to determine the order in which exhibits are displayed (exhibits with the same priority are sorted alphabetically).</td>
+    </tr>
+    <tr>
+      <td><code>thumbnail</code></td>
+      <td>The thumbnail of the exhibit, as a URL.</td>
+    </tr>
+    <tr>
+      <td><code>summary</code></td>
+      <td>The summary of the exhibit, as a string containing a JSON object that represents a Lexical Editor state.</td>
+    </tr>
+    <tr>
+      <td><code>published</code></td>
+      <td>Indicates whether the exhibit should be visible to the public.</td>
+    </tr>
+    <tr>
+      <td><code>cards</code></td>
+      <td>An array of cards that make up the exhibit.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr colspan="2">
+      <th>Card</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td>The ID of the card</td>
+    </tr>
+    <tr>
+      <td><code>media</code></td>
+      <td>The media of the card. This will either be a URL to an image stored in the R2 bucket, or a YouTube URL.</td>
+    </tr>
+    <tr>
+      <td><code>description</code></td>
+      <td>The description of the card, as a string containing a JSON object that represents a Lexical Editor state.</td>
+    </tr>
+    <tr>
+      <td><code>exhibitId</code></td>
+      <td>The ID of the associated exhibit</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr colspan="2">
+      <th>Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>url</code></td>
+      <td>The URL of the image</td>
+    </tr>
+  </tbody>
+</table>
+

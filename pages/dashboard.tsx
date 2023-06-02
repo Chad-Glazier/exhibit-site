@@ -14,8 +14,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     (await prisma.exhibit.findMany({
       include: { cards: true }
     }) as PopulatedExhibit[])
-    .reverse()
-    .sort((a, b) => a.priority - b.priority);
+    .sort((a, b) => (
+      b.priority - a.priority === 0 ?
+        a.title.localeCompare(b.title) :
+        b.priority - a.priority
+  ));
 
   return { props: { exhibits, userData } };
 }

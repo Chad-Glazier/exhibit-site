@@ -65,7 +65,6 @@ export default function Dashboard({
         <div className={styles.exhibits}>
           {exhibitCache
             .filter(el => el.published)
-            .sort((a, b) => b.priority - a.priority)
             .map((el) => 
               <ExhibitTile 
                 allExhibits={exhibitCache}
@@ -81,7 +80,6 @@ export default function Dashboard({
         <div className={styles.exhibits}>
           {exhibitCache
             .filter(el => !el.published)
-            .sort((a, b) => b.priority - a.priority)
             .map((el, index) => 
               <ExhibitTile 
                 allExhibits={exhibitCache}
