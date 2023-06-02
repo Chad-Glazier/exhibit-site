@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Banner() {
   return (
     <div className={styles.banner}>
-      <Link className={styles.logo} href="/">
+      <Link className={styles.logo} href="https://vernonmuseum.ca/">
         <Image
           className={styles.logoImage}
           src="/logo.svg"
