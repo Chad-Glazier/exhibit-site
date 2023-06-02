@@ -165,6 +165,18 @@ export default function Details({
               </div>              
             </>       
           }
+          <Link
+            href={
+              exhibit.published ? 
+                `/${encodeURIComponent(exhibit.title)}`
+                :
+                `/preview/${encodeURIComponent(exhibit.title)}`
+            }
+            target="_blank"
+            className={styles.link + " " + styles.previewLink}
+          >
+            Open {exhibit.published ? " Exhibit" : " Preview"}
+          </Link>
           <div className={styles.buttons}>
             <button
               className={styles.button}

@@ -129,3 +129,8 @@
   color: var(--admin-light-blue);
   cursor: pointer;
 }
+
+.previewLink {
+  margin-top: 8px;
+  text-align: center;
+}
