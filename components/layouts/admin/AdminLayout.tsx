@@ -7,7 +7,8 @@ export default function AdminLayout({
   pageName, 
   userData, 
   children,
-  onRedirect
+  onRedirect,
+  className
 }: { 
   pageName: string;
   userData: UserData;
@@ -19,6 +20,7 @@ export default function AdminLayout({
    * @returns Whether or not to redirect the user.
    */ 
   onRedirect?: (target: string) => boolean;
+  className?: string;
 }) {
   return (
     <>
@@ -26,7 +28,7 @@ export default function AdminLayout({
         <title>{pageName + " | The Museum & Archives of Vernon"}</title>
       </Head>
       <AdminNav onRedirect={onRedirect} />
-      <main className={styles.main} >
+      <main className={styles.main + (className ? ` ${className}` : "")} >
         {children}
       </main>
     </>

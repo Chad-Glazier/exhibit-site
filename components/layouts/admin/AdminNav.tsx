@@ -72,6 +72,15 @@ export default function AdminNav({
           </Link>
         </li>
       </ul>
+      <Link href="/help">
+        <Image
+          className={styles.help}
+          src="/help.png"
+          alt="?"
+          width={24}
+          height={24}
+        />
+      </Link>
     </nav>
   );
 }

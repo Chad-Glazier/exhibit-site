@@ -11,6 +11,7 @@ import AdminServerError from "./errorPages/AdminServerError";
 import Exhibit from "./exhibit/Exhibit";
 import Register from "./login/Register";
 import Accounts from "./accounts/Accounts";
+import Help from "./help/Help";
 
 export { 
   Exhibit,
@@ -25,5 +26,6 @@ export {
   ServerError,
   AdminServerError,
   Register,
-  Accounts
+  Accounts,
+  Help
 };
