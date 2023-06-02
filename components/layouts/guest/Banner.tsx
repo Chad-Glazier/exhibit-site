@@ -2,10 +2,14 @@ import styles from "./Banner.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Banner() {
+export default function Banner({
+  inAnExhibit
+}: {
+  inAnExhibit?: boolean;
+}) {
   return (
     <div className={styles.banner}>
-      <Link className={styles.logo} href="https://vernonmuseum.ca/">
+      <Link className={styles.logo} href={inAnExhibit ? "/" : "https://vernonmuseum.ca/"}>
         <Image
           className={styles.logoImage}
           src="/logo.svg"

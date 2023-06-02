@@ -19,7 +19,7 @@ export default function Layout({
         <title>{`${pageName ? pageName + " | " : ""}The Museum & Archives of Vernon`}</title>
       </Head>
       <header className={styles.header}>
-        <Banner />
+        <Banner inAnExhibit={pageName !== "Exhibits"}/>
         <NavBar />        
       </header>
       <main className={styles.main + (className ? " " + className : "")}>
