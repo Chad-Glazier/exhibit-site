@@ -76,7 +76,7 @@
   background-color: #FFF;
   border: 1px solid var(--admin-dark-blue);
   border-radius: 5px;
-  padding: 0.5rem;
+  padding: 0 5px;
   min-width: min(100%, 500px);
   max-width: 90%;
 }

@@ -116,7 +116,12 @@ export default function Details({
               </option>
             )}
           </select>
-          {exhibit.cards.length > 0 &&
+          {
+          [
+            ...exhibit.cards.map(x => x.media), 
+            exhibit.thumbnail
+          ]
+          .some(url => !url.startsWith("/")) &&
             <>
               <label htmlFor="media" className={styles.label}>
                 Media
@@ -124,7 +129,13 @@ export default function Details({
               <div id="media" className={styles.tableContainer}>
                 <table className={styles.table}>
                   <tbody>
-                    {exhibit.cards.filter(({ media }) => !media.startsWith("/")).map(({ media }, index) =>
+                    {
+                    [
+                      ...exhibit.cards.map(x => x.media), 
+                      exhibit.thumbnail
+                    ]
+                      .filter(media => !media.startsWith("/"))
+                      .map((media, index) =>
                       <tr key={index}>
                         <td>
                           {isYouTube(media) ? 
