@@ -81,7 +81,7 @@ export default function Exhibit({
                 behavior: "smooth",
                 // the CSS file `/components/layouts/guest/Layout.module.css` has a media query that 
                 // determines whether or not the header is fixed; that's where these numbers come from.
-                block: window.innerHeight > 600 && window.innerWidth > 600 ? "center" : "start"
+                block: window.innerHeight > 800 && window.innerWidth > 600 ? "center" : "start"
               })
               setActiveIndex(index);
             }}/>

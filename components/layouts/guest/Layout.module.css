@@ -19,7 +19,7 @@ The `Exhibit` component, found in @/components/pages/exhibit/Exhibit.tsx, uses t
 dimensions to determine certain behaviour; see that file and tweak the numbers there if
 you change the numbers in this query.
 */
-@media (max-width: 600px) or (max-height: 600px) {
+@media (max-width: 600px) or (max-height: 800px) {
   .header {
     position: static;
   }
