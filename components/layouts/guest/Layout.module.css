@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 191px;
+  /* height: 191px; */
   background-color: rgba(255, 255, 255, 0.8);
   z-index: 1000;
 }
@@ -19,7 +19,7 @@ The `Exhibit` component, found in @/components/pages/exhibit/Exhibit.tsx, uses t
 dimensions to determine certain behaviour; see that file and tweak the numbers there if
 you change the numbers in this query.
 */
-@media (max-width: 600px) or (max-height: 800px) {
+@media (max-width: 872px) or (max-height: 800px) {
   .header {
     position: static;
   }

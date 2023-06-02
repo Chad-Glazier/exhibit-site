@@ -4,7 +4,7 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  min-width: min(calc(100vw - 2rem), 400px);
+  min-width: min(calc(100vw - 2rem), 450px);
   max-width: min(calc(100vw - 1rem), 700px);
 }
 

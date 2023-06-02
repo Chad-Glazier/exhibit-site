@@ -38,7 +38,7 @@ export default function OpenExhibit({
               const res = await api.exhibit.post({
                 title,
                 summary: TextEditor.emptyEditorState(),
-                thumbnail: "/add.png",
+                thumbnail: "/no-image.png",
                 cards: [],
                 published: false,
                 priority: 0

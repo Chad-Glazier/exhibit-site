@@ -33,8 +33,8 @@ export default function Details({
           console.error("Failed to get YouTube title for " + media);
           title = "No Title";
         }
-        if (title.length > 45) {
-          title = title.substring(0, 42) + "...";
+        if (title.length > 50) {
+          title = title.substring(0, 47) + "...";
         }
         youTubeTitles.current.set(media, title);
       });
