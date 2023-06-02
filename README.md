@@ -183,7 +183,7 @@ The database for this app is fairly simple, you can find the schema in `@/prisma
 
 Pretty much every type that's used throughout the app is defined in the `@/types` directory. In general, all Zod objects are defined in the same file that their corresponding types are, and share names with their types and a -`Schema` suffix. They are grouped into a number of files:
 
-|file|IncludedTypes|
+|File|Included Types|
 |-|-|
 |`databaseModels.ts`|This file imports the types defined by Prisma that represent the database's tables. In this file, those types are aliased to have the -`Type` suffix, for the sake of disambiguation (e.g., the image `Image` type shares a name with the `next/image` component) and because some types (`Card` and `Exhibit`) possess the `Prisma.JsonValue` type. This type is great for the underlying database to represent the serialized state of a Lexical text editor, but is extremely difficult to use with types; so in this file, any `Prisma.JsonValue` fields are changed to `string` types.|
 |`specialModels.ts`|This file contains a number of special variants of the types defined in `databaseModels.ts`. Each of these types extend the original database types in some way. E.g., `PopulatedExhibit` is just an `Exhibit` with the array of `Card`s associated with it.|
@@ -207,15 +207,17 @@ The `middleware` directory is special because it doesn't correspond to any endpo
 
 Since the code paths are pretty straightforward, I won't bother explaining every endpoint; you can pretty easily look for yourself to see what endpoints are available and how they're handled. Additionally, interactions with the API should generally be set on the `api` object I defined for the client.
 
+Another thing that I would encourage you to do is create error messages that are readable to the end user. This way, you can directly display that message to the user instead of having to map each error code to a custom message on the client-side.
+
 ## The API Client
 
-The client has access to an object defined in `@/util/client` that lets you make predefined requests to the API, in a safe way that wraps the response in a special object. The code is all in `@/client/ApiClient`, and I won't explain it here because it's all very thoroughly commented. If you want to interact with the API, just
+The client has access to an object defined in `@/util/client` that lets you make predefined requests to the API, in a safe way that wraps the response in a special object. The code is all in `@/util/client/ApiClient`, and I won't explain it here because it's all very thoroughly commented. If you want to interact with the API, just import the object:
 
 ```ts
 import { api } from "@/util/client";
 ```
 
-and let the LSP hold your hand. If you make changes to the Rest API or add endpoints to it, I would strongly encourage you to reflect those changes in this `api` object.
+And from there, let the LSP hold your hand. If you make changes to the Rest API or add endpoints to it, I would strongly encourage you to reflect those changes in this `api` object.
 
 # The Client
 
@@ -227,7 +229,7 @@ The client code is all written in `@/components`:
 
 In general, I tried to avoid installing any extra packages, so the code you see in this folder is pretty much all of the code that is used.
 
-The CSS is written with the CSS Module system that is provided by NextJS out of the box. In this system, each component should correspond to exactly one `Component.module.css` file and vice versa. That module is scoped to that component and nothing else. This leads to a fair bit of repeated CSS, but I honestly don't mind because the decoupling makes it really easy to change the CSS applied to a component; you can always assume that the *only* style that is applied to a component is defined in the corresponding `module.css` file.
+The CSS is written with the CSS Module system that is provided by NextJS out of the box. In this system, each component should correspond to exactly one `Component.module.css` file, and vice versa. That module is scoped to that component and nothing else. This leads to a fair bit of repeated CSS, but I honestly don't mind because the decoupling makes it really easy to change the CSS applied to a component; you can always assume that the *only* style that is applied to a component is defined in the corresponding `module.css` file.
 
 The exception to this rule is the `globals.css` module, which applies to everything. I defined a couple of variables in there, so look there if you encounter a variable that you can't track down.
 
@@ -235,14 +237,14 @@ The exception to this rule is the `globals.css` module, which applies to everyth
 
 This app uses the <a href="https://github.com/facebook/lexical">Lexical framework</a> to implement its rich text editors. At the time of writing, this framework is still in version `0.X`, so if you're reading this in the future, it's very possible that the interface has changed. If you can avoid dealing with the editor, try to do so. However, if you must make significant changes to it, it may just be easier to recreate it with a modern version of the framework.
 
-Note that the state of a Lexical editor is serialized to JSON, which is why the `Exhibit.summary` and `Card.description` columns in the database are represented with the MySQL `JSON` type instead of a `VarChar`. Additionally, if you want to create a new and empty text editor, you can can use the `TextEditor.emptyEditorState()` method to return a JSON object that represents the empty state.
+Note that the state of a Lexical editor is serialized to JSON, which is why the `Exhibit.summary` and `Card.description` columns in the database are represented with the MySQL `JSON` type instead of `VarChar`s. Additionally, if you want to create a new and empty text editor, you can can use the `TextEditor.emptyEditorState()` method to return a JSON object that represents the empty state.
 
 ## Server-Side Rendering
 
-You may notice that some of the `@/components/page/` components expect props. This is because those props are fetched by the server during the SSR process that NextJS uses. You can find the `getServerSideProps` functions for each page component in a corresponding `@/pages/` file. This folder is treated specially by NextJS and will be explained in the next section.
+You may notice that some of the `@/components/pages/` components expect props. This is because those props are fetched by the server during the SSR process that NextJS uses. You can find the `getServerSideProps` functions for each page component in a corresponding `@/pages/` file. This folder is treated specially by NextJS and will be explained in the next section.
 
 # Routing
 
-In NextJS, routes are automatically generated according to the `@/pages` directory (if you're reading this in the future, it will instead be the `@/app` directory). Each file in this directory should export a component that represents a page. Thus, each page defined in `@/components/pages/` has a corresponding file in `@/pages` so that it's given a route. Likewise, each aggregate handler in `@/handlers` has a corresponding endpoint in `@/pages/api`, which is special because it expects each file to export a `NextApiHandler` instead of a React component.
+In NextJS, routes are automatically generated according to the `@/pages` directory (if you're reading this in the future, modern versions will instead use the `@/app` directory). Each file in this directory should export a React component that represents a page. Thus, each page defined in `@/components/pages/` has a corresponding file in `@/pages` so that it's given a route. Likewise, each aggregate handler in `@/handlers` has a corresponding filepath in `@/pages/api`, which is special because it expects each file to export a `NextApiHandler` instead of a React component.
 
 Each file in `@/pages` which exports a React component (a page) may optionally export a `getServerSideProps` function which is executed on the server before the page is SSR'd and sent to the client. To see how this works, I would encourage you to just look at the examples in those files.
