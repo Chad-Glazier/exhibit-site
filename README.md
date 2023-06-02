@@ -21,7 +21,7 @@ This website was developed for the Greater Vernon Museum and Archives to provide
 
 # Developer Setup
 
-Once you've cloned the project and run
+First of all, clone the project and then run:
 
 ```bash
 npm install
@@ -29,7 +29,7 @@ npm install
 
 ## Environment Variables
 
-you need to set up the environment variables. The `example.env.local` file describes the variables that need to be set, but it does not provide working examples. Below, I will describe each environment variable and how to get an appropriate value for it. If you're new to NextJS, be aware that these variables will be set in a `.env.local` file, *not* `.env`.
+Now you need to set up the environment variables. The `example.env.local` file describes the variables that need to be set, but it does not provide working examples. Below, I will describe each environment variable and how to get an appropriate value for it. If you're new to NextJS, be aware that these variables will be set in a `.env.local` file, *not* `.env`.
 
 ### General
 
