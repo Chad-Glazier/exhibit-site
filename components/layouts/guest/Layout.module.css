@@ -14,6 +14,11 @@
   z-index: 1;
 }
 
+/*
+The `Exhibit` component, found in @/components/pages/exhibit/Exhibit.tsx, uses these
+dimensions to determine certain behaviour; see that file and tweak the numbers there if
+you change the numbers in this query.
+*/
 @media (max-width: 600px) or (max-height: 600px) {
   .header {
     position: static;
