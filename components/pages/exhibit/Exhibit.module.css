@@ -113,7 +113,6 @@
   transform: translateX(0);
 }
 
-
 @media (max-width: 800px) and (min-height: 600px) {
   .arrow {
     display: none;
@@ -131,5 +130,11 @@
 
   .textInner {
     padding-right: 0;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .article {
+    --article-height: min(calc(60vh - 2rem), max(500px, 35vh));
   }
 }
