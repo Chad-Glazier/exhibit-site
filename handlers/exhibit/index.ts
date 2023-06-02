@@ -1,12 +1,12 @@
 import { ErrorMessage, PopulatedExhibit } from "@/types";
 import { NextApiHandler } from "next";
+import { withAuth } from "../middleware";
 import get from "./get";
 import post from "./post";
 import put from "./put";
 import del from "./del";
 import patch from "./patch";
 import aggregateHandlers from "../aggregateHandlers";
-import { withAuth } from "../middleware";
 
 const handlers = new Map<string, NextApiHandler<PopulatedExhibit | PopulatedExhibit[] | ErrorMessage>>();
 handlers.set("GET", get);

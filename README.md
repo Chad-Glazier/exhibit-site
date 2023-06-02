@@ -8,6 +8,15 @@ This website was developed for the Greater Vernon Museum and Archives to provide
     - <a href="#r2-variables">R2 Variables</a>
   - <a href="#prisma">Prisma</a>
   - <a href="#creating-the-first-admin-account">Creating the First Admin Account</a>
+- <a href="#database">Database</a>
+- <a href="#types">Types</a>
+- <a href="#the-rest-api">The Rest API</a>
+  - <a href="#how-handlers-are-written">How Handlers are Written</a>
+  - <a href="#the-api-client">The API Client</a>
+- <a href="#the-client">The Client</a>
+  - <a href="#the-text-editor">The Text Editor</a>
+  - <a href="#server-side-rendering">Server-Side Rendering</a>
+- <a href="#routing">Routing</a>
 
 
 # Developer Setup
@@ -62,7 +71,7 @@ In order to log in to the administrator pages, users must have an account. Accou
 
 Once you have this, you're ready to use the full website; navigate to <a href="http://localhost:3000/login">localhost:3000/login</a> to login in the future.
 
-# The Database
+# Database
 
 The database for this app is fairly simple, you can find the schema in `@/prisma/schema.prisma`. For each of these tables, Prisma will generate interfaces. However, I would recommend that you avoid using those types and instead use their aliases in `@/types`. I will discuss the types in more depth in the next section.
 
@@ -170,3 +179,70 @@ The database for this app is fairly simple, you can find the schema in `@/prisma
   </tbody>
 </table>
 
+# Types
+
+Pretty much every type that's used throughout the app is defined in the `@/types` directory. In general, all Zod objects are defined in the same file that their corresponding types are, and share names with their types and a -`Schema` suffix. They are grouped into a number of files:
+
+|file|IncludedTypes|
+|-|-|
+|`databaseModels.ts`|This file imports the types defined by Prisma that represent the database's tables. In this file, those types are aliased to have the -`Type` suffix, for the sake of disambiguation (e.g., the image `Image` type shares a name with the `next/image` component) and because some types (`Card` and `Exhibit`) possess the `Prisma.JsonValue` type. This type is great for the underlying database to represent the serialized state of a Lexical text editor, but is extremely difficult to use with types; so in this file, any `Prisma.JsonValue` fields are changed to `string` types.|
+|`specialModels.ts`|This file contains a number of special variants of the types defined in `databaseModels.ts`. Each of these types extend the original database types in some way. E.g., `PopulatedExhibit` is just an `Exhibit` with the array of `Card`s associated with it.|
+|`general.ts`|This file contains some miscellaneous types. E.g., `Credentials`, `ErrorMessage`, etc.|
+|`responseWrapper.ts`|This file contains the type `ApiResponse`, which is used exclusively within the `@/util/client/ApiClient` directory.|
+|`specialApiHandlers.ts`|This file contains special function types that resemble `NextApiHandler`, for the sake of being used as arguments to certain middleware. This is easier to understand if you look at the code for the middleware and handler functions.|
+
+All of these types can be imported directly from `"@/types"`. If you define any more custom types, I would encourage you to export them from here.
+
+You may also note that none of these types are classes, nor do any of them have methods. This is a personal design choice to make them directly serializable.
+
+# The Rest API
+
+This app implements a restful API to handle interactions between the client and server. Each API handler is written in `@/handlers/`. For each request endpoint, you will find a corresponding filepath. E.g., the file at `@/handlers/exhibit/get.ts` handles GET requests to `/api/exhibit`. 
+
+## How Handlers are Written
+
+The `index.ts` of each directory in `@/handlers` is where the handlers are aggregated and where middleware is applied. In NextJS, at the time of writing, the native way to apply middleware is to just write wrapper functions. This process isn't as convenient as the ExpressJS style, but it makes it pretty easy to see what middleware is applied to a handler (and in what order).
+
+The `middleware` directory is special because it doesn't correspond to any endpoints, instead it just holds the middleware wrapper functions.
+
+Since the code paths are pretty straightforward, I won't bother explaining every endpoint; you can pretty easily look for yourself to see what endpoints are available and how they're handled. Additionally, interactions with the API should generally be set on the `api` object I defined for the client.
+
+## The API Client
+
+The client has access to an object defined in `@/util/client` that lets you make predefined requests to the API, in a safe way that wraps the response in a special object. The code is all in `@/client/ApiClient`, and I won't explain it here because it's all very thoroughly commented. If you want to interact with the API, just
+
+```ts
+import { api } from "@/util/client";
+```
+
+and let the LSP hold your hand. If you make changes to the Rest API or add endpoints to it, I would strongly encourage you to reflect those changes in this `api` object.
+
+# The Client
+
+The client code is all written in `@/components`:
+
+- `general` contains components that are used by more than one page.
+- `layouts` contains layout components.
+- `pages` contains a subdirectory for each page. In each subdirectory is a number of components that are specific to that page.
+
+In general, I tried to avoid installing any extra packages, so the code you see in this folder is pretty much all of the code that is used.
+
+The CSS is written with the CSS Module system that is provided by NextJS out of the box. In this system, each component should correspond to exactly one `Component.module.css` file and vice versa. That module is scoped to that component and nothing else. This leads to a fair bit of repeated CSS, but I honestly don't mind because the decoupling makes it really easy to change the CSS applied to a component; you can always assume that the *only* style that is applied to a component is defined in the corresponding `module.css` file.
+
+The exception to this rule is the `globals.css` module, which applies to everything. I defined a couple of variables in there, so look there if you encounter a variable that you can't track down.
+
+## The Text Editor
+
+This app uses the <a href="https://github.com/facebook/lexical">Lexical framework</a> to implement its rich text editors. At the time of writing, this framework is still in version `0.X`, so if you're reading this in the future, it's very possible that the interface has changed. If you can avoid dealing with the editor, try to do so. However, if you must make significant changes to it, it may just be easier to recreate it with a modern version of the framework.
+
+Note that the state of a Lexical editor is serialized to JSON, which is why the `Exhibit.summary` and `Card.description` columns in the database are represented with the MySQL `JSON` type instead of a `VarChar`. Additionally, if you want to create a new and empty text editor, you can can use the `TextEditor.emptyEditorState()` method to return a JSON object that represents the empty state.
+
+## Server-Side Rendering
+
+You may notice that some of the `@/components/page/` components expect props. This is because those props are fetched by the server during the SSR process that NextJS uses. You can find the `getServerSideProps` functions for each page component in a corresponding `@/pages/` file. This folder is treated specially by NextJS and will be explained in the next section.
+
+# Routing
+
+In NextJS, routes are automatically generated according to the `@/pages` directory (if you're reading this in the future, it will instead be the `@/app` directory). Each file in this directory should export a component that represents a page. Thus, each page defined in `@/components/pages/` has a corresponding file in `@/pages` so that it's given a route. Likewise, each aggregate handler in `@/handlers` has a corresponding endpoint in `@/pages/api`, which is special because it expects each file to export a `NextApiHandler` instead of a React component.
+
+Each file in `@/pages` which exports a React component (a page) may optionally export a `getServerSideProps` function which is executed on the server before the page is SSR'd and sent to the client. To see how this works, I would encourage you to just look at the examples in those files.
