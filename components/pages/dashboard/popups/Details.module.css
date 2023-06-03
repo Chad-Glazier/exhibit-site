@@ -126,6 +126,7 @@
 
 .link {
   color: var(--admin-dark-blue);
+  line-break: auto;
 }
 
 .link:hover {

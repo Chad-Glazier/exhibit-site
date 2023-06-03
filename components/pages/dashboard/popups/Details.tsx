@@ -154,7 +154,7 @@ export default function Details({
                               className={styles.link} 
                               target="_blank"
                             >
-                              {getBasename(media)}
+                              {decodeURIComponent(getBasename(media))}
                             </Link>
                           }
                         </td>
