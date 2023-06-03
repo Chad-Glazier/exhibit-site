@@ -51,8 +51,7 @@ export default function Help({
           />
           <p>
             There, you will be prompted to enter the name of the new exhibit. Note that exhibits must
-            have unique names, so you will not be able to create an exhibit with the same name as an
-            existing one. 
+            have unique names, so you will not be able to use a name that&apos;s already in use.
           </p>
           <Image 
             className={styles.screenshot}
@@ -62,14 +61,14 @@ export default function Help({
             alt="screenshot" 
           />
           <p>
-            Once you have entered a valid name, click &quot;Create&quot; to create the exhibit.
-            The exhibit should immediately appear on the Dashboard.              
+            Once you have entered a valid name, click &quot;Create&quot;. The new exhibit should immediately appear 
+            on the Dashboard.              
           </p>
           <p>
             Another way to create exhibits is by navigating to the <Link href="/designer" className={styles.link}>
             Designer page</Link>. From there, you will have the choice of either creating a new exhibit in the designer,
-            or opening an existing one. By default, the selected option is to create a new exhibit, so you can just
-            enter the desired title and then click &quot;Create&quot; to create the exhibit. Then the designer will open for
+            or opening an existing one. By default, the selected option is to create a new one, so you can just
+            enter the desired title and then click &quot;Create&quot;. Then the designer will open for
             the new exhibit.
           </p>
           <Image 
@@ -107,7 +106,7 @@ export default function Help({
           <p>
             Once you have the editor open, you&apos;ll have a number of options for designing your exhibit. The
             buttons in the top right corner of the screen allow you to save the exhibit, preview the last saved
-            version in a new tab, or exit the designer page and return to the Dashboard.
+            version in a new tab, or exit the page and return to the Dashboard.
           </p>
           <Image
             className={styles.screenshot}
@@ -130,7 +129,7 @@ export default function Help({
           />
           <p>
             The title and summary are both text editors, and you can change the thumbnail by clicking on it. This
-            will show a popup that lets you decide whether to upload a new image from your machine, or to select
+            will show a popup that lets you decide whether to upload a new image from your machine or select
             an image that you&apos;ve previously uploaded.
           </p>
           <Image
@@ -142,7 +141,7 @@ export default function Help({
           />
           <p>
             Note that this content (the thumbnail, summary, and title) will not be included as content in the actual
-            exhibit page. It is only used for the exhibit browser page. To add content to the exhibit, you must include
+            exhibit page, it is only used for the browser page. To add content to the exhibit, you must include
             &quot;Card&quot;s.
             <br />
             This can be done by clicking on the &quot;Add Card&quot; button at the bottom of the designer page. The new
@@ -156,9 +155,9 @@ export default function Help({
             alt="screenshot"
           />
           <p>
-            You can then edit the card&apos;s media and text content. The media content can be either an image or a link to
+            You can then edit the media and text content of the card. The media content can be either an image or a link to
             a YouTube video that you want to embed. Note that the ability to link to YouTube videos is only available for cards,
-            not the thumbnail of an exhibit.
+            you cannot set a YouTube video as the thumbnail for an exhibit.
           </p>
           <Image
             className={styles.screenshot}
@@ -170,12 +169,12 @@ export default function Help({
           <p>
             Try adding some cards and editing their content, then save the exhibit and preview it in a new tab (via the buttons at
             the top of the page) to get a feel for how the cards will be presented. Note that newly-created exhibits are hidden from
-            the public until you set them to be public, so feel free to experiment.
+            the public until you publish them from the Dashboard.
           </p>
           <p>
             The order that cards appear in an exhibit is determined by their order in the designer. You can change the order of cards 
             clicking the arrows on the right side of the card. Additionally, clicking the &quot;X&quot; button will prompt you to delete
-            the card. Remember that, if you accidentally delete the wrong card, you can always refresh the page to discard your changes
+            the card. If you accidentally delete the wrong card, you can always refresh the page to discard your changes
             and revert to the last saved version.
           </p>
         </section>
@@ -196,13 +195,13 @@ export default function Help({
               <strong>Edit</strong> - Opens the exhibit in the designer, allowing you to edit it.
             </li>
             <li>
-              <strong>Delete</strong> - Prompts you to delete the exhibit permanently (note that, if you do this by accident, the exhibit can most likely be recovered if you contact me at <Link className={styles.link} target="_blank" href="mailto:chadglazier@outlook.com">chadglazer@outlook.com</Link>).
+              <strong>Delete</strong> - Prompts you to delete the exhibit permanently.
             </li>
             <li>
-              <strong>(Un)Publish</strong> - Prompts you to (un)publish the exhibit. If you unpublish an exhibit, it will no longer be visible to the public. If you publish an exhibit, it will become visible to the public.
+              <strong>(Un)Publish</strong> - Prompts you to publish/unpublish the exhibit. If you unpublish an exhibit, it will no longer be visible to the public. If you publish an exhibit, it will become visible to the public.
             </li>
             <li>
-              <strong>View Details</strong> - Opens a popup that provides more information about the exhibit, and allows you to view a preview, see a list of the media that the exhibit uses (and view their details), and modify the title of the exhibit. Additionally, you can set the &quot;Priority&quot; of the exhibit, which determines the order that exhibits appear in the exhibit browser page. The higher the priority, the closer to the top of the page the exhibit will appear. If two exhibits have the same priority, they will be sorted alphabetically by title.
+              <strong>View Details</strong> - Opens a popup that provides more information about the exhibit, allows you to view a preview, see a list of the media that the exhibit uses (and view their details), and modify the title of the exhibit. Additionally, you can set the &quot;Priority&quot; of the exhibit, which determines the order that exhibits appear in the exhibit browser page. The higher the priority, the closer to the top of the page the exhibit will appear. If two exhibits have the same priority, they will be sorted alphabetically by title.
             </li>
           </ul>
           <Image  
@@ -226,7 +225,7 @@ export default function Help({
             alt="screenshot"
           />
           <p>
-            The &quot;Delete&quot; and &quot;Download&quot; buttons are pretty self explanatory, but before you delete an image, it&apos;s probably a good idea to make sure that no exhibits depend on it. You can determine this by clicking on the &quot;View Details&quot; button, which will show you a list of exhibits that use the image. Clicking on one of those exhibits will open their Designer page in a new tab, so you can swap out the image if you need to.
+            The &quot;Delete&quot; and &quot;Download&quot; buttons are pretty self explanatory, but before you delete an image, it&apos;s probably a good idea to make sure that no exhibits depend upon it. You can determine this by clicking on the &quot;View Details&quot; button, which will show you a list of exhibits that use the image. Clicking on one of those exhibits will open their Designer page in a new tab, so you can swap out the image if you need to.
           </p>
           <Image
             className={styles.screenshot}
@@ -236,7 +235,7 @@ export default function Help({
             alt="screenshot"
           />
           <p>
-            You can also upload new images from this page by scrolling to the bottom and clicking &quot;Add Image&quot;.
+            You can also upload new images directly from this page by scrolling to the bottom and clicking &quot;Add Image&quot;.
           </p>
         </section>
         <section id="manage-accounts" className={styles.section}>
@@ -259,7 +258,7 @@ export default function Help({
             </>
             :
             <p>
-              From the Accounts page, you can view a list of all accounts. You can also change your password from this page. If a new account must be created, contact the user marked as &quot;(Admin)&quot; in the list.
+              From the Accounts page, you can view a list of all accounts and change your password. If a new account must be created, contact the user marked as &quot;(Admin)&quot; in the list.
             </p>
           }
           <Image
@@ -273,7 +272,7 @@ export default function Help({
         <section id="report" className={styles.section} style={{ paddingBottom: "3rem" }}>
           <h2 className={styles.subheading}>Reporting Issues</h2>
           <p>
-            If you encounter a bug or other issue with the website, please contact the developer (me) at <Link className={styles.link} target="_blank" href="mailto:chadglazier@outlook.com">chadglazier@outlook.com</Link>. Try to include as much information about the issue as possible so that I can reproduce it.
+            If you encounter a bug or other issue with the website, please contact the developer at <Link className={styles.link} target="_blank" href="mailto:chadglazier@outlook.com">chadglazier@outlook.com</Link>. Try to include as much information about the issue as possible.
           </p>
         </section>
       </AdminLayout>
