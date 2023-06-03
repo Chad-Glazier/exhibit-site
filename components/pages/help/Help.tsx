@@ -142,10 +142,8 @@ export default function Help({
           <p>
             Note that this content (the thumbnail, summary, and title) will not be included as content in the actual
             exhibit page, it is only used for the browser page. To add content to the exhibit, you must include
-            &quot;Card&quot;s.
-            <br />
-            This can be done by clicking on the &quot;Add Card&quot; button at the bottom of the designer page. The new
-            card should appear at the bottom of the editor:
+            &quot;Card&quot;s. This can be done by clicking on the &quot;Add Card&quot; button at the bottom of the designer page. 
+            The new card should appear at the bottom of the editor:
           </p>
           <Image  
             className={styles.screenshot}
