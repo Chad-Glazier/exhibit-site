@@ -5,32 +5,35 @@
   border-radius: 5px;
   background-color: #fff;
   padding: 1rem;
+  max-width: calc(100vw - 1rem);
+  gap: 1rem;
 }
 
 .title {
   font-size: 1.4rem;
   text-transform: uppercase;
-  margin: 0.5rem;
   text-align: center;
 }
 
 .buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0.5rem;
 }
 
 .button {
-  width: 100px;
+  grid-row: span 1;
+  grid-column: span 1;
+
+  text-transform: uppercase;
   text-align: center;
-  margin: 5px;
   border: 1px solid var(--admin-dark-blue);
   border-radius: 5px;
   background-color: var(--admin-light-blue);
   font-size: 1rem;
   color: #fff;
   transition: all 400ms;
-  min-width: 200px;
 }
 
 .button:hover {

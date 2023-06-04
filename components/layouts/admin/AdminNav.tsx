@@ -72,7 +72,9 @@ export default function AdminNav({
           </Link>
         </li>
       </ul>
-      <Link href="/help">
+      <Link href="/help" onClick={(e) => {
+        if (onRedirect && !onRedirect("/help")) e.preventDefault();
+      }}>
         <Image
           className={styles.help}
           src="/help.png"

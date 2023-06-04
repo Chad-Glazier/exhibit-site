@@ -25,7 +25,7 @@ export default function ConfirmExit({
         <div className={styles.container}>
           <h2 className={styles.title}>Confirm Exit</h2>
           <p>
-            Are you sure you want to exit without saving?
+            It looks like you have unsaved changes. Are you sure you want to exit?
           </p>
           <div className={styles.buttons}>
             <Link 
@@ -33,7 +33,7 @@ export default function ConfirmExit({
               href={target}
               onClick={() => setLoading(true)}
             >
-              Exit Without Saving
+              Confirm Exit
             </Link>
             <button 
               className={styles.button}
