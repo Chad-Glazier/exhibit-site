@@ -5,7 +5,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  min-width: min(500px, calc(100vw - 1rem));
+  width: min(500px, calc(100vw - 1rem));
 }
 
 .container p {
