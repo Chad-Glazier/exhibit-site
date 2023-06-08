@@ -92,7 +92,7 @@
 }
 
 .summary {
-  height: 300px;
+  height: min(50vh, 400px);
   width: min(calc(100% - 1rem), 550px);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
 }

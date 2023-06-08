@@ -26,15 +26,13 @@
 }
 
 .editor {
-  height: 300px;
+  height: min(50vh, 370px);
   width: min(calc(100% - 1rem), 550px);
 }
 
 .editorInner {
-  max-height: 400px;
-  overflow-y: scroll;
-
   height: calc(100% - 44px);
+  overflow-y: scroll;
 }
 
 .buttons {
