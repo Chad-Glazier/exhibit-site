@@ -42,7 +42,8 @@ export default function Swipeable({
   onSwipeDown,
   onSwipe,
   minSwipeDistance,
-  className
+  className,
+  id
 }: {
   children: ReactNode;
   onSwipeLeft?: () => void;
@@ -73,6 +74,7 @@ export default function Swipeable({
    */ 
   minSwipeDistance?: number;
   className?: string;
+  id?: string;
 }) {
   const initialX = useRef(0);
   const initialY = useRef(0);
@@ -80,6 +82,7 @@ export default function Swipeable({
 
   return (
     <div 
+      id={id ?? ""}
       className={className + " " + styles.main}
       onTouchStart={e => {
         initialX.current = e.touches[0].clientX;

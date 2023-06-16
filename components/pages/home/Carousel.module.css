@@ -1,217 +1,141 @@
 .carousel {
   position: relative;
-  display: flex;
-  height: min(calc(100vh - 2rem), max(500px, 35vh));
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: var(--blackish);
-  padding-bottom: 1rem;
-  border-top: 2px solid var(--blackish);
-  border-bottom: 2px solid var(--blackish);
+  height: min(max(55vw, 60vh), calc(100vh - 400px));
+  overflow: hidden;
 }
 
-.carousel > * {
-  height: 100%;
-  background-color: inherit;
-}
-
-.indicator {
+.slide {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  height: 100%;
   width: 100%;
-  height: 2rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  background-color: transparent;
+  transition: all 600ms ease-in-out;
 }
 
-.dot {
-  height: 14px;
-  width: 14px;
-  border-radius: 50%;
-  background-color: #666;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: all 400ms;
-}
-
-.dot[data-status="active"] {
-  background-color: #eee;
-}
-
-.exhibit {
-  padding: 1rem;
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 5fr;
-  height: 100%;
-  transition: transform 600ms ease;
-  overflow-y: hidden;
-}
-
-.exhibit > * {
-  height: 100%;
-}
-
-.thumbnail {
-  grid-column: span 1;
-  grid-row: span 3;
-  height: 100%;
-}
-
-.thumbnail img {
-  aspect-ratio: auto;
-  width: 100%;
-  height: 100%;
-  max-height: calc(100% - 1rem);
-  object-fit: cover;
-}
-
-.title {
-  text-align: center;
-  grid-column: span 1;
-  grid-row: span 1;
-  font-size: 2rem;
-  padding: 0 10px;
-  color: #eee;
-}
-
-.summary {
-  position: relative;
-  top: -1rem; /* to compensate for the text editor's default padding */
-  grid-column: span 1;
-  grid-row: span 1;
-  width: 100%;
-  max-height: 100%;
-  background-color: inherit;
-  overflow-y: auto;
-}
-
-.summaryInner {
-  background-color: inherit;
-  color: #eee;
-}
-
-.exhibit {
-  flex-grow: 1;
-}
-
-/*
-  When the elements are transitioning, their position is set to `absolute`. This changes
-  the sizing of the image within the element, which shrinks the element a bit and makes
-  the animation look rough. 
-
-  To compensate for the resizing, the `margin-top` and border are applied to so that the
-  transition looks normal. (the border matches the border applied to the carousel).
-
-  There's probably some way to refactor the CSS to solve this issue, but to be honest,
-  I'm just not that great with CSS rn.
-*/
-.exhibit[data-status="left"], .exhibit[data-status="right"] {
-  position: absolute;
-  margin-top: 11px;
-  border-top: 2px solid var(--blackish);
-}
-
-.exhibit[data-status="left"] {
+.slide[data-position="left"] {
   transform: translateX(-100vw);
 }
 
-.exhibit[data-status="right"] {
+.slide[data-position="right"] {
   transform: translateX(100vw);
 }
 
-.arrow {
-  cursor: pointer;
+.slide .image {
   height: 100%;
-  width: 50px;
-  z-index: 10;
-  background-color: transparent;
-  opacity: 0.2;
+  width: 100%;
+  object-fit: cover;
+}
+
+.slide .text {
+  position: absolute;
+  bottom: 2rem;
+  width: min(1000px, calc(100% - 4rem));  
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.slide .summary {
+  margin: 1rem 2rem;
+}
+
+@media (max-width: 720px) or (max-height: 720px) {
+  .slide .text {
+    bottom: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .slide .text {
+    width: 100vw;
+    max-height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    bottom: 5%;
+  }
+
+  .slide .text .summary {
+    overflow: auto;
+    margin: 1rem 1rem;
+  }
+
+  .arrowButton {
+    display: none;
+  }
+}
+
+.slide .title {
+  font-size: 3rem;
   transition: all 400ms;
 }
 
-.arrow:hover {
-  opacity: 0.8;
+.slide .summaryInner {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-@media (max-width: 1000px) and (min-height: 500px) {
-  .exhibit {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .title {
-    text-align: center;
-  }
+.slide .summary,
+.slide .summaryInner
+{
+  color: #fff;
+  font-size: 1.5rem;
+  transition: all 400ms;
 }
 
-@media (max-width: 900px) and (min-height: 500px) {
-  .carousel {
-    height: calc(0.70 * 100vh);
-  }
-
-  .exhibit {
-    grid-template-columns: 1fr;
-    grid-template-rows: 5fr 0.5fr 5fr;
-  }
-
-  .thumbnail {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-
-  .thumbnail img {
-    aspect-ratio: 3 / 2;
-    height: 100%;
-  }
-
-  .title {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-
-  .summary {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
+.slide .title {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 0 1rem;
+  width: fit-content;
+  margin: 0 1rem;
 }
 
-@media (max-width: 500px) and (min-height: 500px) {
-  .carousel {
-    transition-duration: 400ms;
-    height: calc(0.90 * 100vh);
-  }
-
-  .thumbnail img {
-    height: 100%;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-  }
-
-  .arrow {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 100%;
-    opacity: 0;
-  }
-
-  .arrow:first-of-type {
-    left: 0;
-  }
+.arrowButton {
+  position: absolute;
+  height: 100%;
+  width: 70px;
+  background: linear-gradient(
+    to right, 
+    rgba(0, 0, 0, 0.0), 
+    rgba(0, 0, 0, 0.6)
+  );
+  background-position: -100%;
+  padding: 0 1rem;
+  transition: all 400ms;
+  opacity: 0.6;
 }
 
+.arrowButton:first-of-type {
+  left: 0rem;
+}
 
-@media screen and (orientation: landscape) and (min-height: 500px) {
-  .carousel {
-    height: min(calc(70vh - 2rem), max(500px, 35vh));
+.arrowButton:last-of-type {
+  right: 0rem;
+}
+
+.arrowButton:hover {
+  background-position: 0;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.slide:hover {
+  cursor: pointer;
+}
+
+.slide:hover .summaryInner,
+.slide:hover .title
+{
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-height: 800px) {
+  .carousel{ 
+    height: 70vh;
+  }
+
+  .slide .title {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .slide .summaryInner {
+    background-color: rgba(0, 0, 0, 0.6);
   }
 }

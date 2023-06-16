@@ -22,6 +22,9 @@ export default function Layout({
         <Banner inAnExhibit={pageName !== "Exhibits"}/>
         <NavBar />        
       </header>
+      <div 
+        id="top"
+      ></div>
       <main className={styles.main + (className ? " " + className : "")}>
         {children}
       </main>
