@@ -68,7 +68,7 @@
 }
 
 .slide .summaryInner {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .slide .summary,
@@ -80,7 +80,7 @@
 }
 
 .slide .title {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 0 1rem;
   width: fit-content;
@@ -123,7 +123,7 @@
 .slide:hover .summaryInner,
 .slide:hover .title
 {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 @media (max-height: 800px) {
@@ -132,10 +132,10 @@
   }
 
   .slide .title {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
   }
   
   .slide .summaryInner {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
   }
 }

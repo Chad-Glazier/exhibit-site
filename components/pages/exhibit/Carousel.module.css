@@ -51,7 +51,7 @@ iframe.media {
 .description {
   background-color: rgba(0, 0, 0, 0.3);
   color: #fff;
-  max-width: calc(50% - 1rem - 50px);
+  max-width: calc(55% - 1rem - 50px);
   max-height: calc(90%);
   overflow: auto;
   margin: 0;
