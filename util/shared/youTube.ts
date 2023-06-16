@@ -4,8 +4,10 @@ export function isYouTube(url: string): boolean {
 
 /**
  * Get the YouTube video ID from a YouTube URL.
+ * Returns `null` if the URL is not a valid YouTube URL.
  */
 export function getYouTubeId(url: string): string | null {
+  if (!isYouTube(url)) return null;
   return (url.split("v=")[1] || url.split("/").pop())?.split("&")[0] ?? null;
 }
 

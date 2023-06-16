@@ -10,7 +10,7 @@
 }
 
 .editorInner {
-  background: #fff;
+  background: transparent;
   position: relative;
   overflow-y: auto;
 }

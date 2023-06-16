@@ -1,6 +1,6 @@
 .carousel {
   position: relative;
-  height: min(max(55vw, 60vh), calc(100vh - 400px));
+  height: min(max(60vw, 60vh), calc(100vh - 350px));
   overflow: hidden;
 }
 
@@ -128,7 +128,7 @@
 
 @media (max-height: 800px) {
   .carousel{ 
-    height: 70vh;
+    height: calc(100vh - 100px);
   }
 
   .slide .title {
