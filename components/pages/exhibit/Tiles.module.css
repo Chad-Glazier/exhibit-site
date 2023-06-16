@@ -1,0 +1,26 @@
+.tiles {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  padding: 1rem;
+}
+
+.tile {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: all 400ms;
+  border: 5px solid transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.tile.active {
+  border-color: var(--orangish);
+}
+
+.tile:hover {
+  border-color: var(--orangish);
+  filter: hue-rotate(10deg);
+}

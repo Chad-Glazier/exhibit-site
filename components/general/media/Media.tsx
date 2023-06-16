@@ -2,6 +2,7 @@ import styles from "./Media.module.css";
 import { isYouTube } from "@/util";
 import { getYouTubeId } from "@/util";
 import Image from "next/image";
+import { MouseEventHandler } from "react";
 
 /**
  * Takes a URL and returns either an `iframe` or an `img`:
@@ -20,7 +21,8 @@ export default function Media({
   active,
   width,
   height,
-  alt
+  alt,
+  onClick
 }: {
   url: string;
   className?: string;
@@ -28,6 +30,7 @@ export default function Media({
   width?: number;
   height?: number;
   alt?: string;
+  onClick?: MouseEventHandler<HTMLImageElement>;
 }) {
   let videoId = getYouTubeId(url);
 
@@ -43,6 +46,7 @@ export default function Media({
       width={width}
       height={height}
       alt={alt}
+      onClick={onClick}
     />;
   }
 
@@ -68,5 +72,6 @@ export default function Media({
     width={width}
     height={height}
     alt={alt}
+    onClick={onClick}
   />
 }

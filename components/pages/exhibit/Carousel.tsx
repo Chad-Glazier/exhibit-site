@@ -1,30 +1,33 @@
 import styles from "./Carousel.module.css";
 import { CardCreatable } from "@/types";
 import { Swipeable, Media, TextEditor } from "@/components/general";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import Image from "next/image";
 
 export default function Carousel({
   cards,
-  background
+  background,
+  activeIndex,
+  onChange
 }: {
   cards: CardCreatable[];
   background: string;
+  activeIndex: number;
+  onChange: (index: number) => void;
 }) {
-  const [activeCard, setActiveCard] = useState(0);
-
   const moveRight = useCallback(() => {
-    setActiveCard(prev => (prev + 1) % cards.length);
-  }, [cards]);
+    onChange((activeIndex + 1) % cards.length);
+  }, [activeIndex, cards.length, onChange]);
 
   const moveLeft = useCallback(() => {
-    setActiveCard(prev => prev ? prev - 1 : cards.length - 1);
-  }, [cards]);
+    onChange((activeIndex ? activeIndex - 1 : cards.length - 1));
+  }, [activeIndex, cards.length, onChange]);
 
   return (
     <Swipeable
       className={styles.carousel}
       onSwipeLeft={moveRight}
+      onSwipeRight={moveLeft}
     >
       <Image
         className={styles.arrowButton}
@@ -56,14 +59,14 @@ export default function Carousel({
             key={index}
             className={styles.card}
             data-position={
-              index === activeCard ? "center" :
-              index < activeCard ? "left" : "right"
+              index === activeIndex ? "center" :
+              index < activeIndex ? "left" : "right"
             }
           >
             <Media
               className={styles.media}
               url={media}
-              active={index === activeCard}
+              active={index === activeIndex}
               alt={"card image"}
               height={800}
               width={1000}

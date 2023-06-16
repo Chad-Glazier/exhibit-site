@@ -25,6 +25,8 @@
   margin: 1rem;
   background-color: var(--admin-light-blue);
   color: #FFF;
+  position: fixed;
+  bottom: 0;
 }
 
 .button:hover {
