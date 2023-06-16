@@ -102,31 +102,7 @@ iframe.media {
   z-index: -10;
 }
 
-/* MEDIA QUERIES -- 1350 */
-
-@media (max-width: 1350px) {
-  .arrowButton {
-    width: 60px;
-  }
-
-  .card {
-    padding: 0 25px;
-  }
-}
-
-/* MEDIA QUERIES -- 1200 */
-
-@media (max-width: 1200px) {
-  .arrowButton {
-    width: 50px;
-  }
-
-  .card {
-    padding: 0;
-  }
-}
-
-/* MEDIA QUERIES -- 1100PX */
+/* MEDIA QUERIES -- 1400PX */
 
 @media (max-width: 1400px) {
   .carousel {
@@ -156,6 +132,30 @@ iframe.media {
     height: 40%;
     overflow: auto;
     margin-bottom: 1rem;
+  }
+}
+
+/* MEDIA QUERIES -- 1350 */
+
+@media (max-width: 1350px) {
+  .arrowButton {
+    width: 60px;
+  }
+
+  .card {
+    padding: 0 25px;
+  }
+}
+
+/* MEDIA QUERIES -- 1200 */
+
+@media (max-width: 1200px) {
+  .arrowButton {
+    width: 50px;
+  }
+
+  .card {
+    padding: 0;
   }
 }
 
