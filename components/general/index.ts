@@ -6,6 +6,7 @@ import AddImage from "./addImage/AddImage";
 import AddYouTube from "./addYouTube/AddYouTube";
 import Swipeable from "./swipeable/Swipeable";
 import Buttons from "./button/Buttons";
+import Media from "./media/Media";
 
 export {
   Popup,
@@ -15,5 +16,6 @@ export {
   AddImage,
   AddYouTube,
   Swipeable,
-  Buttons
+  Buttons,
+  Media
 }

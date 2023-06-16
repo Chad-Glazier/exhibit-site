@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getYouTubeId } from "@/util";
+import styles from "./YouTubeEmbed.module.css";
 
 export default function YouTubeEmbed({
   className,
@@ -20,7 +21,7 @@ export default function YouTubeEmbed({
 }) {
   let videoId = getYouTubeId(src);
   const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
-  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return ( 
     <div
@@ -48,7 +49,12 @@ export default function YouTubeEmbed({
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
           allowFullScreen
-        />        
+          style={{
+            width: "100%",
+            flexGrow: 1,
+            aspectRatio: "16 / 9"
+          }}
+        />             
       }
     </div>
   );

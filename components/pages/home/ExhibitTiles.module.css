@@ -1,0 +1,176 @@
+/* CONTAINER */
+
+.exhibitTiles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+/* HEADING */
+
+.heading {
+  font-size: 2.5rem;
+  width: 100%;
+  padding-left: 10%;
+  text-transform: uppercase;
+}
+
+/* TILES */
+
+.exhibitTile {
+  height: 250px;
+  width: fit-content;
+  max-width: 1200px;
+  flex-grow: 1;
+  background-color: #fff;
+  color: #222;
+
+  transition: all 400ms;
+  display: flex;
+  flex-direction: row;
+  border: 4px solid var(--custom-blue-background);
+
+  position: relative;
+}
+
+.thumbnail {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 2/1;
+  object-fit: cover;
+  transition: all 400ms;
+}
+
+.exhibitTile:hover {
+  border-color: var(--orangish);
+}   
+
+.title {
+  text-align: left;
+  padding-left: 0.8rem;
+  font-size: 1.5rem;
+}
+
+.summary, .summaryInner {
+  background-color: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transition: inherit;
+  padding: 5px 5px 0 5px;
+  height: 40px;
+  width: 40px;
+}
+
+.exhibitTile:hover .arrow {
+  background-color: var(--orangish);
+}
+
+.text {
+  overflow: auto;
+  padding: 1rem;
+}
+
+/* PAGINATION SECTION */
+
+.pagination {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pageNumber {
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  text-align: center;
+  transition: all 400ms;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.pageNumber:hover {
+  color: #fff;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+.pageNumber::before {
+  content: "";
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: all 400ms ease;
+  z-index: -2;
+}
+
+.pageNumber[data-status="active"]::before {
+  height: 5px;
+}
+
+.pageNumber:hover::before {
+  height: 100%;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 1050px) {
+  .thumbnail {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (max-width: 875px) {
+  .thumbnail {
+    aspect-ratio: 1 / 1;
+  }
+
+  .exhibitTiles {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .exhibitTiles {
+    padding: 1rem;
+  }
+
+  .exhibitTile {
+    min-width: 250px;
+    flex-grow: 1;
+    max-width: 350px;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .thumbnail {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .heading {
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+  }
+}
