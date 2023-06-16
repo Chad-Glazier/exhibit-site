@@ -24,7 +24,7 @@
 .exhibitTile {
   height: 250px;
   width: fit-content;
-  max-width: 1200px;
+  width: min(100%, 1200px);
   flex-grow: 1;
   background-color: #fff;
   color: #222;
