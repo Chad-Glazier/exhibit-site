@@ -55,7 +55,6 @@ export default function AddExhibit({
             onCancel();
           }}
         >
-          <h1 className={styles.title}>Add Exhibit</h1>
           <label 
             className={styles.label}
             htmlFor="name"
@@ -68,7 +67,20 @@ export default function AddExhibit({
             name="name" id="name" 
             required 
           />
-          <button className={styles.submit}>Create</button>          
+          <div
+            className={styles.buttons}
+          >
+            <button className={styles.button}>Create</button>    
+            <button 
+              className={styles.button}
+              onClick={e => {
+                e.preventDefault();
+                onCancel();
+              }}
+            >
+              Cancel
+            </button> 
+          </div>
         </form>
       </Popup>    
     </>

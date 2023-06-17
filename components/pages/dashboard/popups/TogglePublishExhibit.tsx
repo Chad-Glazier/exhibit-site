@@ -26,7 +26,7 @@ export default function TogglePublishExhibit({
             "Publish Exhibit"
           }
         </h2>
-        <p>
+        <p className={styles.text}>
           {exhibit.published ? 
             `Are you sure you want to unpublish "${exhibit.title}"? This will hide it from the public.` 
             : 

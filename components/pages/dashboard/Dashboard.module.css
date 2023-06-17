@@ -1,36 +1,45 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .heading {
   font-size: 2rem;
-  font-variant: small-caps;
-  text-align: center;
-  padding: 1.5rem;
+  text-transform: uppercase;
+  text-align: left;
+  width: max(min(1000px, calc(100% - 2rem)), 80%);
 }
 
 .exhibits {
+  width: min(100%, 1000px);
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 400ms;
 }
 
 .button {
-  width: 90%;
-  border: 1px solid var(--admin-dark-blue);
-  padding: 0.5rem;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  transition: all 400ms;
-  margin: 1rem;
-  background-color: var(--admin-light-blue);
-  color: #FFF;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  width: max(8vw, 100px);
   position: fixed;
-  bottom: 0;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+  border: 5px solid black;
+  border-radius: 100%;
+  padding: 1rem;
+  transition: all 400ms;
 }
 
 .button:hover {
-  background-color: var(--admin-lighter-blue);
   cursor: pointer;
-  color: var(--admin-dark-blue);
+  transform: scale(1.05);
 }

@@ -47,41 +47,63 @@ export default function ExhibitTile({
         close={() => setShowDetails(false)}
         exhibit={exhibit}
       />
-      <div className={styles.exhibitCard}>
-        <h2 className={styles.exhibitTitle}>{exhibit.title}</h2>
+      <div className={styles.card}>
         <Image
           src={exhibit.thumbnail}
           alt={exhibit.title}
-          width={300}
-          height={200}
-          className={styles.exhibitThumbnail}
+          width={1000}
+          height={250}
+          className={styles.thumbnail}
         />
-        <div className={styles.exhibitButtons}>
-          <button
-            className={styles.exhibitButton} 
-            onClick={() => setShowDelete(true)}
-          >
-            Delete
-          </button>
-          <button
-            className={styles.exhibitButton} 
-            onClick={() => setShowPublish(true)}
-          >
-            {exhibit.published ? "Unpublish" : "Publish"}
-          </button>
+        <Link
+          href={`/preview/${encodeURIComponent(exhibit.title)}`}
+          target="_blank"
+        >
+          <Image
+            src={"/open.svg"}
+            alt={"Open"}
+            width={32}
+            height={32}
+            className={styles.open}
+            title={"View Exhibit"}
+          />        
+        </Link>
+        <div
+          className={styles.details}
+        >
           <Link
-            className={styles.exhibitButton} 
-            href={`/designer/${encodeURIComponent(exhibit.title)}`}
-            onClick={() => setLoading(true)}
+            href={`/preview/${encodeURIComponent(exhibit.title)}`}
+            target="_blank"
           >
-            Edit
+            <h2 className={styles.title}>{exhibit.title}</h2>
           </Link>
-          <button 
-            className={styles.exhibitButton}
-            onClick={() => setShowDetails(true)}
-          >
-            View Details
-          </button>
+          <div className={styles.buttons}>
+            <button
+              className={styles.button} 
+              onClick={() => setShowDelete(true)}
+            >
+              Delete
+            </button>
+            <button
+              className={styles.button} 
+              onClick={() => setShowPublish(true)}
+            >
+              {exhibit.published ? "Unpublish" : "Publish"}
+            </button>
+            <Link
+              className={styles.button} 
+              href={`/designer/${encodeURIComponent(exhibit.title)}`}
+              onClick={() => setLoading(true)}
+            >
+              Edit
+            </Link>
+            <button 
+              className={styles.button}
+              onClick={() => setShowDetails(true)}
+            >
+              View Details
+            </button>
+          </div>          
         </div>
       </div>    
     </>

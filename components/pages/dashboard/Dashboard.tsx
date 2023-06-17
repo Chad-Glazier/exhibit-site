@@ -6,6 +6,7 @@ import { LoadingOverlay } from "@/components/general";
 import { api } from "@/util/client";
 import ExhibitTile from "./ExhibitTile";
 import AddExhibit from "./popups/AddExhibit";
+import Image from "next/image";
 
 export default function Dashboard({ 
   userData,
@@ -45,6 +46,9 @@ export default function Dashboard({
     setLoading(false);
   }
 
+  const publicExhibits = exhibitCache.filter(el => el.published);
+  const privateExhibits = exhibitCache.filter(el => !el.published);
+
   return (
     <>
       <LoadingOverlay show={loading} />
@@ -59,42 +63,54 @@ export default function Dashboard({
       />
       <AdminLayout
         pageName="Dashboard"
+        className={styles.page}
         userData={userData}
       >
-        <h1 className={styles.heading}>Published Exhibits</h1>
-        <div className={styles.exhibits}>
-          {exhibitCache
-            .filter(el => el.published)
-            .map((el) => 
-              <ExhibitTile 
-                allExhibits={exhibitCache}
-                key={el.title} 
-                exhibit={el} 
-                onDelete={() => deleteExhibit(el)}
-                onTogglePublic={togglePublic}
-              />
-            )
-          }  
-        </div>
-        <h1 className={styles.heading}>Unpublished Exhibits</h1>
-        <div className={styles.exhibits}>
-          {exhibitCache
-            .filter(el => !el.published)
-            .map((el, index) => 
-              <ExhibitTile 
-                allExhibits={exhibitCache}
-                key={index} 
-                exhibit={el} 
-                onDelete={() => deleteExhibit(el)}
-                onTogglePublic={togglePublic}
-                
-              />
-            )
-          }
-          <button className={styles.button} onClick={() => setShowPopup(true)}>
-            Add Exhibit
-          </button>
-        </div>
+        {
+          publicExhibits.length > 0 &&
+          <>
+            <h1 className={styles.heading}>Published Exhibits</h1>
+            <div className={styles.exhibits}>
+              {publicExhibits.map((el) => 
+                  <ExhibitTile 
+                    allExhibits={exhibitCache}
+                    key={el.title} 
+                    exhibit={el} 
+                    onDelete={() => deleteExhibit(el)}
+                    onTogglePublic={togglePublic}
+                  />
+                )
+              }  
+            </div>
+          </>
+        }
+        {
+          privateExhibits.length > 0 &&
+          <>
+            <h1 className={styles.heading}>Unpublished Exhibits</h1>
+            <section className={styles.exhibits}>
+              {privateExhibits.map((el, index) => 
+                  <ExhibitTile 
+                    allExhibits={exhibitCache}
+                    key={index} 
+                    exhibit={el} 
+                    onDelete={() => deleteExhibit(el)}
+                    onTogglePublic={togglePublic}
+                    
+                  />
+                )
+              }
+            </section>
+          </>
+        } 
+        <Image 
+          src="/plus.svg"
+          alt="Add Exhibit"
+          width={100}
+          height={120}
+          className={styles.button} 
+          onClick={() => setShowPopup(true)}
+        />
       </AdminLayout>    
     </>
   );

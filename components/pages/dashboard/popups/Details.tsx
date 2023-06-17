@@ -4,6 +4,7 @@ import { api } from "@/util/client";
 import { isYouTube, getBasename, getYouTubeTitle } from "@/util";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Details.module.css";
 
 export default function Details({
@@ -87,6 +88,13 @@ export default function Details({
             close();
           }}
         >
+          <Image
+            className={styles.background}
+            src={exhibit.thumbnail}
+            alt={exhibit.title}
+            width={1000}
+            height={1000}
+          />
           <label className={styles.label} htmlFor="title">
             Title
           </label>
@@ -165,18 +173,6 @@ export default function Details({
               </div>              
             </>       
           }
-          <Link
-            href={
-              exhibit.published ? 
-                `/${encodeURIComponent(exhibit.title)}`
-                :
-                `/preview/${encodeURIComponent(exhibit.title)}`
-            }
-            target="_blank"
-            className={styles.link + " " + styles.previewLink}
-          >
-            Open {exhibit.published ? " Exhibit" : " Preview"}
-          </Link>
           <div className={styles.buttons}>
             <button
               className={styles.button}
