@@ -22,9 +22,15 @@ export default function Details({
       onClickAway={onClose}
     >
       <div className={styles.container}>
-        <h2 className={styles.title}>
-          {imageName}
-        </h2>
+        <Link
+          className={styles.link}
+          target="_blank"
+          href={imageUrl}
+        >
+          <h2 className={styles.title}>
+            {imageName}
+          </h2>
+        </Link>
         <Image
           className={styles.image}
           src={imageUrl}
@@ -32,21 +38,10 @@ export default function Details({
           width={500}
           alt={imageName}
         />
-        <p>
-          Full image path:
-          <br />
-          <Link
-            className={styles.link}
-            target="_blank"
-            href={imageUrl}
-          >
-            {imageUrl}
-          </Link>
-        </p>
         {dependantExhibits.length > 0 ?
           <>
             <p>
-              This image is used in the following exhibits:
+              This image is used in the following exhibit{dependantExhibits.length > 1 ? "s" : ""}:
             </p>
             <ul>
               {Array.from(dependantExhibits).map(exhibitTitle => (

@@ -3,6 +3,7 @@ import prisma from "@/prisma";
 import { authorized } from "@/util/server";
 import { GetServerSideProps } from "next";
 import { Image } from "@prisma/client";
+import { getBasename } from "@/util";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const userData = await authorized(context.req.cookies);
@@ -10,7 +11,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: { destination: "/login", permanent: false } };
   }
 
-  const images: Image[] = (await prisma.image.findMany()).reverse();
+  const images: Image[] = (await prisma.image.findMany())
+    .sort((a, b) => getBasename(a.url).localeCompare(getBasename(b.url)));
   const imageTitles: Record<string, string[]> = {};
 
   for (const { url } of images) {

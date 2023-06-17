@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  width: min(calc(100vw - 1rem), 800px);
+  width: min(calc(100vw - 1rem), 600px);
   border: 3px solid var(--blackish);
   position: relative;
   z-index: -2;
@@ -55,6 +55,8 @@
   border: 2px solid #222;
   padding: 5px 1rem;
   border-radius: 5px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .table {
@@ -175,7 +177,7 @@
   height: 0;
   width: 100%;
   background-color: var(--orangish);
-  transition: all 200ms ease-in-out;
+  transition: all 150ms ease-in-out;
   z-index: -1;
 }
 

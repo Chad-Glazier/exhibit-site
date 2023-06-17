@@ -49,14 +49,13 @@ export default function AddImage({
             }
           }}
         >
-          <h2 className={styles.title}>Add Image</h2>
           <label htmlFor="image" className={styles.fileUploadLabel}>
             <Image
-              src={imagePreview || "/add.png"}
+              className={(imagePreview ? styles.preview : styles.placeholder)}
+              src={imagePreview || "/plus.svg"}
               alt="Add Image"
               width={250}
               height={250}
-              style={{ objectFit: "contain", cursor: "pointer" }}
             />
           </label>
           <input 
@@ -79,7 +78,7 @@ export default function AddImage({
               reader.readAsDataURL(imageFile);
             }}
           />
-          <button className={styles.submit}>Upload</button>
+          <button className={styles.button}>Upload</button>
         </form>
       </Popup>    
     </>

@@ -1,52 +1,107 @@
 .container {
-  background-color: #fff;
-  border: 1px solid var(--admin-dark-blue);
-  border-radius: 5px;
-  padding: 1rem;
+  background: #fff;
   display: flex;
   flex-direction: column;
-  width: min(500px, calc(100vw - 1rem));
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  width: min(calc(100vw - 2rem), 800px);
 }
 
-.container p {
-  margin: 0.5rem 0;
+/* TITLE */
+
+.title {
+  text-transform: uppercase;
+}
+
+/* TEXT */
+
+.container p,
+.container ul,
+.container li
+{
+  width: 90%;
 }
 
 .container li {
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
+
+/* IMAGE */
 
 .image {
   width: 100%;
   height: auto;
-  max-height: min(40vh, 400px);
+  max-height: min(calc(100vh - 2rem), 400px);
   object-fit: contain;
 }
 
-.link { 
-  text-decoration: underline;
-  color: var(--admin-dark-blue);
-  transition: all 400ms;
-}
-
-.link:hover {
-  cursor: pointer;
-  color: var(--admin-light-blue);
-}
+/* BUTTON */
 
 .button {
-  background-color: var(--admin-light-blue);
+  width: 90%;
+  border: 3px solid var(--orangish);
+  padding: 3px;
   font-size: 1rem;
-  text-transform: uppercase;
-  color: #FFF;
-  border: 1px solid var(--admin-dark-blue);
-  border-radius: 5px;
-  padding: 5px;
-  margin-top: 0.5rem;
   transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
 }
 
 .button:hover {
   cursor: pointer;
-  background-color: var(--admin-lighter-blue);
+  color: #fff;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.button:hover::after {
+  height: 100%;
+}
+
+
+/* LINKS */
+
+.link {
+  width: auto;
+  color: var(--admin-dark-blue);
+  line-break: auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 3px;
+}
+
+.link:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background-color: var(--admin-dark-blue);
+  transition: all 200ms ease-in-out;
+  z-index: -1;
+}
+
+.link:hover::after {
+  height: calc(100% - 2px);
 }

@@ -6,6 +6,7 @@
   padding-top: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  gap: 1rem;
 }
 
 .heading {
@@ -36,7 +37,7 @@
   border: 5px solid black;
   border-radius: 100%;
   padding: 1rem;
-  transition: all 400ms;
+  transition: all 150ms;
 }
 
 .button:hover {

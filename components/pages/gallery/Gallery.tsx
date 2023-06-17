@@ -1,11 +1,11 @@
 import styles from "./Gallery.module.css";
 import { AdminLayout } from "@/components/layouts";
-import { Image } from "@prisma/client";
 import GalleryTile from "./GalleryTile";
-import { UserData } from "@/types";
+import { UserData, ImageType } from "@/types";
 import React, { useState } from "react";
 import { api } from "@/util/client";
 import { LoadingOverlay, AddImage } from "@/components/general";
+import Image from "next/image";
 
 export default function Gallery({
   images,
@@ -13,7 +13,7 @@ export default function Gallery({
   userData,
   targetImage
 }: {
-  images: Image[];
+  images: ImageType[];
   imageTitles: Record<string, string[]>;
   userData: UserData;
   targetImage?: string;
@@ -36,6 +36,7 @@ export default function Gallery({
       <AdminLayout
         pageName="Gallery"
         userData={userData}
+        className={styles.page}
       >
         <h1 className={styles.heading}>Gallery</h1>
         <section className={styles.images}>
@@ -58,12 +59,14 @@ export default function Gallery({
               }}
             />
           )}    
-          <button 
+          <Image 
+            src="/plus.svg"
+            alt="Add Exhibit"
+            width={100}
+            height={120}
+            className={styles.button} 
             onClick={() => setShowPopup(true)}
-            className={styles.button}
-          >
-            Add Image
-          </button>  
+          />
         </section>  
       </AdminLayout>    
     </>
