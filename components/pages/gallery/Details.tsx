@@ -34,8 +34,8 @@ export default function Details({
         <Image
           className={styles.image}
           src={imageUrl}
-          height={500}
-          width={500}
+          height={600}
+          width={600}
           alt={imageName}
         />
         {dependantExhibits.length > 0 ?
