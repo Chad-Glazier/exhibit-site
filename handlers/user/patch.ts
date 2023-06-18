@@ -14,7 +14,7 @@ export default async function put(
     return res
       .status(403)
       .json({
-        message: "The master key does not grant authorization for this endpoint. Try creating an account instead with the key, and then using that account to access this endpoint."
+        message: "The master key does not grant authorization for this endpoint. Try creating an account with the key, and then using that account to access this endpoint."
       })
   }
 
@@ -24,6 +24,7 @@ export default async function put(
   try {
     jwtSecret = process.env.JWT_SECRET as string;
     saltRounds = parseInt(process.env.SALT_ROUNDS as string);
+    if (!jwtSecret || !saltRounds) throw new Error("!!!");
   } catch {
     return res.status(500).json({ 
       message: "The server could not get certain required environment variables. This is certainly due to a misconfiguration on the server." 
@@ -81,14 +82,15 @@ export default async function put(
     patchedUser.password = await bcrypt.hash(patchedUser.password, saltRounds);
   }
 
-  if (patchedUser.email && patchedUser.email !== user) {
+  if (patchedUser.email && patchedUser.email != user) {
     const conflictingUser = await prisma.user.findUnique({ where: { email: patchedUser.email }});
-    if (conflictingUser) {
+    if (conflictingUser !== null) {
+      const { password, ...conflictingUserData } = conflictingUser;
       return res
         .status(409)
         .json({
           message: "That email address is already in use by another user.",
-          ...conflictingUser
+          ...conflictingUserData
         });
     }
   }
@@ -105,15 +107,12 @@ export default async function put(
 
   patchedUser.isMaster = currentUserData.isMaster;
 
-  const updatedUser = await prisma.user.update({
-    where: { email: user },
-    data: patchedUser
-  });
-
-  const newUserData: UserType = await prisma.user.update({
+  const newUser: UserType = await prisma.user.update({
     where: { email: user },
     data: patchedUser
   })
+
+  const { password, ...newUserData } = newUser;
 
   // give the user a new token if they changed their email
   if (authUser.email === user && patchedUser.email !== user) {

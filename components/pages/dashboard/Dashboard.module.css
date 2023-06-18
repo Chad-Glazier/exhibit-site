@@ -6,14 +6,15 @@
   padding-top: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .heading {
   font-size: 2rem;
   text-transform: uppercase;
   text-align: left;
-  width: max(min(1000px, calc(100% - 2rem)), 80%);
+  width: min(100%, 1300px);
+  padding-bottom: 1rem;
 }
 
 .exhibits {
@@ -23,6 +24,7 @@
   justify-content: center;
   align-items: center;
   transition: all 400ms;
+  gap: 1rem;
 }
 
 .button {

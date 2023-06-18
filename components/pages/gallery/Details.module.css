@@ -76,7 +76,6 @@
   height: 100%;
 }
 
-
 /* LINKS */
 
 .link {
@@ -98,7 +97,7 @@
   position: absolute;
   bottom: 3px;
   left: 0;
-  height: 3px;
+  height: 2px;
   width: 100%;
   background-color: var(--admin-dark-blue);
   transition: all 200ms ease-in-out;

@@ -1,0 +1,98 @@
+/* CONTAINER */
+
+.info {
+  border: 3px solid var(--blackish);
+  width: min(600px, calc(100% - 1rem));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  position: relative;
+  transition: all 400ms;
+  background-color: #fff;
+}
+
+.info[data-status="view"]:hover {
+  border-color: var(--orangish);
+  cursor: pointer;
+}
+
+.info label {
+  margin-bottom: -0.8rem;
+  text-transform: uppercase;
+}
+
+.info p {
+  padding: 4px 6px;
+}
+
+.edit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 0 5px 5px;
+  background-color: var(--blackish);
+  transition: all 400ms;
+}
+
+.info:hover .edit {
+  cursor: pointer;
+  background-color: var(--orangish);
+}
+
+/* INPUTS */
+
+.info input {
+  width: 100%;
+  border: 1px solid var(--blackish);
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  z-index: 2;
+}
+
+/* BUTTONS */
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 2px;
+}
+
+.buttons button {
+  flex: 1;
+  border: 3px solid var(--orangish);
+  padding: 3px;
+  font-size: 1rem;
+  transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+}
+
+.buttons button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.buttons button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.buttons button:hover::after {
+  height: 100%;
+}
