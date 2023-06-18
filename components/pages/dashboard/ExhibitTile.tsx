@@ -12,12 +12,14 @@ export default function ExhibitTile({
   exhibit,
   allExhibits,
   onDelete,
-  onTogglePublic
+  onTogglePublic,
+  onChangeTitle
 }: { 
   exhibit: PopulatedExhibitCreatable;
   allExhibits: PopulatedExhibitCreatable[];
   onDelete: () => void;
   onTogglePublic: (exhibit: PopulatedExhibitCreatable) => void;
+  onChangeTitle: (newTitle: string) => void;
 }) {
   const [showDelete, setShowDelete] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
@@ -46,6 +48,7 @@ export default function ExhibitTile({
         show={showDetails && !loading}
         close={() => setShowDetails(false)}
         exhibit={exhibit}
+        onChangeTitle={onChangeTitle}
       />
       <div className={styles.card}>
         <Image

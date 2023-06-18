@@ -78,6 +78,14 @@ export default function Dashboard({
                     exhibit={el} 
                     onDelete={() => deleteExhibit(el)}
                     onTogglePublic={togglePublic}
+                    onChangeTitle={(newTitle) => {
+                      setExhibitCache(prev => prev.map(ex => {
+                        if (ex.title === el.title) {
+                          return { ...ex, title: newTitle };
+                        }
+                        return ex;
+                      }));
+                    }}
                   />
                 )
               }  
@@ -96,7 +104,14 @@ export default function Dashboard({
                     exhibit={el} 
                     onDelete={() => deleteExhibit(el)}
                     onTogglePublic={togglePublic}
-                    
+                    onChangeTitle={(newTitle) => {
+                      setExhibitCache(prev => prev.map(ex => {
+                        if (ex.title === el.title) {
+                          return { ...ex, title: newTitle };
+                        }
+                        return ex;
+                      }));
+                    }}
                   />
                 )
               }

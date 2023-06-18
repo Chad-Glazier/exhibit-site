@@ -4,9 +4,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
   gap: 1rem;
+  padding-bottom: 1rem;
   width: min(calc(100vw - 2rem), 600px);
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 3px solid var(--blackish);
 }
 
 /* TITLE */
@@ -19,7 +22,8 @@
 
 .container p,
 .container ul,
-.container li
+.container li,
+.title
 {
   width: 90%;
 }

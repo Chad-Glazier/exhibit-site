@@ -49,9 +49,6 @@ export default function Register() {
       <LoadingOverlay show={loading} />
       <main className={styles.register}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.title}>
-            Register
-          </h1>
           <label className={styles.label} htmlFor="name">
             Name
           </label>
@@ -92,7 +89,7 @@ export default function Register() {
             type="password" id="master-key" name="master-key"
             required={true}
           />
-          <button className={styles.submit}>Register</button>
+          <button className={styles.button}>Register</button>
         </form>
       </main>
     </>

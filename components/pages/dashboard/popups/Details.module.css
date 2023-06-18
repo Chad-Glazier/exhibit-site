@@ -12,6 +12,8 @@
   border: 3px solid var(--blackish);
   position: relative;
   z-index: -2;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .form > * {

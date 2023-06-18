@@ -37,7 +37,7 @@
   border: 5px solid black;
   border-radius: 100%;
   padding: 1rem;
-  transition: all 150ms;
+  transition: all 400ms;
 }
 
 .button:hover {

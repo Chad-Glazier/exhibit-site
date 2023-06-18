@@ -5,8 +5,17 @@ import prisma from "@/prisma";
 
 export default async function get(
   req: NextApiRequest,
-  res: NextApiResponse<UserData | UserData[] | ErrorMessage>
+  res: NextApiResponse<UserData | UserData[] | ErrorMessage>,
+  authUser: UserData | null
 ) {
+  if (authUser === null) {
+    return res
+      .status(403)
+      .json({
+        message: "The master key does not grant authorization for this endpoint. Try creating an account instead with the key, and then using that account to access this endpoint."
+      })
+  }
+
   let { email } = req.query;
 
   if (Array.isArray(email)) email = email.map(decodeURIComponent);

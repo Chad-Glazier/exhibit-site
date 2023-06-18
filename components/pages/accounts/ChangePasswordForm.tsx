@@ -35,8 +35,7 @@ export default function ChangePasswordForm({
             }
 
             setLoading(true);
-            const res = await api.user.put({
-              ...userData,
+            const res = await api.user.updateOne(userData.email, {
               password: newPassword,
             });
 

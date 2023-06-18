@@ -1,6 +1,7 @@
 import getAuthentic from "./user/getAuthentic";
 import postAuthenticate from "./user/postAuthenticate";
 import { postUser, putUser } from "./user/createUser";
+import { updateUser } from "./user/updateUser";
 import { getUser, getUsers, getAllUsers } from "./user/getUser";
 import { deleteUser, deleteUsers, deleteAllUsers } from "./user/deleteUser";
 import { putExhibit, postExhibit } from "./exhibit/createExhibit";
@@ -29,12 +30,7 @@ const exhibit = {
 
 /**
  * An object containing all API functions for the client to interact with
- * images on the server. 
- * 
- * Images can be `GET`-ed directly from the Cloudflare worker associated with 
- * the R2 bucket. The URL's for those images are stored in the database, so 
- * fetching an image from this endpoint and then accessing the `url` property 
- * of the response will give you the URL for the image.
+ * images on the server.
  */
 const image = {
   post: postImage,
@@ -61,6 +57,7 @@ const user = {
   deleteOne: deleteUser,
   deleteMany: deleteUsers,
   deleteAll: deleteAllUsers,
+  updateOne: updateUser
 }
 
 /**

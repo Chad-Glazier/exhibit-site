@@ -22,15 +22,6 @@ export default function Details({
       onClickAway={onClose}
     >
       <div className={styles.container}>
-        <Link
-          className={styles.link}
-          target="_blank"
-          href={imageUrl}
-        >
-          <h2 className={styles.title}>
-            {imageName}
-          </h2>
-        </Link>
         <Image
           className={styles.image}
           src={imageUrl}
@@ -38,6 +29,9 @@ export default function Details({
           width={600}
           alt={imageName}
         />
+        <h2 className={styles.title}>
+          {imageName}
+        </h2>
         {dependantExhibits.length > 0 ?
           <>
             <p>
@@ -58,9 +52,9 @@ export default function Details({
             </ul>
           </>
           :
-          <p>
-            This image is not used in any exhibit{dependantExhibits.length > 1 ? "s" : ""}.
-          </p>
+          <em>
+            This image is not used in any exhibits.
+          </em>
         }
         <button className={styles.button} onClick={onClose}>
           Close

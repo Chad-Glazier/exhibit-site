@@ -40,7 +40,6 @@ export default function Login() {
       <LoadingOverlay show={loading} />
       <main className={styles.login}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.title}>Login</h1>
           <label className={styles.label} htmlFor="email">
             Email
           </label>
@@ -57,7 +56,7 @@ export default function Login() {
             type="password" id="password" name="password"
             required={true}
           />
-          <button className={styles.submit}>Log In</button>
+          <button className={styles.button}>Log In</button>
         </form>
       </main>    
     </>

@@ -41,6 +41,7 @@ export default function ExhibitTile({
       />  
       <div
         className={styles.tile}
+        onClick={() => setShowDetails(true)}
       >
         <Image 
           className={styles.background}
@@ -52,20 +53,18 @@ export default function ExhibitTile({
         <h1 className={styles.title}>{imageBasename}</h1>
         <div className={styles.buttons}>
           <button
-            onClick={() => setShowDetails(true)}
-            className={styles.button + " " + styles.detailsButton}
-          >
-            View Details    
-          </button>
-          <button
             className={styles.button} 
-            onClick={() => setShowPopup(true)}
+            onClick={e => {
+              setShowPopup(true);
+              e.stopPropagation();
+            }}
           >
             Delete
           </button>
           <Link 
             className={styles.button}
             target="_blank" href={image.url}
+            onClick={e => e.stopPropagation()}
           >
             Download
           </Link>

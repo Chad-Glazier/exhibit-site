@@ -11,13 +11,15 @@ export default function Details({
   show,
   close,
   exhibit,
-  allExhibits
+  allExhibits,
+  onChangeTitle,
 }: {
   show?: boolean;
   close: () => void;
   exhibit: PopulatedExhibitCreatable;
   allExhibits: PopulatedExhibitCreatable[];
   requestRerender?: () => void;
+  onChangeTitle: (newTitle: string) => void;
 }) {
   const { cards, ...exhibitDetails } = exhibit;
   const [lastSavedVersion, setLastSavedVersion] = useState(exhibitDetails);
@@ -78,6 +80,8 @@ export default function Details({
               updatedDetails
             );
             setLoading(false);
+
+            onChangeTitle(title);
 
             if (!res.ok) {
               alert(res.error);

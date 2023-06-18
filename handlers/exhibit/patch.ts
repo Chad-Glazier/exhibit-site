@@ -1,11 +1,20 @@
 import prisma from "@/prisma";
-import { ExhibitType, ExhibitSchema, ErrorMessage } from "@/types";
+import { ExhibitType, ExhibitSchema, ErrorMessage, UserData } from "@/types";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function patch(
   req: NextApiRequest,
-  res: NextApiResponse<ExhibitType | ErrorMessage>
+  res: NextApiResponse<ExhibitType | ErrorMessage>,
+  authUser: UserData | null
 ) {
+  if (authUser === null) {
+    return res
+      .status(403)
+      .json({
+        message: "The master key does not grant authorization for this endpoint. Try creating an account instead with the key, and then using that account to access this endpoint."
+      })
+  }
+
   const { title } = req.query;
 
   if (!title) {

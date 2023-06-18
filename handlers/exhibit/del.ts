@@ -1,11 +1,20 @@
-import { PopulatedExhibit, ErrorMessage } from "@/types";
+import { PopulatedExhibit, ErrorMessage, UserData } from "@/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/prisma";
 
 export default async function del(
   req: NextApiRequest,
-  res: NextApiResponse<ErrorMessage | PopulatedExhibit | PopulatedExhibit[]>
+  res: NextApiResponse<ErrorMessage | PopulatedExhibit | PopulatedExhibit[]>,
+  authUser: UserData | null
 ): Promise<void> {
+  if (authUser === null) {
+    return res
+      .status(403)
+      .json({
+        message: "The master key does not grant authorization for this endpoint. Try creating an account instead with the key, and then using that account to access this endpoint."
+      })
+  }
+
   const { id } = req.query;
   let { title } = req.query;
 
