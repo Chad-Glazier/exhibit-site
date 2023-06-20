@@ -12,9 +12,10 @@ export default function MyAccount({
   userData: UserData;
   onUpdate: (userData: UserData) => void;
 }) {
-  const { name, email, isMaster } = userData;
+  const { name, email } = userData;
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [note, setNote] = useState("any fields left blank will remain unchanged");
 
   return (
     <>
@@ -32,11 +33,6 @@ export default function MyAccount({
           const password = (document.getElementById("password") as HTMLInputElement).value;
           const passwordConfirm = (document.getElementById("password-confirm") as HTMLInputElement).value;
 
-          if (password !== passwordConfirm) {
-            alert("Passwords must match");
-            return;
-          }
-
           let newUserData: Partial<UserType> = {};
           if (updatedName !== name && updatedName !== "") {
             newUserData.name = updatedName;
@@ -46,23 +42,34 @@ export default function MyAccount({
           }
           if (password !== "" || passwordConfirm !== "") {
             if (passwordConfirm !== password) {
-              alert("Passwords must match");
+              setNote("Passwords must match");
               return;
             }
             newUserData.password = password;
+          }
+
+          if (Object.keys(newUserData).length === 0) {
+            setEditMode(false);
+            return;
           }
 
           setLoading(true);
           const res = await api.user.updateOne(email, newUserData);
           setLoading(false);
           if (!res.ok) {
-            alert("Something went wrong");
+            setNote(res.error);
             return;
           }
+          setNote("any fields left blank will remain unchanged");
           onUpdate(res.body);
           setEditMode(false);
         }}
       >
+        <h1
+          className={styles.heading}
+        >
+          My Account
+        </h1>
         { 
           !editMode &&
             <Image 
@@ -108,6 +115,11 @@ export default function MyAccount({
                 id="password-confirm"
                 type="password"
               />   
+              <em
+                className={styles.note}
+              >
+                {note}
+              </em>
               <div
                 className={styles.buttons}
               >
