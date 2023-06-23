@@ -118,7 +118,7 @@
 }
 
 .dropdown {
-  z-index: 5;
+  z-index: 101;
   display: block;
   position: absolute;
   box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
@@ -185,7 +185,7 @@
 
 .linkEditor {
   position: absolute;
-  z-index: 100;
+  z-index: 101;
   top: -10000px;
   left: -10000px;
   margin-top: -6px;

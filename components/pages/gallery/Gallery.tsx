@@ -4,7 +4,7 @@ import GalleryTile from "./GalleryTile";
 import { UserData, ImageType } from "@/types";
 import React, { useState } from "react";
 import { api } from "@/util/client";
-import { LoadingOverlay, AddImage } from "@/components/general";
+import { LoadingOverlay, AddImage, Alert } from "@/components/general";
 import Image from "next/image";
 
 export default function Gallery({
@@ -21,9 +21,11 @@ export default function Gallery({
   const [imageCache, setImageCache] = useState(images);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <AddImage
         show={showPopup && !loading}
@@ -50,7 +52,7 @@ export default function Gallery({
                 setLoading(true);
                 const res = await api.image.deleteOne(el.url);
                 if (!res.ok) {
-                  alert(res.error);
+                  setAlertMessage(res.error);
                   setLoading(false);
                 } else {
                   setImageCache(prev => prev.filter(({ url }) => url !== el.url))         

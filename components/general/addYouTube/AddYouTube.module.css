@@ -2,56 +2,75 @@
   padding: 1rem;
   background-color: #fff;
   border: 1px solid var(--admin-dark-blue);
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  min-width: 400px;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: min(400px, calc(100vw - 2rem));
 }
 
-.title {
-  font-size: 1.4rem;
+.label {
+  margin-bottom: -0.8rem;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.label, .input, .submit {
-  margin: 2px 0;
-}
-
-.input, .submit {
-  padding: 2px;
-  border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
+  width: 100%;
 }
 
 .input {
+  padding: 2px;
+  border-radius: 5px;
+  border: 2px solid var(--blackish);
+  width: 100%;
+}
+
+.input {
+  padding: 5px;
   font-size: 1rem;
+}
+
+.valid {
+  border-color: green;
+}
+
+.invalid {
+  border-color: red;
+}
+
+.button {
+  width: 100%;
+  border: 3px solid var(--orangish);
+  padding: 3px;
+  font-size: 1rem;
+  transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+}
+
+.button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.button:hover::after {
+  height: 100%;
 }
 
 .input:focus {
   outline: none;
-}
-
-.submit {
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: all 400ms;
-  margin-top: 1rem;
-  background-color: var(--admin-light-blue);
-  color: #FFF;
-}
-
-.submit:hover {
-  background-color: var(--admin-lighter-blue);
-  cursor: pointer;
-  color: var(--admin-dark-blue);
-}
-
-.valid {
-  border: 2px solid green;
-}
-
-.invalid {
-  border: 2px solid red;
 }

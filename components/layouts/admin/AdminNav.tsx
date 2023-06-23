@@ -3,7 +3,8 @@ import Link from "next/link";
 import styles from "./AdminNav.module.css";
 
 export default function AdminNav({
-  onRedirect
+  onRedirect,
+  pageName
 }: {
   /**
    * A function that's invoked before the user attempts to redirect, and
@@ -12,6 +13,7 @@ export default function AdminNav({
    * @returns Whether or not to redirect the user.
    */
   onRedirect?: (target: string) => boolean;
+  pageName: string;
 }) {
   return (
     <nav className={styles.navbar}>

@@ -1,5 +1,5 @@
 import { PopulatedExhibitCreatable, ExhibitCreatable } from "@/types";
-import { LoadingOverlay, Popup } from "@/components/general";
+import { Alert, LoadingOverlay, Popup } from "@/components/general";
 import { api } from "@/util/client";
 import { isYouTube, getBasename, getYouTubeTitle } from "@/util";
 import { useEffect, useState, useRef } from "react";
@@ -25,6 +25,7 @@ export default function Details({
   const [lastSavedVersion, setLastSavedVersion] = useState(exhibitDetails);
   const youTubeTitles = useRef(new Map<string, string>());
   const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   useEffect(() => {
     exhibit.cards
@@ -45,6 +46,7 @@ export default function Details({
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <Popup show={show && !loading} onClickAway={close}>
         <form className={styles.form}
@@ -57,7 +59,7 @@ export default function Details({
               &&
               allExhibits.some(exhibit => exhibit.title === title)
             ) {
-              alert("An exhibit with that title already exists.");
+              setAlertMessage("An exhibit with that title already exists.");
               return;
             }
 
@@ -84,7 +86,7 @@ export default function Details({
             onChangeTitle(title);
 
             if (!res.ok) {
-              alert(res.error);
+              setAlertMessage(res.error);
               return;
             }
 

@@ -4,7 +4,7 @@ import { AdminLayout } from "@/components/layouts";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "@/util/client";
-import { LoadingOverlay, TextEditor } from "@/components/general";
+import { Alert, LoadingOverlay, TextEditor } from "@/components/general";
 
 export default function OpenExhibit({
   exhibitCache,
@@ -16,9 +16,11 @@ export default function OpenExhibit({
   const router = useRouter();
   const [createNew, setCreateNew] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <AdminLayout
         pageName="Open Exhibit"
@@ -43,13 +45,15 @@ export default function OpenExhibit({
                 published: false,
                 priority: 0
               });
-              if (!res.body) {
+              if (res.error) {
                 setLoading(false);
-                alert(res.error);
+                setAlertMessage(res.error);
                 return;
               }
-              router.push(`/designer/${encodeURIComponent(res.body.title)}`);
-              return;            
+              if (res.body) {
+                router.push(`/designer/${encodeURIComponent(res.body.title)}`);
+                return;                            
+              }
             }
             router.push(`/designer/${encodeURIComponent(title)}`);
           }}
@@ -97,7 +101,7 @@ export default function OpenExhibit({
               />
             </> 
           )}
-          <button className={styles.submit}>
+          <button className={styles.button}>
             {(createNew ? "Create" : "Open") + " Exhibit"}
           </button>
         </form>

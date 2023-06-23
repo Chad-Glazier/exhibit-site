@@ -1,66 +1,74 @@
+/* CONTAINER */
+
 .form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(400px, 90%);
   padding: 1rem;
-  border-radius: 5px;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border: 1px solid var(--admin-dark-blue);
-  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: min(calc(100vw - 1rem), 500px);
+  border: 3px solid var(--blackish);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: fixed;
+  top: max(200px, 50vh);
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
-.title {
-  font-size: 1.4rem;
+.form > * {
+  width: 100%;
+}
+
+/* BACKGROUND */
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+/* LABELS */
+
+.label {
+  font-size: 1rem;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: -0.8rem;
+  padding-left: 5px;
 }
 
-.label, .input, .select, .submit {
-  margin: 5px 0;
-}
+/* INPUT */
 
-.input, .select, .submit {
+.input {
+  padding: 5px 8px;
   font-size: 1rem;
-  padding: 2px;
   border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
+  border: 1px solid #222;
 }
 
-.label, .submit { 
-  text-transform: uppercase;
-}
-
-.submit {
-  font-size: 1rem;
-  transition: all 400ms;
-  margin-top: 1rem;
-  background-color: var(--admin-light-blue);
-  color: #FFF;
-}
-
-.submit:hover {
-  background-color: var(--admin-lighter-blue);
-  cursor: pointer;
-  color: var(--admin-dark-blue);
-}
+/* PRIORITY (SELECT BOX) */
 
 .select {
   width: 100%;
-  padding: 5px;
+  padding: 8px;
   border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
+  border: 1px solid #222;
   background-color: #FFF;
-  font-size: 16px;
+  font-size: 1rem;
   color: #000;
   -webkit-appearance: none; /* this will remove the default dropdown arrow in Webkit browsers */
   -moz-appearance: none; /* this will remove the default dropdown arrow in Mozilla browsers */
   appearance: none; /* this will remove the default dropdown arrow in standard syntax */
   position: relative;
+  text-transform: capitalize;
+  font-size: 1rem;
 }
 
 .select:focus {
@@ -70,4 +78,81 @@
 
 .select:hover {
   cursor: pointer;
+}
+
+/* LINKS */
+
+.link {
+  width: auto;
+  color: var(--admin-dark-blue);
+  line-break: auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 3px;
+}
+
+.link:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--admin-dark-blue);
+  transition: all 200ms ease-in-out;
+  z-index: -1;
+}
+
+.link:hover::after {
+  height: calc(100% - 2px);
+}
+
+/* BUTTONS */
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 2px;
+}
+
+.button {
+  flex: 1;
+  border: 3px solid var(--orangish);
+  padding: 3px;
+  font-size: 1rem;
+  transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+}
+
+.button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.button:hover::after {
+  height: 100%;
 }

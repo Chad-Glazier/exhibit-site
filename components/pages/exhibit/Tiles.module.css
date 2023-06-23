@@ -1,7 +1,7 @@
 .tiles {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 49%), 1fr));
   padding: 1rem;
 }
 
@@ -17,11 +17,7 @@
   z-index: 2;
 }
 
+.tile:hover,
 .tile.active {
   border-color: var(--orangish);
-}
-
-.tile:hover {
-  border-color: var(--orangish);
-  filter: hue-rotate(10deg);
 }

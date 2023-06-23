@@ -25,7 +25,7 @@ const exhibit = {
   getOne: getExhibit,
   getMany: getExhibits,
   getAll: getAllExhibits,
-  updateOne: updateExhibit
+  updateOne: updateExhibit,
 }
 
 /**

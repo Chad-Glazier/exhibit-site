@@ -1,5 +1,5 @@
 import styles from "./DeleteAccount.module.css";
-import { Popup, LoadingOverlay } from "@/components/general";
+import { Popup, LoadingOverlay, Alert } from "@/components/general";
 import { useState } from "react";
 import { UserData } from "@/types";
 import { api } from "@/util/client";
@@ -16,9 +16,11 @@ export default function DeleteAccount({
   onDelete: (email: string) => void;
 }) {
   const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading && !show} />
       <Popup show={show && userData !== null} onClickAway={close}>
         <form
@@ -31,7 +33,7 @@ export default function DeleteAccount({
             const res = await api.user.deleteOne(userData.email);
             setLoading(false);
             if (res.error) {
-              alert(res.error);
+              setAlertMessage(res.error);
             } else {
               onDelete(userData.email);
             }

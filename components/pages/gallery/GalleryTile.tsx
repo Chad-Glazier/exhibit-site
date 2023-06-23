@@ -47,8 +47,8 @@ export default function ExhibitTile({
           className={styles.background}
           src={image.url}
           alt={imageBasename}
-          width={300}
-          height={300}
+          width={500}
+          height={500}
         />
         <h1 className={styles.title}>{imageBasename}</h1>
         <div className={styles.buttons}>

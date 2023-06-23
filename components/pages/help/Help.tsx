@@ -16,261 +16,374 @@ export default function Help({
         userData={userData}
         className={styles.page}
       >
-        <h1 className={styles.heading}>User Manual</h1>
-        <ul className={styles.tableOfContents}>
-          <li>
-            <Link className={styles.link} href="#create">Creating Exhibits</Link>
-          </li>
-          <li>
-            <Link className={styles.link} href="#design">Designing Exhibits</Link>
-          </li>
-          <li>
-            <Link className={styles.link} href="#manage-exhibits">Managing Exhibits</Link>
-          </li>
-          <li>
-            <Link className={styles.link} href="#manage-images">Managing Images</Link>
-          </li>
-          <li>
-            <Link className={styles.link} href="#manage-accounts">Managing Accounts</Link>
-          </li>
-          <li>
-            <Link className={styles.link} href="#report">Report a Bug</Link>
-          </li>
-        </ul>
-        <section id="create" className={styles.section}>
-          <h2 className={styles.subheading}>Creating Exhibits</h2>
-          <p>
-            From the Dashboard page, click the &quot;Create Exhibit&quot; button at the bottom of the screen.
-          </p>
-          <Image 
-            className={styles.screenshot}
-            src="/manual/create-exhibit-button.png" 
-            height={500} 
-            width={1000} 
-            alt="screenshot" 
-          />
-          <p>
-            There, you will be prompted to enter the name of the new exhibit. Note that exhibits must
-            have unique names, so you will not be able to use a name that&apos;s already in use.
-          </p>
-          <Image 
-            className={styles.screenshot}
-            src="/manual/create-exhibit-prompt.png" 
-            height={500} 
-            width={1000} 
-            alt="screenshot" 
-          />
-          <p>
-            Once you have entered a valid name, click &quot;Create&quot;. The new exhibit should immediately appear 
-            on the Dashboard.              
-          </p>
-          <p>
-            Another way to create exhibits is by navigating to the <Link href="/designer" className={styles.link}>
-            Designer page</Link>. From there, you will have the choice of either creating a new exhibit in the designer,
-            or opening an existing one. By default, the selected option is to create a new one, so you can just
-            enter the desired title and then click &quot;Create&quot;. Then the designer will open for
-            the new exhibit.
-          </p>
-          <Image 
-            className={styles.screenshot}
-            src="/manual/create-exhibit-designer.png" 
-            height={500} 
-            width={1000} 
-            alt="screenshot" 
-          />
-        </section>
-        <section id="design" className={styles.section}>
-          <h2 className={styles.subheading}>Designing Exhibits</h2>
-          <p>
-            In order to design an exhibit, you can open it in the Designer page. This can be done by either
-            navigating to the <Link href="/designer" className={styles.link}>Designer page</Link> and selecting the
-            exhibit to open,
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/designer-open.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            or by clicking on the &quot;Edit&quot; button on the Dashboard page.
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/edit-button.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            Once you have the editor open, you&apos;ll have a number of options for designing your exhibit. The
-            buttons in the top right corner of the screen allow you to save the exhibit, preview the last saved
-            version in a new tab, or exit the page and return to the Dashboard.
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/designer-buttons.png"
-            height={500}
-            width={1000}
-            style={{ maxWidth: "300px" }}
-            alt="screenshot"
-          />
-          <p>
-            The first section of the designer includes the content that will be visible from the exhibit browser
-            page. This includes the title, summary, and thumbnail.
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/designer-content.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            The title and summary are both text editors, and you can change the thumbnail by clicking on it. This
-            will show a popup that lets you decide whether to upload a new image from your machine or select
-            an image that you&apos;ve previously uploaded.
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/thumbnail-edit.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            Note that this content (the thumbnail, summary, and title) will not be included as content in the actual
-            exhibit page, it is only used for the browser page. To add content to the exhibit, you must include
-            &quot;Card&quot;s. This can be done by clicking on the &quot;Add Card&quot; button at the bottom of the designer page. 
-            The new card should appear at the bottom of the editor:
-          </p>
-          <Image  
-            className={styles.screenshot}
-            src="/manual/card.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            You can then edit the media and text content of the card. The media content can be either an image or a link to
-            a YouTube video that you want to embed. Note that the ability to link to YouTube videos is only available for cards,
-            you cannot set a YouTube video as the thumbnail for an exhibit.
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/add-card-media.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            Try adding some cards and editing their content, then save the exhibit and preview it in a new tab (via the buttons at
-            the top of the page) to get a feel for how the cards will be presented. Note that newly-created exhibits are hidden from
-            the public until you publish them from the Dashboard.
-          </p>
-          <p>
-            The order that cards appear in an exhibit is determined by their order in the designer. You can change the order of cards 
-            clicking the arrows on the right side of the card. Additionally, clicking the &quot;X&quot; button will prompt you to delete
-            the card. If you accidentally delete the wrong card, you can always refresh the page to discard your changes
-            and revert to the last saved version.
-          </p>
-        </section>
-        <section id="manage-exhibits" className={styles.section}>
-          <h2 className={styles.subheading}>Managing Exhibits</h2>
-          <p>
-            From the Dashboard page, you can manage your exhibits by using the buttons on the bottom of each exhibits tile. 
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/edit-button.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
+        <section id="table-of-contents">
+          <h1>User Manual</h1>
           <ul>
             <li>
-              <strong>Edit</strong> - Opens the exhibit in the designer, allowing you to edit it.
+              <Link href="#dashboard">
+                The Exhibits Page
+              </Link>
             </li>
             <li>
-              <strong>Delete</strong> - Prompts you to delete the exhibit permanently.
+              <Link href="#designer">
+                The Designer Page
+              </Link>
+              <ul>
+                <li>
+                  <Link href="#thumbnail-section">
+                    Thumbnails
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#cards-section">
+                    Creating/Deleting Cards
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#card-editor">
+                    Editing Cards
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
-              <strong>(Un)Publish</strong> - Prompts you to publish/unpublish the exhibit. If you unpublish an exhibit, it will no longer be visible to the public. If you publish an exhibit, it will become visible to the public.
+              <Link href="#gallery">
+                The Gallery Page
+              </Link>
             </li>
             <li>
-              <strong>View Details</strong> - Opens a popup that provides more information about the exhibit, allows you to view a preview, see a list of the media that the exhibit uses (and view their details), and modify the title of the exhibit. Additionally, you can set the &quot;Priority&quot; of the exhibit, which determines the order that exhibits appear in the exhibit browser page. The higher the priority, the closer to the top of the page the exhibit will appear. If two exhibits have the same priority, they will be sorted alphabetically by title.
+              <Link href="#accounts">
+                The Accounts Page
+              </Link>
+            </li>
+            <li>
+              <Link href="#reporting-a-bug">
+                Reporting an Issue with the Site
+              </Link>
             </li>
           </ul>
-          <Image  
-            className={styles.screenshot}
-            src="/manual/view-details.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
         </section>
-        <section id="manage-images" className={styles.section}>
-          <h2 className={styles.subheading}>Managing Images</h2>
+        <section id="dashboard">
+          <h2>The Exhibits Page</h2>
+          <Image
+            src="/help/dashboard-screenshot.png"
+            alt="Screenshot of the dashboard page"
+            width={1000}
+            height={1000}
+            className={styles.screenshot}
+          />
           <p>
-            As you create exhibits, you will end up uploading a number of images. If you want to view and manage these images, you can do so via the <Link href="/gallery" className={styles.link}>Gallery page</Link>.
+            On this page, you can manage and create exhibits. Each exhibit is represented by a 
+            tile, and each tile has a number of buttons that allow you to perform actions on the
+            exhibit.
+          </p>
+          <ul>
+            <li>
+              <button>Delete</button> will prompt you to delete the exhibit, as you might expect. This action
+              is irreversible, so you will generally want to unpublish the exhibit instead. Note that deleting
+              an exhibit does <em>not</em> delete the media files associated with it. Image deletion is only allowed throgh the              <Link href="#gallery">Gallery page</Link>.
+            </li>
+            <li>
+              <button>Unpublish</button> will prompt you to unpublish the exhibit. This will hide
+              it from the <Link href="/" target="_blank">public page</Link> that guests see. When you create a new exhibit, it will be
+              unpublished by default.
+            </li>
+            <li>
+              <button>Edit</button> will open the exhibit in the <Link href="#designer">Designer page</Link>,
+              allowing you to edit its contents.
+            </li>
+            <li>
+              <button>View Details</button> will provide information about the exhibit, including a list
+              of its related media files, its title, and its &quot;priority&quot;. The priority of an exhibit
+              determines the order in which it appears on the guests homepage. High priority exhibits will
+              appear first, and low priority exhibits will appear last. Exhibits with the same priority
+              are sorted alphabetically.
+            </li>
+            <li>
+              <Image 
+                width={24} 
+                height={24} 
+                style={{
+                  margin: "0p 5px -7px 5px",
+                  padding: "3px",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)"
+                }}
+                src="/open.svg" 
+                alt="an open icon"
+              />
+              is the final button on exhibit tiles, found in the top-right corner. Clicking it will open a preview
+              of the exhibit that shows what guests will see when they open it. The
+              preview can also be opened by clicking on the title of the exhibit.
+            </li>
+          </ul>
+          <p>
+            At the bottom-right corner of the page is a button that allows you to create a new exhibit.
           </p>
           <Image
-            className={styles.screenshot}
-            src="/manual/gallery.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
+            src="/plus.svg"
+            alt="a plus sign"
+            width={100}
+            height={100}
+            className={styles.screenshot + " " + styles.plus}
           />
           <p>
-            The &quot;Delete&quot; and &quot;Download&quot; buttons are pretty self explanatory, but before you delete an image, it&apos;s probably a good idea to make sure that no exhibits depend upon it. You can determine this by clicking on the &quot;View Details&quot; button, which will show you a list of exhibits that use the image. Clicking on one of those exhibits will open their Designer page in a new tab, so you can swap out the image if you need to.
-          </p>
-          <Image
-            className={styles.screenshot}
-            src="/manual/image-details.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
-          <p>
-            You can also upload new images directly from this page by scrolling to the bottom and clicking &quot;Add Image&quot;.
+            Clicking this button will prompt you to choose a name for the new exhibit.
+            Note that each exhibit must have a unique name.
           </p>
         </section>
-        <section id="manage-accounts" className={styles.section}>
-          <h2 className={styles.subheading}>Managing Accounts</h2>
-          {userData.isMaster ? 
-            <>
-              <p>
-                The <Link className={styles.link} href="/accounts">Accounts page</Link> is where you can view and manage accounts. Since you&apos;re the admin user, you reserve the unique ability to create and delete other accounts. Your account cannot be deleted, though the password can be changed.
-              </p>
-              <Image
-                className={styles.screenshot}
-                src="/manual/admin-account-page.png"
-                height={500}
-                width={1000}
-                alt="screenshot"
-              />      
-              <p>
-                Other, non-admin users will see a similar page when they visit the Accounts page, but they will not be able to create or delete accounts.
-              </p>      
-            </>
+        <section id="designer">
+          <h2>The Designer Page</h2>
+          <ul>
+            <li>
+              <Link href="#thumbnail-section">
+                Thumbnails
+              </Link>
+            </li>
+            <li>
+              <Link href="#cards-section">
+                Creating/Deleting Cards
+              </Link>
+            </li>
+            <li>
+              <Link href="#card-editor">
+                Editing Cards
+              </Link>
+            </li>
+          </ul>
+          <Image
+            src="/help/designer-screenshot.png"
+            alt="Screenshot of the designer page"
+            width={1000}
+            height={1000}
+            className={styles.screenshot}
+          />
+          <h3 id="thumbnail-section">The Thumbnail Section</h3>
+          <p>
+            This page has two important sections. The first, at the top of the page, is where you can edit the
+            title, thumbnail image, and summary of the exhibit. These items appear on the homepage, but not when
+            actually viewing the exhibit. The title and summary are standard text inputs, and the thumbnail image can be
+            changed by clicking on it.
+          </p>
+          <Image
+            src="/help/designer-thumbnail-section-screenshot.png"
+            alt="Screenshot of the thumbnail section of the designer page"
+            width={1000}
+            height={1000}
+            className={styles.screenshot}
+          />
+          <p>
+            Note that, unlike media used for cards, the thumbnail image will always be expanded to fill the necessary
+            space on the homepage. This means that it should be high-resolution and should be a suitable backdrop.
+            E.g., a landscape, or a portrait with a lot of empty space.
+          </p>
+          <h3 id="cards-section">The Cards Section</h3>
+          <p>
+            The second section of the designer page is a number of tiles that represent the cards in the exhibit. This
+            is the content that is actually displayed when a guest opens it.
+          </p>
+          <Image
+            src="/help/designer-cards-section-screenshot.png"
+            alt="Screenshot of the thumbnail section of the designer page"
+            width={1000}
+            height={1000}
+            className={styles.screenshot}
+          />
+          <p>
+            Each tile has two buttons that allow you to perform actions on the card.
+          </p>
+          <ul>
+            <li>
+              <button>Delete</button> will prompt you to delete the card. This action is irreversible, so be sure that you&apos;re deleting the correct card.
+            </li>
+            <li>
+              Clicking 
+              <button>Edit</button>,  
+              <Image 
+                width={24} 
+                height={24} 
+                style={{
+                  margin: "0px 5px -7px 5px",
+                  padding: "3px",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)"
+                }}
+                src="/edit.svg" 
+                alt="an open icon"
+              />,
+              or anywhere else on the tile (except for the delete button) will open up the card editor where
+              you can change the contents.
+            </li>
+          </ul>
+          <p>
+            In addition to those two buttons, you also have a button in the bottom-right corner of the page
+            that adds a new card to the exhibit.
+          </p>
+          <Image
+            src="/plus.svg"
+            alt="a plus sign"
+            width={100}
+            height={100}
+            className={styles.screenshot + " " + styles.plus}
+          />
+          <h3 id="card-editor">The Card Editor</h3>
+          <Image
+            src="/help/designer-card-editor-screenshot.png"
+            alt="Screenshot of the card editor"
+            width={1000}
+            height={1000}
+            className={styles.screenshot}
+          />
+          <p>
+            The card editor, shown above, has two sections. The first is the media, which can be changed by clicking on it.
+            The second is the text, which can also be edited directly. There are also a pair of arrows on either side of the
+            card editor which allow you to cycle through the cards in the exhibit.
+          </p>
+          <p>
+            Selecting media for the card is done in the same way as selecting media for the thumbnail (i.e., just click it and then use the prompts), except that you also have
+            the option of selecting a YouTube video. If you select a YouTube video, then the media in the card editor will be
+            replace with an embedded YouTube player. Of course, clicking on this player will only toggle the play/pause controls,
+            so to change the media from a YouTube video you can click the 
+            <Image 
+              width={24} 
+              height={24} 
+              style={{
+                margin: "0px 5px -7px 5px",
+                padding: "3px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)"
+              }}
+              src="/edit.svg" 
+              alt="an open icon"
+            />
+            icon in the top-right corner instead.
+          </p>
+          <p>
+            When selecting a YouTube video, you will be prompted to enter the video&apos;s URL. This can be done by copying it from
+            the address bar of your browser, or by clicking the "Share" button on the YouTube video page and then clicking "Copy".
+            Once you have the URL, you can paste it into the prompt and click <button style={{ width: "200px" }}>Use YouTube Video</button>.
+          </p>
+          <Image
+            src="/help/youtube-form-good.png"
+            alt="Screenshot of a good YouTube URL"
+            width={300}
+            height={500}
+            className={styles.screenshot}
+          />
+          <p>
+            This button won&apos;t work if you entered an invalid URL, and the input field will turn red that the URL is bad.
+          </p>
+          <Image
+            src="/help/youtube-form-bad.png"
+            alt="Screenshot of a bad YouTube URL"
+            width={300}
+            height={500}
+            className={styles.screenshot}
+          />
+        </section>
+        <section id="gallery">
+          <h2>The Gallery Page</h2>
+          <Image
+            src="/help/gallery-screenshot.png"
+            alt="Screenshot of the gallery page"
+            width={1000}
+            height={1000}
+            className={styles.screenshot}
+          />
+          <p>
+            This page is where you can view all of the images that you&apos;ve previously uploaded to the site. You can delete, download,
+            or upload new images from here. The <button>Delete</button> and <button>Download</button> buttons are self-explanatory,
+            but you also have the ability to click on the image itself to view more details about it.
+          </p>
+          <Image
+            src="/help/image-details.png"
+            alt="Screenshot of the image details popup"
+            width={400}
+            height={1000}
+            className={styles.screenshot}
+          />
+          <p>
+            In addition to displaying a larger and uncropped version of the image, this popup also lists any exhibits that are currently using
+            the image. I would strongly recommend that you only delete an image if no exhibits are using it. Due to image caching, deleting an
+            image that is in-use won&apos;t immediately remove it from the exhibit, but it will eventually be removed and then the users won&apos;t
+            be able to see it.
+          </p>
+          <p>
+            As with the other pages, there is also a button in the bottom-right corner of the page that allows you to upload a new image.
+          </p>
+          <Image
+            src="/plus.svg"
+            alt="a plus sign"
+            width={100}
+            height={100}
+            className={styles.screenshot + " " + styles.plus}
+          />
+        </section>
+        <section id="accounts">
+          <h2>The Accounts Page</h2>
+          {
+            userData.isMaster ?
+              <>
+                <Image
+                  src="/help/admin-accounts-screenshot.png"
+                  alt="Screenshot of the gallery page"
+                  width={1000}
+                  height={1000}
+                  className={styles.screenshot}
+                />    
+                <p>
+                  From this page, you can view the email and account details of all users. As the admin user, you also have the exclusive ability to delete another user&apos;s account with <button>Delete</button>, or reset their password with
+                  <button style={{ width: "140px", marginLeft: "5px" }}>Reset Password</button>. Additionally, you can create other users by clicking the button in the bottom-right corner.
+                </p>
+                <Image
+                  src="/plus.svg"
+                  alt="a plus sign"
+                  width={100}
+                  height={100}
+                  className={styles.screenshot + " " + styles.plus}
+                />
+                <p>
+                  If you click on your own account details, a form will open that lets you change your account
+                  details. Any fields you leave empty on this form will remain unchanged.  
+                </p>   
+                <Image
+                  src="/help/account-details-form.png"
+                  alt="Screenshot of the gallery page"
+                  width={500}
+                  height={1000}
+                  className={styles.screenshot}
+                />         
+              </>
             :
-            <p>
-              From the Accounts page, you can view a list of all accounts and change your password. If a new account must be created, contact the user marked as &quot;(Admin)&quot; in the list.
-            </p>
+              <>
+                <Image
+                  src="/help/nonadmin-accounts-screenshot.png"
+                  alt="Screenshot of the gallery page"
+                  width={1000}
+                  height={1000}
+                  className={styles.screenshot}
+                />
+                <p>
+                  On this page, you can view your own account details and the email of other users.
+                  The admin user, marked with &quot;&nbsp;(Admin)&quot;, has the ability to create and delete
+                  other users. They also have the ability to reset a user&apos;s password, so if you forget
+                  your password, you can ask the admin to reset it for you.  
+                </p>
+                <p>
+                  If you click on your own account details, a form will open that lets you change your account
+                  details. Any fields you leave empty on this form will remain unchanged.  
+                </p>   
+                <Image
+                  src="/help/account-details-form.png"
+                  alt="Screenshot of the gallery page"
+                  width={500}
+                  height={1000}
+                  className={styles.screenshot}
+                />         
+              </>
           }
-          <Image
-            className={styles.screenshot}
-            src="/manual/nonadmin-account-page.png"
-            height={500}
-            width={1000}
-            alt="screenshot"
-          />
         </section>
-        <section id="report" className={styles.section} style={{ paddingBottom: "3rem" }}>
-          <h2 className={styles.subheading}>Reporting Issues</h2>
+        <section id="reporting-an-issue">
+          <h2>Reporting an Issue</h2>
           <p>
-            If you encounter a bug or other issue with the website, please contact the developer at <Link className={styles.link} target="_blank" href="mailto:chadglazier@outlook.com">chadglazier@outlook.com</Link>. Try to include as much information about the issue as possible.
+            If you find a bug or other issue with the site, you can report it to me directly by sending an email to <Link href="mailto:chadglazier@outlook.com" target="_blank">chadglazier@outlook.com</Link>.
           </p>
         </section>
       </AdminLayout>

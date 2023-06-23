@@ -2,7 +2,7 @@ import styles from "./Dashboard.module.css";
 import { CardType, PopulatedExhibit, PopulatedExhibitCreatable, UserData } from "@/types";
 import { AdminLayout } from "@/components/layouts";
 import { useState } from "react";
-import { LoadingOverlay } from "@/components/general";
+import { Alert, LoadingOverlay } from "@/components/general";
 import { api } from "@/util/client";
 import ExhibitTile from "./ExhibitTile";
 import AddExhibit from "./popups/AddExhibit";
@@ -18,12 +18,13 @@ export default function Dashboard({
   const [exhibitCache, setExhibitCache] = useState<PopulatedExhibitCreatable[]>(exhibits);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   async function deleteExhibit(exhibit: PopulatedExhibitCreatable) {
     setLoading(true);
     const res = await api.exhibit.deleteOne(exhibit.title);
     if (!res.ok) {
-      alert(res.error);
+      setAlertMessage(res.error);
     } else {
       setExhibitCache(prev => prev.filter(({ title }) => title !== exhibit.title))
     }
@@ -34,7 +35,7 @@ export default function Dashboard({
     setLoading(true);
     const res = await api.exhibit.put({ ...exhibit, published: !exhibit.published });
     if (!res.ok) {
-      alert(res.error);
+      setAlertMessage(res.error);
     } else {
       setExhibitCache(prev => prev.map(el => {
         if (el.title === exhibit.title) {
@@ -51,6 +52,7 @@ export default function Dashboard({
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <AddExhibit
         show={showPopup && !loading}

@@ -2,12 +2,13 @@ import styles from "./Login.module.css";
 import { api } from "@/util/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LoadingOverlay } from "@/components/general";
+import { Alert, LoadingOverlay } from "@/components/general";
 import Head from "next/head";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   useEffect(() => {
     router.prefetch("/dashboard");
@@ -29,11 +30,12 @@ export default function Login() {
 
     setLoading(false);
 
-    alert("Incorrect email or password");
+    setAlertMessage("Incorrect email or password");
   }
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <Head>
         <title>Login &#124; The Museum &amp; Archives of Vernon</title>
       </Head>

@@ -1,5 +1,5 @@
 import styles from "./AddImage.module.css";
-import { Popup, LoadingOverlay } from "@/components/general";
+import { Popup, LoadingOverlay, Alert } from "@/components/general";
 import { useState } from "react";
 import { api } from "@/util/client";
 import Image from "next/image";
@@ -15,9 +15,11 @@ export default function AddImage({
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <Popup show={show && !loading} onClickAway={() => {
         setImagePreview(null);
@@ -42,7 +44,7 @@ export default function AddImage({
             if (!res.ok) {
               setLoading(false);
               onCancel();
-              alert(res.error);
+              setAlertMessage(res.error);
             } else {
               setLoading(false);
               onUpload(res.body.url);

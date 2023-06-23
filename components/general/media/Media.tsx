@@ -30,6 +30,7 @@ export default function Media({
   width?: number;
   height?: number;
   alt?: string;
+  /* This handler will only apply to Image elements; *not* active embedded players. */
   onClick?: MouseEventHandler<HTMLImageElement>;
 }) {
   let videoId = getYouTubeId(url);

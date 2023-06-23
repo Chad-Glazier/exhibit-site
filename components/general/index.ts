@@ -5,8 +5,9 @@ import LoadingOverlay from "./loadingOverlay/LoadingOverlay";
 import AddImage from "./addImage/AddImage";
 import AddYouTube from "./addYouTube/AddYouTube";
 import Swipeable from "./swipeable/Swipeable";
-import Buttons from "./button/Buttons";
+import Buttons from "./buttons/Buttons";
 import Media from "./media/Media";
+import Alert from "./alert/Alert";
 
 export {
   Popup,
@@ -17,5 +18,6 @@ export {
   AddYouTube,
   Swipeable,
   Buttons,
-  Media
+  Media,
+  Alert
 }

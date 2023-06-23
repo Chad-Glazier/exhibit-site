@@ -1,8 +1,7 @@
 import { Designer } from "@/components/pages";
 import prisma from "@/prisma";
-import { PopulatedExhibitCreatable } from "@/types";
 import { authorized } from "@/util/server";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {  
   const userData = await authorized(context.req.cookies);
@@ -18,23 +17,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let title = Array.isArray(context.query.title) ? context.query.title[0] : context.query.title;
   title = decodeURIComponent(title);
 
-  const allExhibits: PopulatedExhibitCreatable[] = await prisma.exhibit.findMany({
-    include: { cards: true }
-  }) as PopulatedExhibitCreatable[];
+  const [allImages, originalExhibit, otherExhibitTitles] = await Promise.all([
+    prisma.image.findMany(),
+    prisma.exhibit.findUnique({ 
+      where: { title }, 
+      include: { cards: true } 
+    }),
+    prisma.exhibit.findMany({
+      where: { title: { not: title }},
+      select: { title: true }
+    }).then(data => data.map(({ title }) => title))
+  ]);
 
-  const originalExhibit = allExhibits.find(x => x.title === title);
-
-  if (!originalExhibit) {
+  if (originalExhibit === null) {
     return { redirect: { destination: "/404_Admin", permanent: false } };
-  }
+  };
 
-  const allImages = await prisma.image.findMany();
-  
   return {
     props: {
       originalExhibit,
       userData,
-      allExhibits,
+      otherExhibitTitles,
       allImages
     }
   }
