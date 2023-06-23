@@ -5,36 +5,25 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-
-  background-color: #74EBD5;
-  background-image: radial-gradient(circle at center, #b3cde0 0%, #97dcff 50%, #56acfc 100%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: var(--custom-blue-background);
 }
 
 .form {
   padding: 1rem;
   background-color: #fff;
-  border: 1px solid var(--admin-dark-blue);
-  border-radius: 5px;
+  border: 3px solid var(--orangish);
   display: flex;
   flex-direction: column;
   min-width: min(400px, calc(100vw - 1rem));
+  gap: 1rem;
 }
 
-.title {
-  font-size: 1.4rem;
+.label {
+  margin-bottom: -0.8rem;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 0.5rem;
 }
 
-.label, .input, .submit {
-  margin: 2px 0;
-}
-
-.input, .submit {
+.input {
   padding: 2px;
   border-radius: 5px;
   border: 1px solid var(--admin-dark-blue);
@@ -45,20 +34,38 @@
   font-size: 1rem;
 }
 
-.label, .submit { 
-  text-transform: uppercase;
-}
+/* BUTTON */
 
-.submit {
-  font-size: 1.2rem;
+.button {
+  width: 100%;
+  border: 3px solid var(--orangish);
+  padding: 3px;
+  font-size: 1rem;
   transition: all 400ms;
-  margin-top: 1rem;
-  background-color: var(--admin-light-blue);
-  color: #FFF;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
 }
 
-.submit:hover {
-  background-color: var(--admin-lighter-blue);
+.button:hover {
   cursor: pointer;
-  color: var(--admin-dark-blue);
+  color: #fff;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.button:hover::after {
+  height: 100%;
 }

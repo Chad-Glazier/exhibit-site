@@ -1,63 +1,97 @@
+/* CONTAINER */
+
 .form {
   padding: 1rem;
-  background-color: #EEE;
-  border-radius: 5px;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
-  min-width: min(calc(100vw - 2rem), 450px);
-  max-width: min(calc(100vw - 1rem), 700px);
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: min(calc(100vw - 1rem), 600px);
+  border: 3px solid var(--blackish);
+  position: relative;
+  z-index: -2;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-.label, .input, .select, .button {
-  margin: 5px 0;
+.form > * {
+  width: 100%;
 }
 
-.input, .select, .button {
+/* BACKGROUND */
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+/* LABELS */
+
+.label {
   font-size: 1rem;
-  padding: 2px;
-  border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
+  text-transform: uppercase;
+  margin-bottom: -0.8rem;
+  padding-left: 5px;
 }
+
+/* TITLE */
 
 .input {
-  padding: 5px;
+  padding: 5px 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 2px solid #222;
 }
 
-.label, .button { 
-  text-transform: uppercase;
+/* TABLES */
+
+.tableContainer {
+  background-color: #FFF;
+  border: 2px solid #222;
+  padding: 5px 1rem;
+  border-radius: 5px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-.buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 5px;
-  height: max(auto, 3rem);
+.table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.button {
-  grid-column: span 1;
-  grid-row: span 1;
+.table tbody th {
   font-size: 1rem;
-  transition: all 400ms;
-  margin-top: 1rem;
-  background-color: var(--admin-light-blue);
-  color: #FFF;
+  text-transform: uppercase;
+  font-weight: normal;
+  text-align: left;
+  padding: 2px;
+  border-bottom: 2px solid #222;
 }
 
-.button:hover {
-  background-color: var(--admin-lighter-blue);
-  cursor: pointer;
-  color: var(--admin-dark-blue);
+.table tbody tr:not(:last-of-type) {
+  border-bottom: 2px solid #222;
 }
+
+.table tbody td {
+  padding: 10px 2px;
+}
+
+/* PRIORITY (SELECT BOX) */
 
 .select {
   width: 100%;
-  padding: 5px;
+  padding: 10px 1rem;
   border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
+  border: 2px solid #222;
   background-color: #FFF;
-  font-size: 16px;
+  font-size: 1rem;
   color: #000;
   -webkit-appearance: none; /* this will remove the default dropdown arrow in Webkit browsers */
   -moz-appearance: none; /* this will remove the default dropdown arrow in Mozilla browsers */
@@ -76,66 +110,79 @@
   cursor: pointer;
 }
 
-.tableContainer {
-  background-color: #FFF;
-  border: 1px solid var(--admin-dark-blue);
-  border-radius: 5px;
-  padding: 0 5px;
-  min-width: min(100%, 500px);
-  max-width: 90%;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table tbody th {
-  font-size: 1rem;
-  text-transform: uppercase;
-  font-weight: normal;
-  text-align: left;
-  padding: 2px;
-  border-bottom: 1px solid var(--admin-dark-blue);
-}
-
-.table tbody tr:not(:last-of-type) {
-  border-bottom: 1px solid var(--admin-dark-blue);
-}
-
-.table tbody td {
-  padding: 10px 2px;
-}
-
-.table .input {
-  font-size: 1rem;
-  padding: 3px;
-  border: 2px solid var(--blackish);
-  border-radius: 5px;
-}
-
-.table .input:hover {
-  border: 2px solid var(--admin-light-blue);
-  border-radius: 5px;
-}
-
-.label {
-  font-size: 1rem;
-  text-transform: uppercase;
-}
+/* LINKS */
 
 .link {
+  width: auto;
   color: var(--admin-dark-blue);
   line-break: auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 3px;
 }
 
 .link:hover {
-  text-decoration: underline;
-  color: var(--admin-light-blue);
+  color: #fff;
   cursor: pointer;
 }
 
-.previewLink {
-  margin-top: 8px;
-  text-align: center;
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--admin-dark-blue);
+  transition: all 200ms ease-in-out;
+  z-index: -1;
+}
+
+.link:hover::after {
+  height: calc(100% - 2px);
+}
+
+/* BUTTONS */
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 2px;
+}
+
+.button {
+  flex: 1;
+  border: 3px solid var(--orangish);
+  padding: 3px;
+  font-size: 1rem;
+  transition: all 400ms;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+}
+
+.button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.button:hover::after {
+  height: 100%;
 }

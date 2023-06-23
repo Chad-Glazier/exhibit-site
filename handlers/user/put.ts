@@ -8,8 +8,17 @@ import { getCookieString } from "./authenticate/post";
 
 export default async function put(
   req: NextApiRequest,
-  res: NextApiResponse<UserData | ErrorMessage>
+  res: NextApiResponse<UserData | ErrorMessage>,
+  authUser: UserData | null
 ) {
+  if (authUser !== null && !authUser.isMaster) {
+    return res
+      .status(403)
+      .json({
+        message: "Only an admin user can create accounts."
+      });
+  }
+
   let jwtSecret: string;
   let saltRounds: number;
 

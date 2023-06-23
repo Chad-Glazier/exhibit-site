@@ -24,11 +24,6 @@ export default function AddYouTube({
           onSubmit(url);  
         }}
       >
-        <h2 
-          className={styles.title}
-        >
-          Add YouTube Video
-        </h2>
         <label 
           className={styles.label}
           htmlFor="youtube-url"
@@ -50,7 +45,7 @@ export default function AddYouTube({
             "Please enter a valid YouTube URL"
           }
           disabled={!isValid} 
-          className={styles.submit}
+          className={styles.button}
         >
           Use YouTube Video
         </button>

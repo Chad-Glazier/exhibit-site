@@ -1,6 +1,6 @@
 import { PopulatedExhibitCreatable } from "@/types";
 import styles from "./AddExhibit.module.css";
-import { LoadingOverlay, Popup } from "@/components/general";
+import { Alert, LoadingOverlay, Popup } from "@/components/general";
 import { api } from "@/util/client";
 import { useState } from "react";
 import { TextEditor } from "@/components/general";
@@ -21,9 +21,11 @@ export default function AddExhibit({
   onCancel: () => void;
 }) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <Popup show={show && !loading} onClickAway={() => onCancel()}>
         <form
@@ -47,7 +49,7 @@ export default function AddExhibit({
             setLoading(true);
             const res = await api.exhibit.post(newExhibit);
             if (!res.ok) {
-              alert(res.error);
+              setAlertMessage(res.error);
             } else {
               onCreate(newExhibit);
             }
@@ -55,7 +57,6 @@ export default function AddExhibit({
             onCancel();
           }}
         >
-          <h1 className={styles.title}>Add Exhibit</h1>
           <label 
             className={styles.label}
             htmlFor="name"
@@ -68,7 +69,20 @@ export default function AddExhibit({
             name="name" id="name" 
             required 
           />
-          <button className={styles.submit}>Create</button>          
+          <div
+            className={styles.buttons}
+          >
+            <button className={styles.button}>Create</button>    
+            <button 
+              className={styles.button}
+              onClick={e => {
+                e.preventDefault();
+                onCancel();
+              }}
+            >
+              Cancel
+            </button> 
+          </div>
         </form>
       </Popup>    
     </>

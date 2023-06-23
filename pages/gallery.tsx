@@ -3,22 +3,25 @@ import prisma from "@/prisma";
 import { authorized } from "@/util/server";
 import { GetServerSideProps } from "next";
 import { Image } from "@prisma/client";
+import { getBasename } from "@/util";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const userData = await authorized(context.req.cookies);
   if (!userData) {
     return { redirect: { destination: "/login", permanent: false } };
   }
-
-  const images: Image[] = (await prisma.image.findMany()).reverse();
+    
   const imageTitles: Record<string, string[]> = {};
+
+  const [images, allExhibits] = await Promise.all([
+    prisma.image.findMany(),
+    prisma.exhibit.findMany({ include: { cards: true } })
+  ]);
+
+  images.sort((a, b) => getBasename(a.url).localeCompare(getBasename(b.url)));
 
   for (const { url } of images) {
     imageTitles[url] = [];
-    
-    const allExhibits = await prisma.exhibit.findMany({ 
-      include: { cards: true } 
-    });
 
     for (const { title, thumbnail, cards } of allExhibits) {
       if (

@@ -23,6 +23,7 @@ import emptyEditorState from "./emptyEditorState";
 
 function TextEditor({
   onChange,
+  onClick,
   className,
   innerClassName,
   initialState,
@@ -30,6 +31,7 @@ function TextEditor({
   readonly
 }: {
   className?: string;
+  onClick?: (e: any) => void;
   innerClassName?: string;
   title?: string;
   placeholder?: string;
@@ -64,6 +66,7 @@ function TextEditor({
     >
       <div
         className={styles.editorContainer + ` ${className ? className : ""}`}
+        onClick={onClick}
       >
         {!readonly &&
           <ToolbarPlugin />

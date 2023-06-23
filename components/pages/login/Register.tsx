@@ -2,11 +2,12 @@ import styles from "./Register.module.css";
 import { api } from "@/util/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LoadingOverlay } from "@/components/general";
+import { Alert, LoadingOverlay } from "@/components/general";
 
 export default function Register() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
   useEffect(() => {
     router.prefetch("/dashboard");
   });
@@ -21,7 +22,7 @@ export default function Register() {
     const masterKey = (e.currentTarget.elements.namedItem("master-key") as HTMLInputElement).value;
 
     if (password !== passwordConfirm) {
-      alert("Passwords do not match");
+      setAlertMessage("Passwords do not match");
       return;
     }
 
@@ -41,17 +42,15 @@ export default function Register() {
     }
 
     setLoading(false);
-    alert(response.error);
+    setAlertMessage(response.error);
   }
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <main className={styles.register}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.title}>
-            Register
-          </h1>
           <label className={styles.label} htmlFor="name">
             Name
           </label>
@@ -92,7 +91,7 @@ export default function Register() {
             type="password" id="master-key" name="master-key"
             required={true}
           />
-          <button className={styles.submit}>Register</button>
+          <button className={styles.button}>Register</button>
         </form>
       </main>
     </>

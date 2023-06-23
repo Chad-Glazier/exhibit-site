@@ -2,17 +2,37 @@ import { NextApiRequest, NextApiResponse } from "next/types";
 import { User } from "@prisma/client";
 import { ErrorMessage, UserData } from "@/types";
 import prisma from "@/prisma";
+import jwt from "jsonwebtoken";
+
+const jwtSecret: string = process.env.JWT_SECRET as string;
 
 export default async function del(
   req: NextApiRequest,
-  res: NextApiResponse<UserData | UserData[] | ErrorMessage>
+  res: NextApiResponse<UserData | UserData[] | ErrorMessage>,
+  authUser: UserData | null
 ) {
+  if (authUser === null) {
+    return res
+      .status(403)
+      .json({
+        message: "The master key does not grant authorization for this endpoint. Try creating an account instead with the key, and then using that account to access this endpoint."
+      })
+  }
+
   let { email } = req.query;
 
   if (Array.isArray(email)) email = email.map(decodeURIComponent);
   else if (email && email !== "*") email = decodeURIComponent(email);
 
   if (email === "*") {
+    if (!authUser.isMaster) {
+      return res
+        .status(403)
+        .json({
+          message: "Only an admin user can delete all accounts."
+        });
+    }
+
     const users: User[] = await prisma.user.findMany();
     await prisma.user.deleteMany();
     const userData: UserData[] = users.map(user => {
@@ -31,6 +51,14 @@ export default async function del(
   }
 
   if (Array.isArray(email)) {
+    if (!authUser.isMaster) {
+      return res
+        .status(403)
+        .json({
+          message: "You do not have permission to delete any account except your own."
+        });
+    }
+
     const users: User[] = await prisma.user.findMany({
       where: { email: { in: email }}
     });
@@ -46,6 +74,15 @@ export default async function del(
       .json(userData);
     return;
   }
+
+  if (authUser.email != email && !authUser.isMaster) {
+    return res
+      .status(403)
+      .json({
+        message: "Only an admin can delete the account of another user."
+      });
+  }
+
 
   const user: User | null = await prisma.user.findUnique({
     where: { email }

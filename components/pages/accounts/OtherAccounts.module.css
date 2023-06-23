@@ -1,0 +1,138 @@
+/* CONTAINER */
+
+.container {
+  border: 3px solid var(--blackish);
+  min-width: min(700px, calc(100% - 1rem));
+  max-width: 700px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  position: relative;
+  transition: all 400ms;
+  background-color: #fff;
+  overflow-x: auto;
+}
+
+.container[data-type="admin"] {
+  max-width: 900px;
+}
+
+.heading {
+  text-transform: uppercase;
+  width: min(calc(100% - 1rem), 900px);
+  text-align: center;
+  font-size: 2rem;
+}
+
+/* TABLE */
+
+.table {
+  width: 100%;
+  padding: 0 1rem;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  border-bottom: 2px solid var(--blackish);
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.table td {
+  padding: 10px;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #eee;
+}
+
+.email {
+  min-width: fit-content;
+}
+
+/* LINKS */
+
+.link {
+  width: auto;
+  color: var(--admin-dark-blue);
+  line-break: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.link:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--admin-dark-blue);
+  transition: all 200ms ease-in-out;
+  z-index: -1;
+}
+
+.link:hover::after {
+  height: calc(100% - 2px);
+}
+
+/* BUTTONS */
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  min-width: 315px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.buttons button {
+  flex: 1;
+  border: 3px solid var(--orangish);
+  padding: 3px;
+  font-size: 1rem;
+  transition: all 400ms;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+}
+
+.buttons button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.buttons button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.buttons button:hover::after {
+  height: 100%;
+}
+
+/* NOTE */
+
+.note {
+  color: #555;
+}

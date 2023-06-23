@@ -1,27 +1,31 @@
 import { PopulatedExhibitCreatable, ExhibitCreatable } from "@/types";
-import { LoadingOverlay, Popup } from "@/components/general";
+import { Alert, LoadingOverlay, Popup } from "@/components/general";
 import { api } from "@/util/client";
 import { isYouTube, getBasename, getYouTubeTitle } from "@/util";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Details.module.css";
 
 export default function Details({
   show,
   close,
   exhibit,
-  allExhibits
+  allExhibits,
+  onChangeTitle,
 }: {
   show?: boolean;
   close: () => void;
   exhibit: PopulatedExhibitCreatable;
   allExhibits: PopulatedExhibitCreatable[];
   requestRerender?: () => void;
+  onChangeTitle: (newTitle: string) => void;
 }) {
   const { cards, ...exhibitDetails } = exhibit;
   const [lastSavedVersion, setLastSavedVersion] = useState(exhibitDetails);
   const youTubeTitles = useRef(new Map<string, string>());
   const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   useEffect(() => {
     exhibit.cards
@@ -42,6 +46,7 @@ export default function Details({
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <Popup show={show && !loading} onClickAway={close}>
         <form className={styles.form}
@@ -54,7 +59,7 @@ export default function Details({
               &&
               allExhibits.some(exhibit => exhibit.title === title)
             ) {
-              alert("An exhibit with that title already exists.");
+              setAlertMessage("An exhibit with that title already exists.");
               return;
             }
 
@@ -78,8 +83,10 @@ export default function Details({
             );
             setLoading(false);
 
+            onChangeTitle(title);
+
             if (!res.ok) {
-              alert(res.error);
+              setAlertMessage(res.error);
               return;
             }
 
@@ -87,6 +94,13 @@ export default function Details({
             close();
           }}
         >
+          <Image
+            className={styles.background}
+            src={exhibit.thumbnail}
+            alt={exhibit.title}
+            width={1000}
+            height={1000}
+          />
           <label className={styles.label} htmlFor="title">
             Title
           </label>
@@ -165,18 +179,6 @@ export default function Details({
               </div>              
             </>       
           }
-          <Link
-            href={
-              exhibit.published ? 
-                `/${encodeURIComponent(exhibit.title)}`
-                :
-                `/preview/${encodeURIComponent(exhibit.title)}`
-            }
-            target="_blank"
-            className={styles.link + " " + styles.previewLink}
-          >
-            Open {exhibit.published ? " Exhibit" : " Preview"}
-          </Link>
           <div className={styles.buttons}>
             <button
               className={styles.button}

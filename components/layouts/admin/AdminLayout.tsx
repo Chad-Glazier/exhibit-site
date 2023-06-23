@@ -27,7 +27,7 @@ export default function AdminLayout({
       <Head>
         <title>{pageName + " | The Museum & Archives of Vernon"}</title>
       </Head>
-      <AdminNav onRedirect={onRedirect} />
+      <AdminNav onRedirect={onRedirect} pageName={pageName} />
       <main className={styles.main + (className ? ` ${className}` : "")} >
         {children}
       </main>

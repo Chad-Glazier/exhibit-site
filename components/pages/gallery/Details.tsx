@@ -22,31 +22,20 @@ export default function Details({
       onClickAway={onClose}
     >
       <div className={styles.container}>
-        <h2 className={styles.title}>
-          {imageName}
-        </h2>
         <Image
           className={styles.image}
           src={imageUrl}
-          height={500}
-          width={500}
+          height={600}
+          width={600}
           alt={imageName}
         />
-        <p>
-          Full image path:
-          <br />
-          <Link
-            className={styles.link}
-            target="_blank"
-            href={imageUrl}
-          >
-            {imageUrl}
-          </Link>
-        </p>
+        <h2 className={styles.title}>
+          {imageName}
+        </h2>
         {dependantExhibits.length > 0 ?
           <>
             <p>
-              This image is used in the following exhibits:
+              This image is used in the following exhibit{dependantExhibits.length > 1 ? "s" : ""}:
             </p>
             <ul>
               {Array.from(dependantExhibits).map(exhibitTitle => (
@@ -63,9 +52,9 @@ export default function Details({
             </ul>
           </>
           :
-          <p>
-            This image is not used in any exhibit{dependantExhibits.length > 1 ? "s" : ""}.
-          </p>
+          <em>
+            This image is not used in any exhibits.
+          </em>
         }
         <button className={styles.button} onClick={onClose}>
           Close

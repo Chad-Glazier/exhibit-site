@@ -2,44 +2,68 @@
   padding: 1rem;
   background-color: #fff;
   border: 1px solid var(--admin-dark-blue);
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
-}
-
-.title {
-  font-size: 1.4rem;
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 0.75rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .fileUploadLabel {
-  padding: 10px;
   cursor: pointer;
   border: none;
   border-radius: 5px;
   text-align: center;
 }
 
+.preview {
+  width: min(100vw - 2rem, 400px);
+  height: auto;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.placeholder {
+  width: 80px;
+  height: 80px;
+  margin: 70px;
+}
+
+
 .input {
   display: none;
 }
 
-.submit {
-  text-transform: uppercase;
-  padding: 2px;
-  border-radius: 5px;
-  border: 1px solid var(--admin-dark-blue);
+.button {
+  width: 100%;
+  border: 3px solid var(--orangish);
+  padding: 3px;
   font-size: 1rem;
   transition: all 400ms;
-  margin-top: 1rem;
-  background-color: var(--admin-light-blue);
-  color: #FFF;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px);
 }
 
-.submit:hover {
-  background-color: var(--admin-lighter-blue);
+.button:hover {
   cursor: pointer;
-  color: var(--admin-dark-blue);
+  color: #fff;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background-color: var(--orangish);
+  transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.button:hover::after {
+  height: 100%;
 }

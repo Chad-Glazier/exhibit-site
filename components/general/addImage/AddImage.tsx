@@ -1,5 +1,5 @@
 import styles from "./AddImage.module.css";
-import { Popup, LoadingOverlay } from "@/components/general";
+import { Popup, LoadingOverlay, Alert } from "@/components/general";
 import { useState } from "react";
 import { api } from "@/util/client";
 import Image from "next/image";
@@ -15,9 +15,11 @@ export default function AddImage({
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <Popup show={show && !loading} onClickAway={() => {
         setImagePreview(null);
@@ -42,21 +44,20 @@ export default function AddImage({
             if (!res.ok) {
               setLoading(false);
               onCancel();
-              alert(res.error);
+              setAlertMessage(res.error);
             } else {
               setLoading(false);
               onUpload(res.body.url);
             }
           }}
         >
-          <h2 className={styles.title}>Add Image</h2>
           <label htmlFor="image" className={styles.fileUploadLabel}>
             <Image
-              src={imagePreview || "/add.png"}
+              className={(imagePreview ? styles.preview : styles.placeholder)}
+              src={imagePreview || "/plus.svg"}
               alt="Add Image"
               width={250}
               height={250}
-              style={{ objectFit: "contain", cursor: "pointer" }}
             />
           </label>
           <input 
@@ -79,7 +80,7 @@ export default function AddImage({
               reader.readAsDataURL(imageFile);
             }}
           />
-          <button className={styles.submit}>Upload</button>
+          <button className={styles.button}>Upload</button>
         </form>
       </Popup>    
     </>

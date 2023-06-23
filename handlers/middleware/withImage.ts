@@ -1,5 +1,5 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { NextApiImageHandler } from "@/types";
+import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiImageHandler, NextApiAuthHandler, UserData } from "@/types";
 import { IncomingForm, File } from "formidable";
 
 /**
@@ -13,10 +13,11 @@ import { IncomingForm, File } from "formidable";
  */
 export default function withImage(
   next: NextApiImageHandler
-): NextApiHandler {
+): NextApiAuthHandler {
   return async function(
     req: NextApiRequest, 
-    res: NextApiResponse
+    res: NextApiResponse,
+    authUser: UserData | null
   ) {
     let data;
 

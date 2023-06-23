@@ -2,10 +2,11 @@ import styles from "./Dashboard.module.css";
 import { CardType, PopulatedExhibit, PopulatedExhibitCreatable, UserData } from "@/types";
 import { AdminLayout } from "@/components/layouts";
 import { useState } from "react";
-import { LoadingOverlay } from "@/components/general";
+import { Alert, LoadingOverlay } from "@/components/general";
 import { api } from "@/util/client";
 import ExhibitTile from "./ExhibitTile";
 import AddExhibit from "./popups/AddExhibit";
+import Image from "next/image";
 
 export default function Dashboard({ 
   userData,
@@ -17,12 +18,13 @@ export default function Dashboard({
   const [exhibitCache, setExhibitCache] = useState<PopulatedExhibitCreatable[]>(exhibits);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   async function deleteExhibit(exhibit: PopulatedExhibitCreatable) {
     setLoading(true);
     const res = await api.exhibit.deleteOne(exhibit.title);
     if (!res.ok) {
-      alert(res.error);
+      setAlertMessage(res.error);
     } else {
       setExhibitCache(prev => prev.filter(({ title }) => title !== exhibit.title))
     }
@@ -33,7 +35,7 @@ export default function Dashboard({
     setLoading(true);
     const res = await api.exhibit.put({ ...exhibit, published: !exhibit.published });
     if (!res.ok) {
-      alert(res.error);
+      setAlertMessage(res.error);
     } else {
       setExhibitCache(prev => prev.map(el => {
         if (el.title === exhibit.title) {
@@ -45,8 +47,12 @@ export default function Dashboard({
     setLoading(false);
   }
 
+  const publicExhibits = exhibitCache.filter(el => el.published);
+  const privateExhibits = exhibitCache.filter(el => !el.published);
+
   return (
     <>
+      <Alert message={alertMessage} setMessage={setAlertMessage} />
       <LoadingOverlay show={loading} />
       <AddExhibit
         show={showPopup && !loading}
@@ -59,42 +65,69 @@ export default function Dashboard({
       />
       <AdminLayout
         pageName="Dashboard"
+        className={styles.page}
         userData={userData}
       >
-        <h1 className={styles.heading}>Published Exhibits</h1>
-        <div className={styles.exhibits}>
-          {exhibitCache
-            .filter(el => el.published)
-            .map((el) => 
-              <ExhibitTile 
-                allExhibits={exhibitCache}
-                key={el.title} 
-                exhibit={el} 
-                onDelete={() => deleteExhibit(el)}
-                onTogglePublic={togglePublic}
-              />
-            )
-          }  
-        </div>
-        <h1 className={styles.heading}>Unpublished Exhibits</h1>
-        <div className={styles.exhibits}>
-          {exhibitCache
-            .filter(el => !el.published)
-            .map((el, index) => 
-              <ExhibitTile 
-                allExhibits={exhibitCache}
-                key={index} 
-                exhibit={el} 
-                onDelete={() => deleteExhibit(el)}
-                onTogglePublic={togglePublic}
-                
-              />
-            )
-          }
-          <button className={styles.button} onClick={() => setShowPopup(true)}>
-            Add Exhibit
-          </button>
-        </div>
+        {
+          publicExhibits.length > 0 &&
+          <>
+            <h1 className={styles.heading}>Published Exhibits</h1>
+            <div className={styles.exhibits}>
+              {publicExhibits.map((el) => 
+                  <ExhibitTile 
+                    allExhibits={exhibitCache}
+                    key={el.title} 
+                    exhibit={el} 
+                    onDelete={() => deleteExhibit(el)}
+                    onTogglePublic={togglePublic}
+                    onChangeTitle={(newTitle) => {
+                      setExhibitCache(prev => prev.map(ex => {
+                        if (ex.title === el.title) {
+                          return { ...ex, title: newTitle };
+                        }
+                        return ex;
+                      }));
+                    }}
+                  />
+                )
+              }  
+            </div>
+          </>
+        }
+        {
+          privateExhibits.length > 0 &&
+          <>
+            <h1 className={styles.heading}>Unpublished Exhibits</h1>
+            <section className={styles.exhibits}>
+              {privateExhibits.map((el, index) => 
+                  <ExhibitTile 
+                    allExhibits={exhibitCache}
+                    key={index} 
+                    exhibit={el} 
+                    onDelete={() => deleteExhibit(el)}
+                    onTogglePublic={togglePublic}
+                    onChangeTitle={(newTitle) => {
+                      setExhibitCache(prev => prev.map(ex => {
+                        if (ex.title === el.title) {
+                          return { ...ex, title: newTitle };
+                        }
+                        return ex;
+                      }));
+                    }}
+                  />
+                )
+              }
+            </section>
+          </>
+        } 
+        <Image 
+          src="/plus.svg"
+          alt="Add Exhibit"
+          width={100}
+          height={120}
+          className={styles.button} 
+          onClick={() => setShowPopup(true)}
+        />
       </AdminLayout>    
     </>
   );

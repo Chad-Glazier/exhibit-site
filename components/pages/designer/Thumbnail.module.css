@@ -1,0 +1,112 @@
+/* CONTAINER */
+
+.container {
+  height: min(max(60vw, 60vh), calc(100vh - 350px));
+  width: calc(100% - 2rem);
+  position: relative;
+}
+
+@media (max-height: 700px) {
+  .container {
+    height: min(calc(100vh - 2rem), 500px);
+  }
+}
+
+/* TEXT */
+
+.text {
+  position: absolute;
+  bottom: 2rem;
+  width: min(1000px, calc(100% - 2rem));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.title,
+.summary {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 0;
+  transition: all 400ms;
+}
+
+.title {
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  max-width: 100%;
+}
+
+.summary {
+  height: 200px;
+}
+
+.summaryInner {
+  max-height: calc(100%  - 3rem);
+}
+
+@media (max-width: 568px) {
+  .summaryInner {
+    max-height: calc(100% - 5rem);
+  }
+}
+
+@media (max-width: 323px) {
+  .summaryInner {
+    max-height: calc(100% - 7rem);
+  }
+}
+
+.title:hover,
+.title:focus,
+.summary:hover,
+.summary:focus {
+  border-color: var(--orangish);
+  outline: none;
+}
+
+/* THUMBNAIL IMAGE */
+
+.thumbnailSection {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--custom-blue-background);
+  transition: all 400ms;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.thumbnail {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: all 400ms;
+  opacity: 0.7;
+}
+
+.editThumbnailButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 0 3px 3px;
+  background-color: var(--blackish);
+  transition: all 400ms;
+}
+
+.thumbnailSection:hover {
+  border-color: var(--orangish);
+}
+
+.thumbnailSection:hover .thumbnail,
+.thumbnail.active {
+  cursor: pointer;
+  border-color: var(--orangish);
+  opacity: 1;
+}
+
+.thumbnailSection:hover .editThumbnailButton {
+  cursor: pointer;
+  background-color: var(--orangish);
+}

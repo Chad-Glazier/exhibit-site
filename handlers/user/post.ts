@@ -8,8 +8,17 @@ import { getCookieString } from "./authenticate/post";
 
 export default async function post(
   req: NextApiRequest,
-  res: NextApiResponse<UserData | ErrorMessage>
+  res: NextApiResponse<UserData | ErrorMessage>,
+  authUser: UserData | null
 ) {
+  if (authUser !== null && !authUser.isMaster) {
+    return res
+      .status(403)
+      .json({
+        message: "Only an admin user can create accounts."
+      });
+  }
+
   let jwtSecret: string;
   let saltRounds: number;
 
@@ -20,7 +29,7 @@ export default async function post(
     saltRounds = parseInt(process.env.SALT_ROUNDS as string);
   } catch {
     return res.status(500).json({ 
-      message: "The server could not get certain required environment variables. This is certainly due to a misconfiguration on the server." 
+      message: "The server could not get certain required environment variables. This is due to a misconfiguration on the server; you should probably report this to the developer so that it can be fixed." 
     });
   }
 

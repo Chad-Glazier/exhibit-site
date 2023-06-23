@@ -37,7 +37,8 @@ export {
   NewImageSchema
 } from "./general";
 export type {
-  NextApiImageHandler
+  NextApiImageHandler,
+  NextApiAuthHandler
 } from "./specialApiHandlers";
 export type {
   ApiResponse

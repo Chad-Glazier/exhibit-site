@@ -1,12 +1,21 @@
-import { PopulatedExhibit, ErrorMessage, ExhibitCreatable, ExhibitCreatableSchema, CardCreatable, CardCreatableSchema, PopulatedExhibitCreatable } from "@/types";
+import { UserData, PopulatedExhibit, ErrorMessage, ExhibitCreatable, ExhibitCreatableSchema, CardCreatable, CardCreatableSchema, PopulatedExhibitCreatable } from "@/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/prisma";
 import { z } from "zod";
 
 export default async function put(
   req: NextApiRequest,
-  res: NextApiResponse<ErrorMessage | PopulatedExhibit>
+  res: NextApiResponse<ErrorMessage | PopulatedExhibit>,
+  authUser: UserData | null
 ): Promise<void> {
+  if (authUser === null) {
+    return res
+      .status(403)
+      .json({
+        message: "The master key does not grant authorization for this endpoint. Try creating an account instead with the key, and then using that account to access this endpoint."
+      })
+  }
+
   let newExhibit: ExhibitCreatable;
   let newCards: CardCreatable[];
   try {

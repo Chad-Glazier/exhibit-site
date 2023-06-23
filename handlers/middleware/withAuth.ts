@@ -2,7 +2,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next/types";
 import prisma from "@/prisma";
 import { User } from "@prisma/client";
-import { TokenPayload, TokenPayloadSchema } from "@/types";
+import { NextApiAuthHandler, TokenPayload, TokenPayloadSchema } from "@/types";
 
 const jwtSecret: string = process.env.JWT_SECRET as string;
 const masterKey: string = process.env.MASTER_KEY as string;
@@ -16,7 +16,7 @@ const masterKey: string = process.env.MASTER_KEY as string;
  * executing `next`.
  */
 export default function withAuth(
-  next: NextApiHandler
+  next: NextApiAuthHandler
 ): NextApiHandler {
   return async function(
     req: NextApiRequest,
@@ -31,7 +31,7 @@ export default function withAuth(
       if (authorization !== "Bearer " + masterKey) {
         return res.status(401).json({ message: "The `Authorization` header of the request didn't match the master key." });
       }
-      return next(req, res);
+      return next(req, res, null);
     }
     const token: string | null = req.cookies.token || null;
     if (token === null) {
@@ -48,7 +48,8 @@ export default function withAuth(
       if (!user) {
         return res.status(401).json({ message: "Unrecognized user in token" });
       }
-      return next(req, res);
+      const { password, ...userData } = user;
+      return next(req, res, userData);
     } catch (error) {
       return res.status(401).json({ message: "Invalid token or payload" });
     }

@@ -6,6 +6,7 @@ import { Popup } from "@/components/general";
 import Link from "next/link";
 import { getBasename, getExtension } from "@/util";
 import Details from "./Details";
+import DeleteImage from "./DeleteImage";
 
 export default function ExhibitTile({ 
   image,
@@ -32,63 +33,43 @@ export default function ExhibitTile({
         imageUrl={image.url}
         dependantExhibits={dependantExhibits}
       />
-      <Popup show={showPopup} onClickAway={() => setShowPopup(false)}>
-        <div className={styles.popup}>
-          <h2 className={styles.popupTitle}>
-            Delete Image
-          </h2>
-          <p>
-            Are you sure you want to delete &quot;{imageBasename}&quot;&#x3F;
-          </p>
-          <div className={styles.popupButtons}>
-            <button 
-              className={styles.button}
-              onClick={() => {
-                if (onDelete) onDelete();
-                setShowPopup(false);
-              }}
-            >
-              Delete
-            </button>
-            <button
-              className={styles.button} 
-              onClick={() => setShowPopup(false)}
-            >
-              Cancel
-            </button>        
-          </div>
-        </div>
-      </Popup>
-      <div className={styles.imageTile}>
-        <h2 className={styles.imageTitle}>{imageBasename}</h2>
-        <Image
-          className={styles.imageThumbnail}
+      <DeleteImage
+        show={showPopup}
+        onClose={() => setShowPopup(false)}
+        onDelete={onDelete}
+        imageBasename={imageBasename}
+      />  
+      <div
+        className={styles.tile}
+        onClick={() => setShowDetails(true)}
+      >
+        <Image 
+          className={styles.background}
           src={image.url}
           alt={imageBasename}
-          width={300}
-          height={200}
+          width={500}
+          height={500}
         />
-        <div className={styles.imageButtons}>
+        <h1 className={styles.title}>{imageBasename}</h1>
+        <div className={styles.buttons}>
           <button
-            className={styles.imageButton} 
-            onClick={() => setShowPopup(true)}
+            className={styles.button} 
+            onClick={e => {
+              setShowPopup(true);
+              e.stopPropagation();
+            }}
           >
             Delete
           </button>
           <Link 
-            className={styles.imageButton}
+            className={styles.button}
             target="_blank" href={image.url}
+            onClick={e => e.stopPropagation()}
           >
             Download
           </Link>
-          <button
-            onClick={() => setShowDetails(true)}
-            className={styles.imageButton + " " + styles.detailsButton}
-          >
-            View Details    
-          </button>
-        </div>
-      </div>    
+        </div>         
+      </div>
     </>
   )
 }
