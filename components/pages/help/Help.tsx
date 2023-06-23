@@ -256,7 +256,7 @@ export default function Help({
           <p>
             Selecting media for the card is done in the same way as selecting media for the thumbnail (i.e., just click it and then use the prompts), except that you also have
             the option of selecting a YouTube video. If you select a YouTube video, then the media in the card editor will be
-            replace with an embedded YouTube player. Of course, clicking on this player will only toggle the play/pause controls,
+            replaced with an embedded YouTube player. Clicking on this player will only toggle the play/pause controls,
             so to change the media from a YouTube video you can click the 
             <Image 
               width={24} 
