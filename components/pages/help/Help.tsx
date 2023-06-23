@@ -396,7 +396,7 @@ export default function Help({
               </>
           }
         </section>
-        <section id="reporting-an-issue">
+        <section id="reporting-a-bug">
           <h2>Reporting an Issue</h2>
           <p>
             If you find a bug or other issue with the site, you can report it to me directly by sending an email to <Link href="mailto:chadglazier@outlook.com" target="_blank">chadglazier@outlook.com</Link>.
