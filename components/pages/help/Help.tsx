@@ -257,7 +257,7 @@ export default function Help({
           </p>
           <p>
             When selecting a YouTube video, you will be prompted to enter the video&apos;s URL. This can be done by copying it from
-            the address bar of your browser, or by clicking the "Share" button on the YouTube video page and then clicking "Copy".
+            the address bar of your browser, or by clicking the &quot;Share&quot; button on the YouTube video page and then clicking &quot;Copy&quot;.
             Once you have the URL, you can paste it into the prompt and click <button style={{ width: "200px" }}>Use YouTube Video</button>.
           </p>
           <Image
