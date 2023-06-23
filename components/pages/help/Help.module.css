@@ -135,3 +135,13 @@
 .page button:hover::after {
   height: 100%;
 }
+
+.page button.saveButton {
+  background-color: var(--admin-dark-blue);
+  border-color: var(--admin-light-blue);
+  color: #fff;
+}
+
+.page button.saveButton::after {
+  background-color: var(--admin-light-blue);
+}

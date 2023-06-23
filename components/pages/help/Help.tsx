@@ -133,6 +133,22 @@ export default function Help({
         </section>
         <section id="designer">
           <h2>The Designer Page</h2>
+          <p>
+            This page lets you edit your exhibits. Remember to save your changes before leaving the page, by clicking 
+            the 
+            <button className={styles.saveButton}>
+              Save
+              <Image
+                className={styles.icon}
+                src="/save.svg"
+                width={16}
+                height={16}
+                style={{ marginLeft: "10px", marginBottom: "-3px" }}
+                alt=""
+              />
+            </button>
+            button at the top-right corner of the page
+          </p>
           <ul>
             <li>
               <Link href="#thumbnail-section">
