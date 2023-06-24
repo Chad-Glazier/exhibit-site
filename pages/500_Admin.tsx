@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      userData: null
+      userData: userData
     }
   };
 }
