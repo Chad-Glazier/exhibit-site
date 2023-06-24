@@ -284,7 +284,7 @@ export default function Help({
             className={styles.screenshot}
           />
           <p>
-            This button won&apos;t work if you entered an invalid URL, and the input field will turn red that the URL is bad.
+            This button won&apos;t work if you entered an invalid URL, and the input field will turn red to indicate that the URL is bad.
           </p>
           <Image
             src="/help/youtube-form-bad.png"
